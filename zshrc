@@ -85,3 +85,9 @@ setopt prompt_subst
 PROMPT="%m%{${fg_bold[magenta]}%} :Ж: %{$reset_color%}%{${fg[green]}%}%3~ \$vcs_info_msg_0_> "
 zstyle ':vcs_info:git:*' formats '%F{240}(%b)%r%f'
 zstyle ':vcs_info:*' enable git
+
+# AUTOCOMPLETE
+autoload -U +X bashcompinit && bashcompinit
+autoload -U +X compinit && compinit
+complete -C "$HOME/bin/aws_completer" aws
+
