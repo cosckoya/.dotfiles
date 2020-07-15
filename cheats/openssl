@@ -1,0 +1,30 @@
+# Check a Certificate Signing Request (CSR)
+openssl req -text -noout -verify -in <certificate>.csr
+
+# Check a private key
+openssl rsa -in <privatekey> -check
+
+# Check a x509 certificate
+openssl x509 -in <certificate> -text -noout
+
+# Check a DER certificate
+openssl x509 -in <certificate> -inform DER -text
+
+# Check a PKCS#12 file (.pfx or .p12)
+openssl pkcs12 -info -in <certificate>.<p12|pfx>
+
+# Generate a PKCS12 certificate
+openssl pkcs12 -export -out <certificate>.<p12|pfx> -inkey <privatekey> -in <certificate> -certfile <intermediateCA>
+
+# Check a PKCS12 certificate
+openssl pkcs12 -in <certificate>.<p12|pfx> -nocerts -nodes -out <privatekey>
+openssl pkcs12 -in <certificate>.<p12|pfx> -clcerts -nodes -nokeys -out <certificate>
+openssl pkcs12 -in <certificate>.<p12|pfx> -cacerts -nodes -nokeys -chain -out <intermediateCA>
+
+# Export certificate and private key from PKCS12 certificate
+openssl pkcs12 -in <certificate>.<p12|pfx> -nocerts -nodes | sed -ne '/-BEGIN PRIVATE KEY-/,/-END PRIVATE KEY-/p' > <privatekey>
+openssl pkcs12 -in <certificate>.<p12|pfx> -clcerts -nokeys | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > <certificate>
+openssl pkcs12 -in <certificate>.<p12|pfx> -cacerts -nokeys -chain | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > <intermediateCA>
+
+# Check SSL on site
+openssl s_client -connect <url>:443

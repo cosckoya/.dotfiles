@@ -1,0 +1,63 @@
+# Get All (pod, service, deployment, replicaset, daemonset...)
+kubectl get all (-A)
+
+# Kubernetes Deployments, DaemonSets or Statefulset
+kubectl -n <namespace> get deploy,ds,statefulset
+
+# Kubernetes Nodes
+kubectl get nodes -o wide
+
+# Kubernetes Pods
+kubectl -n <namespace> get pods (-A) (-o wide)
+
+# Kubernetes Services
+kubectl -n <namespace> get services (-A) (-o wide)
+
+# Kubernetes Endpoints
+kubectl -n <namespace> get endpoints (-A) (-o wide)
+
+# Kubernetes ConfigMap
+kubectl -n <namespace> get configmap (-A) (-o wide)
+
+# Kubernetes Secrets
+kubectl -n <namespace> get secrets (-A) (-o wide)
+
+# Run a pod in the Cluster
+kubectl run -ti --generator=run-pod/v1 --image=<image> <pod_name>
+
+# Scale replicas
+kubectl scale <k8s_resource> <name> --replicas=N
+
+# Show Label on resources
+kubectl get <resource> --show-labels
+
+# Set label on resource
+kubectl label <resource> <resource_name> <label=value> --overwrite
+
+# Remove label on resource
+kubectl label <resource> <resource_name> <label>-
+
+# Drain Node
+kubectl drain <node_name> --force=true --delete-local-data=true --ignore-daemonsets=true --grace-period=0
+
+# Delete resource
+kubectl delete <resource> <resouce_name> (--force=true --grace-period=0)
+
+# Patch resource (change property)
+kubectl patch <resource> <resource_name> -p '{"spec":{"type": "NodePort"}}'
+
+# Re-run Jobs
+kubectl get job <job_name> -o json | \
+                jq 'del(.spec.selector)' | \
+                jq 'del(.spec.template.metadata.labels)' | \
+                kubectl replace --force -f -
+
+# Run Custom Shells on Kubernetes
+kubectl run prompt-shell --rm -i --tty --image centos:7 -- bash
+kubectl run prompt-shell --rm -i --tty --image fedora:29 -- bash
+kubectl run prompt-shell --rm -i --tty --image ubuntu:18.10 -- bash
+kubectl run prompt-shell --rm -i --tty --image alpine:3.8 -- sh
+kubectl run prompt-shell --rm -i --tty --image kalilinux/kali-linux-docker:latest -- bash
+
+# Generate Ingress TLS
+kubectl create secret tls "domain-tls" --key <privatekey> --cert <bundleCA> --dry-run -o yaml > domain-tls.yaml
