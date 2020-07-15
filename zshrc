@@ -16,7 +16,7 @@ HISTSIZE=1000
 SAVEHIST=1000
 
 # PATHS
-export PATH=$PATH:$HOME/bin:/usr/local/bin
+export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/.local/bin
 export MANPATH=$MANPATH:/usr/local/man
 export LANG=en_US.UTF-8
 
@@ -57,6 +57,7 @@ zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-history-substring-search", defer:3
 
+# Oh my ZSH
 zplug "plugins/git",  from:oh-my-zsh, as:plugin
 zplug "plugins/tig",  from:oh-my-zsh, as:plugin
 zplug "plugins/kubectl",  from:oh-my-zsh, as:plugin
@@ -64,6 +65,7 @@ zplug "plugins/docker",  from:oh-my-zsh, as:plugin
 zplug "plugins/minikube",  from:oh-my-zsh, as:plugin
 zplug "plugins/terraform",  from:oh-my-zsh, as:plugin
 zplug "plugins/z",  from:oh-my-zsh, as:plugin
+zplug "plugins/asdf", from:oh-my-zsh, as:plugin
 
 # Install packages that have not been installed yet
 if ! zplug check --verbose; then
@@ -93,3 +95,4 @@ complete -C "$HOME/bin/aws_completer" aws
 source /etc/bash_completion.d/azure-cli
 source /etc/bash_completion.d/gcloud
 source <(helm completion zsh)
+source $HOME/.asdf/asdf.sh && source $HOME/.asdf/completions/asdf.bash

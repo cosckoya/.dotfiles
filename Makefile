@@ -181,6 +181,11 @@ cheat:
 	ln -s -f ${DOTFILES}/cheats ${HOME}/.config/cheat/cheatsheets/personal
 	@echo "Cheat done!"
 
+asdf:
+	@echo "Installing ASDF" ;\
+	git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
+	@echo "ASDF done!"
+
 docker-compose:
 	@echo "Installing Docker compose" ;\
 	wget -q https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64 -O ${HOME}/bin/docker-compose ;\
