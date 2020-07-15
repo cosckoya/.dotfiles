@@ -90,4 +90,5 @@ zstyle ':vcs_info:*' enable git
 autoload -U +X bashcompinit && bashcompinit
 autoload -U +X compinit && compinit
 complete -C "$HOME/bin/aws_completer" aws
-
+source /etc/bash_completion.d/azure-cli
+source /etc/bash_completion.d/gcloud
