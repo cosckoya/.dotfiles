@@ -19,27 +19,11 @@
       ░    ░  ░         ░    ░  ░   ░           ░  ░            ░ ░     ░
 by Cosckoya
 ```
-
-INSTALL TOOLS
-
-Version as default
-```
-TERRAFORM_VERSION="0.12.28"
-HELM_VERSION="v3.2.4"
-KUBECTL_VERSION="v1.17.3"
-ANSIBLE_VERSION="2.9.10"
-```
-
-```bash
-make terraform TERRAFORM_VERSION="X.Y.Z"
-make helm HELM_VERSION="vX.Y.Z"
-make kubectl KUBECTL_VERSION="vX.Y.Z"
-make ansible ANSIBLE_VERSION="2.9.10"
-```
+Help: run `make help`
 
 <!-- START makefile-doc -->
 ```
-$ make help 
+$ make help
 Klaatu Barata Nitko!
 addons                         Install Addons: tig, asdf, cheat, docker-compose, asdf ...
 all                            Install Profile, IaC, Cloud and terminal addons
@@ -64,6 +48,6 @@ profile                        Install ZSH, TMUX and Vim/Neovim plugins and prof
 terraform                      Install Terraform. Set version with `make terraform TERRAFORM_VERSION="0.12.28"` (default version: 0.12.28)
 tig                            Install Tig
 tmux                           Install TMUX profile
-zsh                            Sets ZSH as default Shell, and install ZSH profile and zplug with plugins 
+zsh                            Sets ZSH as default Shell, and install ZSH profile and zplug with plugins
 ```
 <!-- END makefile-doc -->
