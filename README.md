@@ -23,8 +23,10 @@ Help: run `make help`
 
 <!-- START makefile-doc -->
 ```
-$ make help
+$ make help 
+
 Klaatu Barata Nitko!
+
 addons                         Install Addons: tig, asdf, cheat, docker-compose, asdf ...
 all                            Install Profile, IaC, Cloud and terminal addons
 ansible                        Install Pip3+Ansible. Set version with `make ansible ANSIBLE_VERSION="2.9.10"` (default version: 2.9.10)
@@ -48,6 +50,6 @@ profile                        Install ZSH, TMUX and Vim/Neovim plugins and prof
 terraform                      Install Terraform. Set version with `make terraform TERRAFORM_VERSION="0.12.28"` (default version: 0.12.28)
 tig                            Install Tig
 tmux                           Install TMUX profile
-zsh                            Sets ZSH as default Shell, and install ZSH profile and zplug with plugins
+zsh                            Sets ZSH as default Shell, and install ZSH profile and zplug with plugins 
 ```
 <!-- END makefile-doc -->

@@ -18,7 +18,9 @@ all: profile iac cloud addons ## Install Profile, IaC, Cloud and terminal addons
 .PHONY: help
 
 help: ## Shows this makefile help
+	@echo ""
 	@echo "Klaatu Barata Nitko!"
+	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 profile: zsh tmux neovim ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
