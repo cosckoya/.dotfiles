@@ -36,7 +36,7 @@ azure                          Install Azure Cli (az)
 bash                           Install Bash profile
 cheat                          Install cheat
 cloud                          Install AWS-Cli v2, Azure Cli and Google SDK
-dependencies                   Installs Linux package dependencies
+dependencies                   Install Linux package dependencies
 docker-compose                 Install docker-compose (default version: latest)
 git-secret                     Install git-secret
 google                         Install Google SDK (glcoud)

@@ -19,7 +19,7 @@ help: ## Shows this makefile help
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-dependencies: pip3 pre-commit ## Installs Linux package dependencies
+dependencies: pip3 pre-commit ## Install Linux package dependencies
 	@echo "Installing package dependencies" ;\
 	sudo bash -c "apt update -qq &&\
 		apt install -qq -y --no-install-recommends \
