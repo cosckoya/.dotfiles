@@ -47,6 +47,7 @@ kubectl                        Install Kubectl. Set version with `make kubectl K
 kubectx                        Install Kubectx and Kubens
 kubernetes                     Install Kubernetes tools: Kubectl, Helm and Kubectx
 neovim                         Install Vim/Neovim profile and vimplug plugins
+pre-commit                     Install Pre-Commit
 profile                        Install ZSH, TMUX and Vim/Neovim plugins and profiles
 terraform                      Install Terraform. Set version with `make terraform TERRAFORM_VERSION="0.12.28"` (default version: 0.12.28)
 tig                            Install Tig

@@ -19,9 +19,19 @@ help: ## Shows this makefile help
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-dependencies: ## Installs Linux package dependencies
+dependencies: pip3 pre-commit ## Installs Linux package dependencies
 	@echo "Installing package dependencies" ;\
-	sudo bash -c "apt update -qq && apt install -qq -y --no-install-recommends ca-certificates apt-transport-https lsb-release gnupg"
+	sudo bash -c "apt update -qq &&\
+		apt install -qq -y --no-install-recommends \
+		ca-certificates apt-transport-https lsb-release gnupg\
+		unzip" ;\
+
+pip3: ## Install Python Pip3
+	@echo "Installing Python Pip3" ;\
+	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py ;\
+	python3 get-pip.py --user ;\
+	rm get-pip.py ;\
+	ansible --version
 
 all: dependencies profile iac cloud addons ## Install Profile, IaC, Cloud and terminal addons
 	@echo "Setting up local environment"
@@ -74,10 +84,7 @@ tmux: ## Install TMUX profile
 
 ansible: ## Install Pip3+Ansible. Set version with `make ansible ANSIBLE_VERSION="2.9.10"` (default version: 2.9.10)
 	@echo "Setting up Ansible" ;\
-	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py ;\
-	python3 get-pip.py --user ;\
 	pip3 install --user ansible==${ANSIBLE_VERSION} ;\
-	rm get-pip.py ;\
 	ansible --version
 	@echo "Ansible done!"
 
@@ -130,6 +137,11 @@ google: ## Install Google SDK (glcoud)
 	@echo "GCloud SDK done!"
 
 # ADDONS
+
+pre-commit: ## Install Pre-Commit
+	@echo "Install Pre-Commit" ;\
+	pip3 install pre-commit --user ;\
+	pre-commit --version
 
 kubectx:  ## Install Kubectx and Kubens
 	@echo "Setting up Kubectx" ;\
