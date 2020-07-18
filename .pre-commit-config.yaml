@@ -1,0 +1,4 @@
+- repo: git://github.com/smian/pre-commit-makefile
+  sha: master
+  hooks:
+    - id: makefile-doc

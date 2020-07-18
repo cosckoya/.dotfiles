@@ -39,12 +39,14 @@ TERRAFORM_VERSION:="0.12.28"
 
 ###
 
-all: profile iac cloud addons
+all: profile iac cloud addons ## Install Profile, IaC, Cloud and terminal addons
 	@echo "Setting up local environment"
 
-info:
+.PHONY: help
+
+help:
 	@echo "Klaatu Barata Nitko!"
-	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 profile: zsh tmux neovim
 	@echo "Custom profile ready to rumble. Enjoy!"
@@ -61,7 +63,7 @@ kubernetes: kubectl kubectx helm
 cloud: aws azure google
 	@echo "Cloud tools enabled. Enjoy!"
 
-addons: tig git-secret cheat docker-compose
+addons: tig git-secret cheat docker-compose adsf
 	@echo "Shell Add-ons enabled. Enjoy!"
 
 ### PROFILE
@@ -104,7 +106,7 @@ ansible:
 terraform:
 	@echo "Setting up HashiCorp Terraform" ;\
 	wget -q https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -O terraform.zip ;\
-	unzip terraform.zip -d ${HOME}/bin ;\
+	unzip -o terraform.zip -d ${HOME}/bin ;\
 	rm terraform.zip ;\
 	terraform version
 	@echo "Terraform done!"
