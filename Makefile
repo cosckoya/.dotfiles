@@ -19,14 +19,14 @@ help: ## Shows this makefile help
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-dependencies: pip3 pre-commit ## Install Linux package dependencies
+dependencies: pip pre-commit ## Install Linux package dependencies
 	@echo "Installing package dependencies" ;\
 	sudo bash -c "apt update -qq &&\
 		apt install -qq -y --no-install-recommends \
 		ca-certificates apt-transport-https lsb-release gnupg\
 		unzip" ;\
 
-pip3: ## Install Python Pip3
+pip: ## Install Python Pip3
 	@echo "Installing Python Pip3" ;\
 	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py ;\
 	python3 get-pip.py --user ;\
