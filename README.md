@@ -27,7 +27,7 @@ $ make help
 
 Klaatu Barata Nitko!
 
-addons                         Install Addons: tig, asdf, cheat, docker-compose, asdf ...
+addons                         Install Addons: tig, asdf, cheat, docker-compose, asdf +More
 all                            Install Profile, IaC, Cloud and terminal addons
 ansible                        Install Pip3+Ansible. Set version with `make ansible ANSIBLE_VERSION="2.9.10"` (default version: 2.9.10)
 asdf                           Install asdf
@@ -36,6 +36,7 @@ azure                          Install Azure Cli (az)
 bash                           Install Bash profile
 cheat                          Install cheat
 cloud                          Install AWS-Cli v2, Azure Cli and Google SDK
+dependencies                   Installs Linux package dependencies
 docker-compose                 Install docker-compose (default version: latest)
 git-secret                     Install git-secret
 google                         Install Google SDK (glcoud)

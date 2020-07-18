@@ -12,16 +12,19 @@ HELM_VERSION:="v3.2.4"
 KUBECTL_VERSION:="v1.17.3"
 TERRAFORM_VERSION:="0.12.28"
 
-all: profile iac cloud addons ## Install Profile, IaC, Cloud and terminal addons
-	@echo "Setting up local environment"
-
 .PHONY: help
-
 help: ## Shows this makefile help
 	@echo ""
 	@echo "Klaatu Barata Nitko!"
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+dependencies: ## Installs Linux package dependencies
+	@echo "Installing package dependencies" ;\
+	sudo bash -c "apt update -qq && apt install -qq -y --no-install-recommends ca-certificates apt-transport-https lsb-release gnupg"
+
+all: dependencies profile iac cloud addons ## Install Profile, IaC, Cloud and terminal addons
+	@echo "Setting up local environment"
 
 profile: zsh tmux neovim ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
 	@echo "Custom profile ready to rumble. Enjoy!"
@@ -38,7 +41,7 @@ kubernetes: kubectl kubectx helm ## Install Kubernetes tools: Kubectl, Helm and 
 cloud: aws azure google ## Install AWS-Cli v2, Azure Cli and Google SDK
 	@echo "Cloud tools enabled. Enjoy!"
 
-addons: tig git-secret cheat docker-compose adsf ## Install Addons: tig, asdf, cheat, docker-compose, asdf ...
+addons: tig git-secret cheat docker-compose adsf ## Install Addons: tig, asdf, cheat, docker-compose, asdf +More
 	@echo "Shell Add-ons enabled. Enjoy!"
 
 # PROFILE
