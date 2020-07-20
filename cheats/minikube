@@ -1,0 +1,26 @@
+# REFERENCE
+https://minikube.sigs.k8s.io/
+https://kubernetes.io/docs/setup/learning-environment/minikube/
+
+# Minikube help
+minikube help
+minikube <command> --help
+
+# Minikube Lifecycle
+minikube (start|status|delete)
+
+# Set Minikube driver (defaults to auto-detect)
+# Driver is one of: virtualbox, vmwarefusion, kvm2, vmware, none, docker, podman (experimental)
+minikube start --driver=''
+
+# Set Minikube CNI: auto, bridge, calico, cilium, flannel, kindnet, or path to a CNI manifest (default: auto)
+minikube start --cni=''
+
+# Set Minikube runtime: docker, cri-o, containerd
+minikube start --container-runtime=''
+
+# Set Minikube custom compute resources
+minikube start --memory 2048 --cpus=2
+
+# Set Minikube Hyperkube version
+minikube start --kubernetes-version v1.11.0
