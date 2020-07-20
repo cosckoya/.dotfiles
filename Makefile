@@ -33,10 +33,7 @@ pip: ## Install Python Pip3
 	rm get-pip.py
 
 all: dependencies profile iac cloud addons ## Install Profile, IaC, Cloud and terminal addons
-	export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/bin:$HOME/.local/bin
-	echo $PATH
 	@echo "Setting up local environment"
-
 	
 profile: zsh tmux neovim ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
 	@echo "Custom profile ready to rumble. Enjoy!"
@@ -60,10 +57,12 @@ addons: tig git-secret cheat docker-compose adsf ## Install Addons: tig, asdf, c
 
 bash: ## Install Bash profile
 	@echo "Setting up BASH profile" ;\
+	export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/bin:$HOME/.local/bin ;\
 	ln -s -f ${DOTFILES}/bashrc ${HOME}/.bashrc
 
 zsh: ## Sets ZSH as default Shell, and install ZSH profile and zplug with plugins
 	@echo "Setting up ZSH profile" ;\
+	export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/bin:$HOME/.local/bin ;\
 	sudo sh -c "apt update -qq && apt install -qq -y --no-install-recommends zsh" ;\
 	sudo sh -c "usermod --shell /bin/zsh ${USER}" ;\
 	ln -s -f ${DOTFILES}/zshrc ${HOME}/.zshrc
