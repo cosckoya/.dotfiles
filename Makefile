@@ -151,14 +151,14 @@ kubectx:  ## Install Kubectx and Kubens
 
 tig: ## Install Tig
 	@echo "Installing Tig" ;\
-	sudo bash -c "apt update -qq && apt install -qq -y --no-install-recommends tig"
+	sudo sh -c "apt update -qq && apt install -qq -y --no-install-recommends tig"
 	@echo "Tig done!"
 
 git-secret: ## Install git-secret
 	@echo "Installing git-secret. See git-secret.io for more info" ;\
 	sudo sh -c "echo 'deb https://dl.bintray.com/sobolevn/deb git-secret main' > /etc/apt/sources.list.d/git-secret.list" ;\
 	wget -qO - https://api.bintray.com/users/sobolevn/keys/gpg/public.key | sudo apt-key add - ;\
-	sudo bash -c "apt-get update -qq && apt-get -qq -y --no-install-recommends git-secret"
+	sudo sh -c "apt-get update -qq && apt-get -qq -y --no-install-recommends git-secret"
 	@echo "git-secret done!"
 
 cheat: ## Install cheat
