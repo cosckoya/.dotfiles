@@ -139,8 +139,7 @@ google: ## Install Google SDK (glcoud)
 
 pre-commit: ## Install Pre-Commit
 	@echo "Install Pre-Commit" ;\
-	pip3 install pre-commit --user ;\
-	pre-commit --version
+	pip3 install pre-commit --user
 
 kubectx:  ## Install Kubectx and Kubens
 	@echo "Setting up Kubectx" ;\
