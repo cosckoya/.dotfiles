@@ -81,10 +81,12 @@ zplug load
 
 # Zstyle!
 autoload -Uz vcs_info
+autoload -U colors && colors
+autoload -U promptinit && promptinit
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-PROMPT="%m%{${fg_bold[magenta]}%} :Ж: %{$reset_color%}%{${fg[green]}%}%3~ \$vcs_info_msg_0_> "
+export PROMPT="%{${fg[green]}%}%m%{${fg[yellow]}%}の%{${fg[red]}%}%n %{${fg[blue]}%}%2~ \$vcs_info_msg_0_❯ "
 zstyle ':vcs_info:git:*' formats '%F{240}(%b)%r%f'
 zstyle ':vcs_info:*' enable git
 
