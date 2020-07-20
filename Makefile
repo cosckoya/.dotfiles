@@ -165,15 +165,16 @@ cheat: ## Install cheat
 	@echo "Installing Cheat" ;\
 	wget -q https://github.com/cheat/cheat/releases/latest/download/cheat-linux-amd64.gz ;\
 	gzip -dc < cheat-linux-amd64.gz > ${HOME}/bin/cheat ;\
-	rm cheat-linux-amd64.gz ;\
+	rm -rf cheat-linux-amd64.gz ${HOME}/.config/cheat ;\
 	chmod 755 ${HOME}/bin/cheat ;\
-	mkdir -p ~/.config/cheat/cheatsheets && cheat --init > ~/.config/cheat/conf.yml ;\
+	mkdir -p ${HOME}/.config/cheat/cheatsheets && cheat --init > ${HOME}/.config/cheat/conf.yml ;\
 	git clone https://github.com/cheat/cheatsheets.git ${HOME}/.config/cheat/cheatsheets/community ;\
 	ln -s -f ${DOTFILES}/cheats ${HOME}/.config/cheat/cheatsheets/personal
 	@echo "Cheat done!"
 
 asdf: ## Install asdf
 	@echo "Installing ASDF" ;\
+	rm -rf ${HOME}/.asdf ;\
 	git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
 	@echo "ASDF done!"
 
