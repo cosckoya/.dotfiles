@@ -58,6 +58,7 @@ kubectx                        Install Kubectx and Kubens
 kubernetes                     Install Kubernetes tools: Kubectl, Helm and Kubectx
 minikube                       Install Minikube
 minishift                      Install Minishift. Set version with `make minishift MINISHIFT_VERSION="1.34.2"` (default version: 1.34.2)
+minis                          Install Minikube and Minishift local kubernetes clusters
 neovim                         Install Vim/Neovim profile and vimplug plugins
 pip                            Install Python Pip3
 pre-commit                     Install Pre-Commit

@@ -1,7 +1,15 @@
+.ONESHELL:
+.SHELL := /bin/sh
+.PHONY: help
+.DEFAULT_GOAL := help
+CURRENT_FOLDER=$(shell basename "$$(pwd)")
+BOLD=$(shell tput bold)
+RED=$(shell tput setaf 1)
+RESET=$(shell tput sgr0)
+
 ## Global
 NAME=profile-generator
 VERSION=scratch
-SHELL=/bin/sh
 
 ## Paths
 DOTFILES=${HOME}/.dotfiles
@@ -13,7 +21,7 @@ KUBECTL_VERSION:="v1.17.3"
 TERRAFORM_VERSION:="0.12.28"
 MINISHIFT_VERSION:="1.34.2"
 
-.PHONY: help
+## Burn, baby, burn
 help: ## Shows this makefile help
 	@echo ""
 	@echo "Klaatu Barata Nitko!"
@@ -53,6 +61,9 @@ cloud: aws azure google ## Install AWS-Cli v2, Azure Cli and Google SDK
 
 addons: tig git-secret cheat docker-compose asdf ## Install Addons: tig, asdf, cheat, docker-compose, asdf +More
 	@echo "Shell Add-ons enabled. Enjoy!"
+
+minis: minikube minishift ## Install Minikube and Minishift local kubernetes clusters
+	@echo "Minis installed. Enjoy!"
 
 # PROFILE
 
