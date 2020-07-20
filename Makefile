@@ -30,7 +30,6 @@ pip: ## Install Python Pip3
 	@echo "Installing Python Pip3" ;\
 	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py ;\
 	python3 get-pip.py --user ;\
-	export PATH=${HOME}/.local/bin && echo ${PATH}
 	rm get-pip.py
 
 all: dependencies profile iac cloud addons ## Install Profile, IaC, Cloud and terminal addons
@@ -85,8 +84,8 @@ tmux: ## Install TMUX profile
 
 ansible: ## Install Pip3+Ansible. Set version with `make ansible ANSIBLE_VERSION="2.9.10"` (default version: 2.9.10)
 	@echo "Setting up Ansible" ;\
-	pip3 install --user ansible==${ANSIBLE_VERSION} ;\
-	ansible --version
+	${HOME}/.local/bin/pip3 install --user ansible==${ANSIBLE_VERSION} ;\
+	${HOME}/.local/bin/ansible --version
 	@echo "Ansible done!"
 
 terraform: ## Install Terraform. Set version with `make terraform TERRAFORM_VERSION="0.12.28"` (default version: 0.12.28)
@@ -141,7 +140,7 @@ google: ## Install Google SDK (glcoud)
 
 pre-commit: ## Install Pre-Commit
 	@echo "Install Pre-Commit" ;\
-	pip3 install pre-commit --user
+	${HOME}/.local/bin/pip3 install pre-commit --user
 
 kubectx:  ## Install Kubectx and Kubens
 	@echo "Setting up Kubectx" ;\
