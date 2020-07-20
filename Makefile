@@ -62,10 +62,10 @@ bash: ## Install Bash profile
 
 zsh: ## Sets ZSH as default Shell, and install ZSH profile and zplug with plugins
 	@echo "Setting up ZSH profile" ;\
-	export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/bin:$HOME/.local/bin ;\
 	sudo sh -c "apt update -qq && apt install -qq -y --no-install-recommends zsh" ;\
 	sudo sh -c "usermod --shell /bin/zsh ${USER}" ;\
-	ln -s -f ${DOTFILES}/zshrc ${HOME}/.zshrc
+	ln -s -f ${DOTFILES}/zshrc ${HOME}/.zshrc ;\
+	export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/bin:$HOME/.local/bin
 
 neovim: ## Install Vim/Neovim profile and vimplug plugins
 	@echo "Setting up NeoVIM" ;\
