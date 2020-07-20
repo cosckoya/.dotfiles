@@ -50,7 +50,7 @@ kubernetes: kubectl kubectx helm ## Install Kubernetes tools: Kubectl, Helm and 
 cloud: aws azure google ## Install AWS-Cli v2, Azure Cli and Google SDK
 	@echo "Cloud tools enabled. Enjoy!"
 
-addons: tig git-secret cheat docker-compose adsf ## Install Addons: tig, asdf, cheat, docker-compose, asdf +More
+addons: tig git-secret cheat docker-compose asdf ## Install Addons: tig, asdf, cheat, docker-compose, asdf +More
 	@echo "Shell Add-ons enabled. Enjoy!"
 
 # PROFILE
