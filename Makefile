@@ -33,8 +33,10 @@ pip: ## Install Python Pip3
 	rm get-pip.py
 
 all: dependencies profile iac cloud addons ## Install Profile, IaC, Cloud and terminal addons
-	@echo "Setting up local environment" ;\
 	export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/bin:$HOME/.local/bin
+	echo $PATH
+	@echo "Setting up local environment"
+
 	
 profile: zsh tmux neovim ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
 	@echo "Custom profile ready to rumble. Enjoy!"
