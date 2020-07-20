@@ -93,14 +93,14 @@ terraform: ## Install Terraform. Set version with `make terraform TERRAFORM_VERS
 	wget -q https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -O terraform.zip ;\
 	unzip -o terraform.zip -d ${HOME}/bin ;\
 	rm terraform.zip ;\
-	$HOME/bin/terraform version
+	${HOME}/bin/terraform version
 	@echo "Terraform done!"
 
 kubectl: ## Install Kubectl. Set version with `make kubectl KUBECTL_VERSION="v1.17.3"` (default version: v1.17.3)
 	@echo "Setting up Kubectl" ;\
 	wget -q https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl -O ${HOME}/bin/kubectl ;\
 	chmod u+x ${HOME}/bin/kubectl ;\
-	$HOME/bin/kubectl version --client=true --short=true
+	${HOME}/bin/kubectl version --client=true --short=true
 	@echo "Kubectl done!"
 
 helm: ## Install Helm. Set version with `make helm HELM_VERSION="v3.2.4"` (default version: v3.2.4)
@@ -108,7 +108,7 @@ helm: ## Install Helm. Set version with `make helm HELM_VERSION="v3.2.4"` (defau
 	wget -q https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz -O helm.tar.gz ;\
 	tar -xf helm.tar.gz --strip-components=1 -C ${HOME}/bin ;\
 	rm helm.tar.gz ${HOME}/bin/LICENSE ${HOME}/bin/README.md ;\
-	$HOME/bin/helm version --short
+	${HOME}/bin/helm version --short
 	@echo "Helm done!"
 
 # CLOUD
@@ -181,5 +181,5 @@ docker-compose: ## Install docker-compose (default version: latest)
 	@echo "Installing Docker compose" ;\
 	wget -q https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64 -O ${HOME}/bin/docker-compose ;\
 	chmod 755 ${HOME}/bin/docker-compose
-	$HOME/bin/docker-compose -v
+	${HOME}/bin/docker-compose -v
 	@echo "Docker compose done!"
