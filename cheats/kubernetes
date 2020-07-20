@@ -34,17 +34,30 @@ kubectl get <resource> --show-labels
 # Set label on resource
 kubectl label <resource> <resource_name> <label=value> --overwrite
 
+Sample: kubectl label nodes node{02,03,04}.my.cloud sysadmin.tck/role=worker --overwrite
+
 # Remove label on resource
 kubectl label <resource> <resource_name> <label>-
 
+# Taint Node
+kubectl taint nodes <node_name> node-role.kubernetes.io/master:NoSchedule-
+
 # Drain Node
 kubectl drain <node_name> --force=true --delete-local-data=true --ignore-daemonsets=true --grace-period=0
+
+# Uncordon Node
+kubectl uncordon <node_name>
 
 # Delete resource
 kubectl delete <resource> <resouce_name> (--force=true --grace-period=0)
 
 # Patch resource (change property)
-kubectl patch <resource> <resource_name> -p '{"spec":{"type": "NodePort"}}'
+kubectl patch <resource> <resource_name> -p '{"spec":{"<ATTR>": "<VALUE>"}}'
+
+Samples: 
+kubectl patch svc http-svc -p '{"spec":{"type": "NodePort"}}'
+kubectl patch svc http-svc -p '{"spec":{"type": "LoadBalancer"}}'
+kubectl patch svc http-svc -p '{"spec":{"type": "ClusterIP"}}'
 
 # Re-run Jobs
 kubectl get job <job_name> -o json | \
@@ -64,3 +77,27 @@ kubectl create secret tls "domain-tls" --key <privatekey> --cert <bundleCA> --dr
 
 # Check Compute Nodes allocation CPU and Memory
 kubectl describe nodes | grep -A7 ^Allocated
+
+# HACK
+## Show Pod RAW data from inside a pod
+curl --insecure https://10.0.0.211:10250/pods | jq
+
+## Show POD item data
+curl -s --insecure https://10.0.0.211:10250/pods | jq '.items[0]'
+
+## Show POD 'name' or 'namespace' data
+curl -s --insecure https://10.0.0.211:10250/pods | jq '.items[] | .metadata | {name,namespace}'
+
+## Show POD containers
+curl -s --insecure https://10.0.0.211:10250/pods | jq '.items[] | .spec.containers[] | .name'
+
+## Show POD volumeMounts
+curl -s --insecure https://10.0.0.211:10250/pods | jq '.items[] | .spec.containers[] | .volumeMounts[]'
+
+# Run Commands on Pod/Container
+curl --insecure https://10.0.0.211:10250/run/<NAMESPACE>/<POD>/<CONTAINER> -d "cmd=ls -l /etc/ssl/certs"
+
+
+
+
+

@@ -24,3 +24,6 @@ minikube start --memory 2048 --cpus=2
 
 # Set Minikube Hyperkube version
 minikube start --kubernetes-version v1.11.0
+
+# Show Minikube IP
+minikube ip

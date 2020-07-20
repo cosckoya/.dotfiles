@@ -1,0 +1,14 @@
+# Helm add repository
+helm repo add stable https://kubernetes-charts.storage.googleapis.com
+
+# Helm list repositories
+helm repo list
+
+# Helm remove repositories
+helm repo remove
+
+# Helm search chart on repositories
+helm search repo <chart>
+
+# Download Chart 
+helm fetch <chart> -d <path>

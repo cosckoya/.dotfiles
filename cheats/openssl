@@ -27,4 +27,7 @@ openssl pkcs12 -in <certificate>.<p12|pfx> -clcerts -nokeys | sed -ne '/-BEGIN C
 openssl pkcs12 -in <certificate>.<p12|pfx> -cacerts -nokeys -chain | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > <intermediateCA>
 
 # Check SSL on site
-openssl s_client -connect <url>:443
+openssl s_client -showcerts -servername <server_name> -connect www.schiller.edu:443
+
+# Check SSL on site: date
+echo | openssl s_client -showcerts -servername <server_name> -connect <url>:443 | openssl x509 -noout -dates
