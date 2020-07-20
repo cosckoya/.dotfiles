@@ -33,7 +33,7 @@ Help: run `make help`
 
 <!-- START makefile-doc -->
 ```
-$ make help
+$ make help 
 
 Klaatu Barata Nitko!
 
@@ -56,6 +56,8 @@ iac                            Install Pip3+Ansible, Terraform and Kubernetes to
 kubectl                        Install Kubectl. Set version with `make kubectl KUBECTL_VERSION="v1.17.3"` (default version: v1.17.3)
 kubectx                        Install Kubectx and Kubens
 kubernetes                     Install Kubernetes tools: Kubectl, Helm and Kubectx
+minikube                       Install Minikube
+minishift                      Install Minishift. Set version with `make minishift MINISHIFT_VERSION="1.34.2"` (default version: 1.34.2)
 neovim                         Install Vim/Neovim profile and vimplug plugins
 pip                            Install Python Pip3
 pre-commit                     Install Pre-Commit
@@ -63,6 +65,6 @@ profile                        Install ZSH, TMUX and Vim/Neovim plugins and prof
 terraform                      Install Terraform. Set version with `make terraform TERRAFORM_VERSION="0.12.28"` (default version: 0.12.28)
 tig                            Install Tig
 tmux                           Install TMUX profile
-zsh                            Sets ZSH as default Shell, and install ZSH profile and zplug with plugins
+zsh                            Sets ZSH as default Shell, and install ZSH profile and zplug with plugins 
 ```
 <!-- END makefile-doc -->

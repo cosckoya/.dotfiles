@@ -11,6 +11,7 @@ ANSIBLE_VERSION:="2.9.10"
 HELM_VERSION:="v3.2.4"
 KUBECTL_VERSION:="v1.17.3"
 TERRAFORM_VERSION:="0.12.28"
+MINISHIFT_VERSION:="1.34.2"
 
 .PHONY: help
 help: ## Shows this makefile help
@@ -34,7 +35,7 @@ pip: ## Install Python Pip3
 
 all: dependencies profile iac cloud addons ## Install Profile, IaC, Cloud and terminal addons
 	@echo "Setting up local environment"
-	
+
 profile: zsh tmux neovim ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
 	@echo "Custom profile ready to rumble. Enjoy!"
 
@@ -177,6 +178,19 @@ asdf: ## Install asdf
 	rm -rf ${HOME}/.asdf ;\
 	git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
 	@echo "ASDF done!"
+
+minikube: ## Install Minikube
+	@echo "Installing Minikube" ;\
+	wget -q https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64 -O ${HOME}/bin/minikube ;\
+	chmod 755 ${HOME}/bin/minikube
+	@echo "Minikube done!"
+
+minishift: ## Install Minishift. Set version with `make minishift MINISHIFT_VERSION="1.34.2"` (default version: 1.34.2)
+	@echo "Install Minishift" ;\
+	wget -q https://github.com/minishift/minishift/releases/latest/download/minishift-${MINISHIFT_VERSION}-linux-amd64.tgz -O minishift.tar.tgz ;\
+	tar -xf minishift.tar.tgz --strip-components=1 -C ${HOME}/bin ;\
+	rm minishift.tar.tgz ${HOME}/bin/README.adoc ${HOME}/bin/LICENSE
+	@echo "Minishift done!"
 
 docker-compose: ## Install docker-compose (default version: latest)
 	@echo "Installing Docker compose" ;\
