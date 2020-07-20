@@ -61,3 +61,6 @@ kubectl run prompt-shell --rm -i --tty --image kalilinux/kali-linux-docker:lates
 
 # Generate Ingress TLS
 kubectl create secret tls "domain-tls" --key <privatekey> --cert <bundleCA> --dry-run -o yaml > domain-tls.yaml
+
+# Check Compute Nodes allocation CPU and Memory
+kubectl describe nodes | grep -A7 ^Allocated
