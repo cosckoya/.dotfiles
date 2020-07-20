@@ -19,11 +19,21 @@
       ░    ░  ░         ░    ░  ░   ░           ░  ░            ░ ░     ░
 by Cosckoya
 ```
+# Requires the following debian / ubuntu packages
+
+```
+git
+make
+curl
+python3
+python3-distutils
+```
+
 Help: run `make help`
 
 <!-- START makefile-doc -->
 ```
-$ make help 
+$ make help
 
 Klaatu Barata Nitko!
 
@@ -53,6 +63,6 @@ profile                        Install ZSH, TMUX and Vim/Neovim plugins and prof
 terraform                      Install Terraform. Set version with `make terraform TERRAFORM_VERSION="0.12.28"` (default version: 0.12.28)
 tig                            Install Tig
 tmux                           Install TMUX profile
-zsh                            Sets ZSH as default Shell, and install ZSH profile and zplug with plugins 
+zsh                            Sets ZSH as default Shell, and install ZSH profile and zplug with plugins
 ```
 <!-- END makefile-doc -->
