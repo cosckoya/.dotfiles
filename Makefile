@@ -23,13 +23,14 @@ dependencies: pip pre-commit ## Install Linux package dependencies
 	@echo "Installing package dependencies" ;\
 	sudo bash -c "apt update -qq &&\
 		apt install -qq -y --no-install-recommends \
-		ca-certificates apt-transport-https lsb-release gnupg\
-		unzip" ;\
+		python3 python3-distutils curl wget unzip \
+		ca-certificates apt-transport-https lsb-release gnupg" ;\
 
 pip: ## Install Python Pip3
 	@echo "Installing Python Pip3" ;\
 	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py ;\
 	python3 get-pip.py --user ;\
+	export PATH=${HOME}/.local/bin && echo $PATH
 	rm get-pip.py
 
 all: dependencies profile iac cloud addons ## Install Profile, IaC, Cloud and terminal addons
