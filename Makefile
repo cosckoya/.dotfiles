@@ -23,7 +23,7 @@ dependencies: pip pre-commit ## Install Linux package dependencies
 	@echo "Installing package dependencies" ;\
 	sudo bash -c "apt update -qq &&\
 		apt install -qq -y --no-install-recommends \
-		python3 python3-distutils curl wget unzip \
+		wget unzip \
 		ca-certificates apt-transport-https lsb-release gnupg" ;\
 
 pip: ## Install Python Pip3
