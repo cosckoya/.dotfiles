@@ -1,5 +1,4 @@
 ```
-```
                    ,     ,  ._  ,
                  _.MMmm.mMm_Mm.MMm_:mMMmmm.._  .
             _ .-mmMMMMMMMMMMMMm:MMm:MMMMMMMMMm._
