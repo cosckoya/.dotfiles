@@ -61,6 +61,7 @@ zplug "zsh-users/zsh-history-substring-search", defer:3
 zplug "plugins/git",  from:oh-my-zsh, as:plugin
 zplug "plugins/tig",  from:oh-my-zsh, as:plugin
 zplug "plugins/kubectl",  from:oh-my-zsh, as:plugin
+zplug "plugins/helm",  from:oh-my-zsh, as:plugin
 zplug "plugins/docker",  from:oh-my-zsh, as:plugin
 zplug "plugins/minikube",  from:oh-my-zsh, as:plugin
 zplug "plugins/terraform",  from:oh-my-zsh, as:plugin
