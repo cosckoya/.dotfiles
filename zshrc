@@ -1,14 +1,3 @@
-# ▒███████▒  ██████  ██░ ██     ██▓███   ██▀███   ▒█████    █████▒██▓ ██▓    ▓█████
-# ▒ ▒ ▒ ▄▀░▒██    ▒ ▓██░ ██▒   ▓██░  ██▒▓██ ▒ ██▒▒██▒  ██▒▓██   ▒▓██▒▓██▒    ▓█   ▀
-# ░ ▒ ▄▀▒░ ░ ▓██▄   ▒██▀▀██░   ▓██░ ██▓▒▓██ ░▄█ ▒▒██░  ██▒▒████ ░▒██▒▒██░    ▒███
-#   ▄▀▒   ░  ▒   ██▒░▓█ ░██    ▒██▄█▓▒ ▒▒██▀▀█▄  ▒██   ██░░▓█▒  ░░██░▒██░    ▒▓█  ▄
-# ▒███████▒▒██████▒▒░▓█▒░██▓   ▒██▒ ░  ░░██▓ ▒██▒░ ████▓▒░░▒█░   ░██░░██████▒░▒████▒
-# ░▒▒ ▓░▒░▒▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒   ▒▓▒░ ░  ░░ ▒▓ ░▒▓░░ ▒░▒░▒░  ▒ ░   ░▓  ░ ▒░▓  ░░░ ▒░ ░
-# ░░▒ ▒ ░ ▒░ ░▒  ░ ░ ▒ ░▒░ ░   ░▒ ░       ░▒ ░ ▒░  ░ ▒ ▒░  ░      ▒ ░░ ░ ▒  ░ ░ ░  ░
-# ░ ░ ░ ░ ░░  ░  ░   ░  ░░ ░   ░░         ░░   ░ ░ ░ ░ ▒   ░ ░    ▒ ░  ░ ░      ░
-#   ░ ░          ░   ░  ░  ░               ░         ░ ░          ░      ░  ░   ░  ░
-# .zshrc by Cosckoya
-
 # History
 HIST_STAMPS="yyyy-mm-dd"
 HISTFILE=$HOME/.histfile
@@ -67,6 +56,9 @@ zplug "plugins/minikube",  from:oh-my-zsh, as:plugin
 zplug "plugins/terraform",  from:oh-my-zsh, as:plugin
 zplug "plugins/z",  from:oh-my-zsh, as:plugin
 zplug "plugins/asdf", from:oh-my-zsh, as:plugin
+
+# Themes
+#zplug "romkatv/powerlevel10k", as:theme, depth:1
 
 # Install packages that have not been installed yet
 if ! zplug check --verbose; then
