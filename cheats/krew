@@ -1,0 +1,14 @@
+# Update Krew plugins list
+kubectl krew update
+
+# Search plugin
+kubectl krew search
+
+# Install a plugin
+kubectl krew install doctor
+
+# Use plugin
+kubectl doctor
+
+# Uninstall a plugin
+kubectl krew uninstall doctor
