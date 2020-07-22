@@ -30,47 +30,47 @@ alias vi='nvim'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
-# ZPLUGINS
-## Check if zplug is installed
-if [[ ! -d ~/.zplug ]]; then
-  git clone https://github.com/zplug/zplug ~/.zplug
-  source ~/.zplug/init.zsh && zplug update --self
+# ZINIT
+# REF. https://github.com/zdharma/zinit
+## Check if zinit is installed
+if [[ ! -d ~/.zinit ]]; then
+  git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
 fi
 
-## Essential
-source ~/.zplug/init.zsh
+source ~/.zinit/bin/zinit.zsh
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
-## Plugins
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "zsh-users/zsh-history-substring-search", defer:3
+# zinit self-update
 
-# Oh my ZSH
-zplug "plugins/git",  from:oh-my-zsh, as:plugin
-zplug "plugins/tig",  from:oh-my-zsh, as:plugin
-zplug "plugins/kubectl",  from:oh-my-zsh, as:plugin
-zplug "plugins/helm",  from:oh-my-zsh, as:plugin
-zplug "plugins/docker",  from:oh-my-zsh, as:plugin
-zplug "plugins/minikube",  from:oh-my-zsh, as:plugin
-zplug "plugins/terraform",  from:oh-my-zsh, as:plugin
-zplug "plugins/z",  from:oh-my-zsh, as:plugin
-zplug "plugins/asdf", from:oh-my-zsh, as:plugin
+# ZINIT: Plugins
+zinit light zsh-users/zsh-autosuggestions
+#zinit light zsh-users/zsh-completions
+#zinit light zsh-users/zsh-syntax-highlighting
+#zinit light zsh-users/zsh-history-substring-search
+zinit light zdharma/fast-syntax-highlighting
+zinit load zdharma/history-search-multi-word
 
-# Themes
-#zplug "romkatv/powerlevel10k", as:theme, depth:1
+zinit for \
+    light-mode  zsh-users/zsh-autosuggestions \
+    light-mode  zdharma/fast-syntax-highlighting \
+                zdharma/history-search-multi-word \
+    light-mode pick"async.zsh" src"pure.zsh" \
+                sindresorhus/pure
 
-# Install packages that have not been installed yet
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    else
-        echo
-    fi
-fi
+zinit ice atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
+zinit light trapd00r/LS_COLORS
 
-zplug load
+# ZINIT: Snippets
+# Oh-my-zsh
+zinit snippet OMZ::plugins/git/git.plugin.zsh
+zinit snippet OMZ::plugins/tig/tig.plugin.zsh
+zinit snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
+zinit snippet OMZ::plugins/helm/helm.plugin.zsh
+zinit snippet OMZ::plugins/docker/_docker
+zinit snippet OMZ::plugins/minikube/minikube.plugin.zsh
+zinit snippet OMZ::plugins/terraform/terraform.plugin.zsh
+zinit snippet OMZ::plugins/asdf/asdf.plugin.zsh
 
 # Zstyle!
 autoload -Uz vcs_info
@@ -79,7 +79,7 @@ autoload -U promptinit && promptinit
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-export PROMPT="%{${fg[green]}%}%m%{${fg[yellow]}%}の%{${fg[red]}%}%n %{${fg[blue]}%}%2~ \$vcs_info_msg_0_❯ "
+PROMPT="%F{113}%m%F{227}の%F{197}%n %{$reset_color%}❯ "
 zstyle ':vcs_info:git:*' formats '%F{240}(%b)%r%f'
 zstyle ':vcs_info:*' enable git
 
