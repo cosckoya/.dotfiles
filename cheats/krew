@@ -1,3 +1,5 @@
+# Plugin Ref. https://github.com/kubernetes-sigs/krew-index/blob/master/plugins.md
+
 # Update Krew plugins list
 kubectl krew update
 
