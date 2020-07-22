@@ -5,7 +5,7 @@ HISTSIZE=1000
 SAVEHIST=1000
 
 # PATHS
-export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/.local/bin
+export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.krew/bin
 export MANPATH=$MANPATH:/usr/local/man
 export LANG=en_US.UTF-8
 

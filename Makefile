@@ -52,7 +52,7 @@ iac: ansible terraform kubernetes ## Install Pip3+Ansible, Terraform and Kuberne
 	chmod 755 -R ${HOME}/bin
 	@echo "Toolbox ready to be used. Enjoy!"
 
-kubernetes: kubectl kubectx helm ## Install Kubernetes tools: Kubectl, Helm and Kubectx
+kubernetes: kubectl kubectx helm krew ## Install Kubernetes tools: Kubectl, Helm, Krew and Kubectl
 	chmod 755 -R ${HOME}/bin
 	@echo "Kubernetes tools enabled. Enjoy!"
 
@@ -153,6 +153,15 @@ google: ## Install Google SDK (glcoud)
 pre-commit: ## Install Pre-Commit
 	@echo "Install Pre-Commit" ;\
 	${HOME}/.local/bin/pip3 install pre-commit --user
+
+krew: ## Install Krew: Kubectl plugin manager
+	@echo "Istall Krew" ;\
+	curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.{tar.gz,yaml}" ;\
+	tar zxvf krew.tar.gz ;\
+	./krew-linux_amd64 install --manifest=krew.yaml --archive=krew.tar.gz ;\
+	./krew-linux_amd64 update ;\
+	rm krew* LICENSE
+	@echo "Krew done!"
 
 kubectx:  ## Install Kubectx and Kubens
 	@echo "Setting up Kubectx" ;\

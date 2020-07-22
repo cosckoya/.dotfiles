@@ -94,9 +94,10 @@ google                         Install Google SDK (glcoud)
 helm                           Install Helm. Set version with `make helm HELM_VERSION="v3.2.4"` (default version: v3.2.4)
 help                           Shows this makefile help
 iac                            Install Pip3+Ansible, Terraform and Kubernetes tools
+krew                           Install Krew: Kubectl plugin manager
 kubectl                        Install Kubectl. Set version with `make kubectl KUBECTL_VERSION="v1.17.3"` (default version: v1.17.3)
 kubectx                        Install Kubectx and Kubens
-kubernetes                     Install Kubernetes tools: Kubectl, Helm and Kubectx
+kubernetes                     Install Kubernetes tools: Kubectl, Helm, Krew and Kubectl
 minikube                       Install Minikube
 minishift                      Install Minishift. Set version with `make minishift MINISHIFT_VERSION="1.34.2"` (default version: 1.34.2)
 minis                          Install Minikube and Minishift local kubernetes clusters
