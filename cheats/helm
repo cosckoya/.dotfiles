@@ -10,5 +10,12 @@ helm repo remove
 # Helm search chart on repositories
 helm search repo <chart>
 
-# Download Chart 
+# Download Chart
 helm fetch <chart> -d <path>
+helm pull <chart>
+
+# Install Chart
+helm install <custom> <chart> (-f values.yaml)
+
+# Install Chart with Attributes
+helm install <custom> <chart> -f values.yaml --namespace <namespace> --create-namespace
