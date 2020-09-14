@@ -20,7 +20,7 @@ HELM_VERSION:="v3.2.4"
 KUBECTL_VERSION:="v1.17.3"
 MINISHIFT_VERSION:="1.34.2"
 #TERRAFORM_VERSION:="0.12.28"
-TERRAFORM_VERSION:="0.13.0"
+TERRAFORM_VERSION:="0.13.2"
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
