@@ -91,6 +91,7 @@ dependencies                   Install Linux package dependencies
 docker-compose                 Install docker-compose (default version: latest)
 git-secret                     Install git-secret
 google                         Install Google SDK (glcoud)
+hadolint                       Install Hadolint
 helm                           Install Helm. Set version with `make helm HELM_VERSION="v3.2.4"` (default version: v3.2.4)
 help                           Shows this makefile help
 iac                            Install Pip3+Ansible, Terraform and Kubernetes tools

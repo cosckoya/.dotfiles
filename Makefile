@@ -60,7 +60,7 @@ kubernetes: kubectl kubectx helm krew ## Install Kubernetes tools: Kubectl, Helm
 cloud: aws azure google ## Install AWS-Cli v2, Azure Cli and Google SDK
 	@echo "Cloud tools enabled. Enjoy!"
 
-addons: tig git-secret cheat docker-compose asdf ## Install Addons: tig, asdf, cheat, docker-compose, asdf +More
+addons: tig git-secret cheat docker-compose asdf hadolint ## Install Addons: tig, asdf, cheat, docker-compose, asdf +More
 	@echo "Shell Add-ons enabled. Enjoy!"
 
 minis: minikube minishift ## Install Minikube and Minishift local kubernetes clusters
@@ -199,6 +199,12 @@ asdf: ## Install asdf
 	rm -rf ${HOME}/.asdf ;\
 	git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
 	@echo "ASDF done!"
+
+hadolint: ## Install Hadolint
+	@echo "Installing Hadolint" ;\
+  wget https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64 -O ${HOME}/bin/hadolint ;\
+  chmod u+x ${HOME}/bin/hadolint
+	@echo "Hadolint done!"
 
 minikube: ## Install Minikube
 	@echo "Installing Minikube" ;\
