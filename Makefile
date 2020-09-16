@@ -228,6 +228,6 @@ docker-compose: ## Install docker-compose (default version: latest)
 
 kind: ## Install Kind (Kubernetes on docker)
 	@echo "Installing Kind" ;\
-	curl -Lo ./kind "https://kind.sigs.k8s.io/dl/latest/kind-$(uname)-amd64" -O ${HOME}/bin/kind ;\
+	wget -q "https://kind.sigs.k8s.io/dl/latest/kind-$(uname)-amd64" -O ${HOME}/bin/kind ;\
 	chmod u+x ${HOME}/bin/kind
 	@echo "Kind done!"
