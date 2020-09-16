@@ -53,7 +53,7 @@ iac: ansible terraform kubernetes ## Install Pip3+Ansible, Terraform and Kuberne
 	chmod 755 -R ${HOME}/bin
 	@echo "Toolbox ready to be used. Enjoy!"
 
-kubernetes: kubectl kubectx helm krew ## Install Kubernetes tools: Kubectl, Helm, Krew and Kubectl
+kubernetes: kubectl kubectx helm krew kind ## Install Kubernetes tools: Kubectl, Helm, Krew, Kind and Kubectl
 	chmod 755 -R ${HOME}/bin
 	@echo "Kubernetes tools enabled. Enjoy!"
 
@@ -225,3 +225,9 @@ docker-compose: ## Install docker-compose (default version: latest)
 	chmod 755 ${HOME}/bin/docker-compose
 	${HOME}/bin/docker-compose -v
 	@echo "Docker compose done!"
+
+kind: ## Install Kind (Kubernetes on docker)
+	@echo "Installing Kind" ;\
+	curl -Lo ./kind "https://kind.sigs.k8s.io/dl/latest/kind-$(uname)-amd64" -O ${HOME}/bin/kind ;\
+	chmod u+x ${HOME}/bin/kind
+	@echo "Kind done!"
