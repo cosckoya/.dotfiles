@@ -241,3 +241,10 @@ tflint: ## Install / Updrade TFLint util
 	rm tflint_linux_amd64.zip ;\
 	${HOME}/bin/tflint --version
 	@echo "Terraform TFLint installed"
+
+tfdocs: ## Install / Updated Terraform-docs
+	@echo "Installing terraform-docs" ;\
+	wget -q https://github.com/terraform-docs/terraform-docs/releases/latest/download/terraform-docs-v0.10.1-linux-amd64 -O ${HOME}/bin/terraform-docs ;\
+	chmod u+x ${HOME}/bin/terraform-docs ;\
+	${HOME}/bin/terraform-docs --version
+	@echo "Terraform terraform-docs installed"
