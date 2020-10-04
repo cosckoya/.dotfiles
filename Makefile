@@ -65,6 +65,9 @@ addons: tig git-secret cheat docker-compose asdf hadolint ## Install Addons: tig
 minis: minikube minishift ## Install Minikube and Minishift local kubernetes clusters
 	@echo "Minis installed. Enjoy!"
 
+tftools: tflint tfdocs tfsec ## Install Terraform local tools: tflint, terraform-docs and
+	@echo "Installing / upgrading Terraform tools"
+
 # PROFILE
 
 bash: ## Install Bash profile

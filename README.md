@@ -111,6 +111,7 @@ terraform                      Install Terraform. Set version with `make terrafo
 tfdocs                         Install / Updated Terraform-docs
 tflint                         Install / Updrade TFLint util
 tfsec                          Install / Updated tfsec: Terraform Security Compliance
+tftools                        Install Terraform local tools: tflint, terraform-docs and
 tig                            Install Tig
 tmux                           Install TMUX profile
 zsh                            Sets ZSH as default Shell, and install ZSH profile and zplug with plugins 
