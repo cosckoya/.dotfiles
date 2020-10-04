@@ -1,10 +1,10 @@
 repos:
-- repo: https://github.com/smian/pre-commit-makefile.git
+- repo: git://github.com/smian/pre-commit-makefile
   rev: master
   hooks:
     - id: makefile-doc
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v3.2.0
+  rev: v2.4.0
   hooks:
   - id: check-merge-conflict
   - id: end-of-file-fixer

@@ -62,16 +62,23 @@ Linux Profile by Cosckoya
 ```
 # Requires the following debian / ubuntu packages
 
-```
-git
-make
-curl
-python3
-python3-distutils
-```
+Run on command line:
 
-Help: run `make help`
-
+```bash
+sudo apt install -y git \
+              make \
+              curl \
+              python3 \
+              python3-distutils
+```
+Help:
+```bash
+make help
+```
+# To install all the basic profile settings just run:
+```bash
+make all
+```
 <!-- START makefile-doc -->
 ```
 $ make help 

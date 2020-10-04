@@ -55,5 +55,3 @@ jour­nalctl -o export
 
 # Formats entries as JSON data struct­ures, in multiple lines in order to make them more readable by humans.
 jour­nalctl -o json-p­retty
-
-
