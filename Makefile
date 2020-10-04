@@ -19,7 +19,7 @@ ANSIBLE_VERSION:="2.9.10"
 HELM_VERSION:="v3.2.4"
 KUBECTL_VERSION:="v1.17.3"
 MINISHIFT_VERSION:="1.34.2"
-TERRAFORM_VERSION:="0.13.3"
+TERRAFORM_VERSION:="0.13.4"
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
@@ -230,3 +230,14 @@ kind: ## Install Kind (Kubernetes on docker)
 	wget -q https://storage.googleapis.com/k8s-staging-kind/latest/kind-linux-amd64 -O ${HOME}/bin/kind ;\
 	chmod u+x ${HOME}/bin/kind
 	@echo "Kind done!"
+
+# Terraform command line addons
+
+tflint: ## Install / Updrade TFLint util
+	@echo "Installing Terraform Linter: tflint" ;\
+	wget -q https://github.com/terraform-linters/tflint/releases/latest/download/tflint_linux_amd64.zip ;\
+	unzip tflint_linux_amd64.zip ;\
+	mv tflint ${HOME}/bin ;\
+	rm tflint_linux_amd64.zip ;\
+	${HOME}/bin/tflint --version
+	@echo "Terraform TFLint installed"

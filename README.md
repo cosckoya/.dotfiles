@@ -108,6 +108,7 @@ pip                            Install Python Pip3
 pre-commit                     Install Pre-Commit
 profile                        Install ZSH, TMUX and Vim/Neovim plugins and profiles
 terraform                      Install Terraform. Set version with `make terraform TERRAFORM_VERSION="0.12.28"` (default version: 0.12.28)
+tflint                         Install / Updrade TFLint util
 tig                            Install Tig
 tmux                           Install TMUX profile
 zsh                            Sets ZSH as default Shell, and install ZSH profile and zplug with plugins 
