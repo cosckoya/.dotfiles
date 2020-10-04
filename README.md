@@ -110,6 +110,7 @@ profile                        Install ZSH, TMUX and Vim/Neovim plugins and prof
 terraform                      Install Terraform. Set version with `make terraform TERRAFORM_VERSION="0.12.28"` (default version: 0.12.28)
 tfdocs                         Install / Updated Terraform-docs
 tflint                         Install / Updrade TFLint util
+tfsec                          Install / Updated tfsec: Terraform Security Compliance
 tig                            Install Tig
 tmux                           Install TMUX profile
 zsh                            Sets ZSH as default Shell, and install ZSH profile and zplug with plugins 
