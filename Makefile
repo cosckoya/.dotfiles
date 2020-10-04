@@ -248,3 +248,10 @@ tfdocs: ## Install / Updated Terraform-docs
 	chmod u+x ${HOME}/bin/terraform-docs ;\
 	${HOME}/bin/terraform-docs --version
 	@echo "Terraform terraform-docs installed"
+
+tfsec: ## Install / Updated tfsec: Terraform Security Compliance
+	@echo "Installing TFSec" ;\
+	wget -q https://github.com/liamg/tfsec/releases/latest/download/tfsec-linux-amd64 -O ${HOME}/bin/tfsec ;\
+	chmod u+x ${HOME}/bin/tfsec ;\
+	${HOME}/bin/tfsec--version
+	@echo "Terraform tfsec installed"
