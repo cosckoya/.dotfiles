@@ -96,6 +96,7 @@ cheat                          Install cheat
 cloud                          Install AWS-Cli v2, Azure Cli and Google SDK
 dependencies                   Install Linux package dependencies
 docker-compose                 Install docker-compose (default version: latest)
+gh-cli                         Install Github Cli
 git-secret                     Install git-secret
 google                         Install Google SDK (glcoud)
 hadolint                       Install Hadolint

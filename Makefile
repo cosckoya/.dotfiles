@@ -59,7 +59,7 @@ kubernetes: kubectl kubectx helm krew kind ## Install Kubernetes tools: Kubectl,
 cloud: aws azure google ## Install AWS-Cli v2, Azure Cli and Google SDK
 	@echo "Cloud tools enabled. Enjoy!"
 
-addons: tig git-secret cheat docker-compose asdf hadolint ## Install Addons: tig, asdf, cheat, docker-compose, asdf +More
+addons: gh-cli tig git-secret cheat docker-compose asdf hadolint ## Install Addons: tig, asdf, cheat, docker-compose, asdf +More
 	@echo "Shell Add-ons enabled. Enjoy!"
 
 minis: minikube minishift ## Install Minikube and Minishift local kubernetes clusters
@@ -152,6 +152,13 @@ google: ## Install Google SDK (glcoud)
 	@echo "GCloud SDK done!"
 
 # ADDONS
+
+gh-cli: ## Install Github Cli
+	@echo "Install Github Cli" ;\
+	wget https://github.com/cli/cli/releases/latest/download/gh_1.0.0_linux_amd64.deb ;\
+	sudo bash -c "apt update -qq && apt install -qq -y ./gh_1.0.0_linux_amd64.deb -f" ;\
+    rm gh_1.0.0_linux_amd64.deb
+	@echo "Github cli installed!"
 
 pre-commit: ## Install Pre-Commit
 	@echo "Install Pre-Commit" ;\
