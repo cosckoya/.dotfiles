@@ -155,7 +155,7 @@ google: ## Install Google SDK (glcoud)
 
 gh-cli: ## Install Github Cli
 	@echo "Install Github Cli" ;\
-	wget https://github.com/cli/cli/releases/latest/download/gh_1.0.0_linux_amd64.deb ;\
+	wget https://github.com/cli/cli/releases/download/v1.1.0/gh_1.1.0_linux_amd64.deb ;\
 	sudo bash -c "apt update -qq && apt install -qq -y ./gh_1.0.0_linux_amd64.deb -f" ;\
     rm gh_1.0.0_linux_amd64.deb
 	@echo "Github cli installed!"
