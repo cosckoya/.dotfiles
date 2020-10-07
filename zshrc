@@ -8,6 +8,7 @@ SAVEHIST=1000
 export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.krew/bin
 export MANPATH=$MANPATH:/usr/local/man
 export LANG=en_US.UTF-8
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 ## GOLANG
 if [ -d "$GOPATH" ]; then

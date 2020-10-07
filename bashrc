@@ -1,6 +1,7 @@
 ## .bashrc file
 
 export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 # HISTORY #
 HISTCONTROL=ignoreboth
