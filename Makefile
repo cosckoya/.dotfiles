@@ -137,7 +137,7 @@ azure: ## Install Azure Cli (az)
 aws: ## Install Amazon AWS-Cli v2 (aws)
 	@echo "Installing AWS Cli"
 	curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" ;\
-	unzip awscliv2.zip ;\
+	unzip -qq awscliv2.zip ;\
 	sudo ./aws/install -i ${HOME}/.config/aws-cli -b ${HOME}/bin --update ;\
 	sudo chown -R ${USER}: ${HOME}/bin ${HOME}/.config/aws-cli ;\
 	rm -rf ./aws awscliv2.zip ;\
