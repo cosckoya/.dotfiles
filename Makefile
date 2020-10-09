@@ -256,7 +256,8 @@ minishift: ## Install Minishift. Set version with `make minishift MINISHIFT_VERS
 kind: ## Install Kind (Kubernetes on docker)
 	@echo "Installing Kind" ;\
 	wget -q https://storage.googleapis.com/k8s-staging-kind/latest/kind-linux-amd64 -O ${HOME}/bin/kind ;\
-	chmod u+x ${HOME}/bin/kind
+	chmod u+x ${HOME}/bin/kind ;\
+	${HOME}/bin/kind version
 	@echo "Kind done!"
 
 # Terraform command line addons
