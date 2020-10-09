@@ -100,16 +100,17 @@ gh-cli                         Install Github Cli
 git-secret                     Install git-secret
 google                         Install Google SDK (glcoud)
 hadolint                       Install Hadolint
-helm                           Install Helm. Set version with `make helm HELM_VERSION="v3.2.4"` (default version: v3.2.4)
+helm                           Install Helm. Set version with `make helm HELM_VERSION="v3.3.0"` (default version: v3.3.0)
+helm-repo                      Add Helm repositories
 help                           Shows this makefile help
 iac                            Install Pip3+Ansible, Terraform and Kubernetes tools
 kind                           Install Kind (Kubernetes on docker)
 krew                           Install Krew: Kubectl plugin manager
 kubectl                        Install Kubectl. Set version with `make kubectl KUBECTL_VERSION="v1.17.3"` (default version: v1.17.3)
 kubectx                        Install Kubectx and Kubens
-kubernetes                     Install Kubernetes tools: Kubectl, Helm, Krew, Kind and Kubectl
+kubernetes                     Install Kubernetes tools: Kubectl & Helm
 minikube                       Install Minikube
-minishift                      Install Minishift. Set version with `make minishift MINISHIFT_VERSION="1.34.2"` (default version: 1.34.2)
+minishift                      Install Minishift. Set version with `make minishift MINISHIFT_VERSION="1.34.3"` (default version: 1.34.3)
 minis                          Install Minikube and Minishift local kubernetes clusters
 neovim                         Install Vim/Neovim profile and vimplug plugins
 pip                            Install Python Pip3
