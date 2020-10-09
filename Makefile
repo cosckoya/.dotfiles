@@ -16,7 +16,7 @@ DOTFILES=${HOME}/.dotfiles
 
 ## Versions
 ANSIBLE_VERSION:="2.9.10"
-HELM_VERSION:="v3.2.4"
+HELM_VERSION:="v3.3.0"
 KUBECTL_VERSION:="v1.17.3"
 MINISHIFT_VERSION:="1.34.2"
 TERRAFORM_VERSION:="0.13.4"
@@ -28,12 +28,17 @@ help: ## Shows this makefile help
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+all: dependencies profile iac cloud addons ## Install Profile, IaC, Cloud and terminal addons
+	@echo "Setting up local environment"
+
+
+## Basic Tools like Python3-Pip, Pre-commit or Profile settings
 dependencies: pip pre-commit ## Install Linux package dependencies
 	@echo "Installing package dependencies" ;\
 	sudo bash -c "apt update -qq &&\
-		apt install -qq -y --no-install-recommends \
-		wget unzip \
-		ca-certificates apt-transport-https lsb-release gnupg" ;\
+	apt install -qq -y --no-install-recommends \
+	wget unzip \
+	ca-certificates apt-transport-https lsb-release gnupg" ;\
 
 pip: ## Install Python Pip3
 	@echo "Installing Python Pip3" ;\
@@ -41,35 +46,39 @@ pip: ## Install Python Pip3
 	python3 get-pip.py --user ;\
 	rm get-pip.py
 
-all: dependencies profile iac cloud addons ## Install Profile, IaC, Cloud and terminal addons
-	@echo "Setting up local environment"
+pre-commit: ## Install Pre-Commit
+	@echo "Install Pre-Commit" ;\
+	${HOME}/.local/bin/pip3 install pre-commit --user
 
+## Basic Environment
 profile: zsh tmux neovim ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
 	@echo "Custom profile ready to rumble. Enjoy!"
 
+addons: gh-cli tig git-secret cheat docker-compose asdf hadolint ## Install Addons: tig, asdf, cheat, docker-compose, asdf +More
+	@echo "Shell Add-ons enabled. Enjoy!"
+
+## Tools by type
 iac: ansible terraform kubernetes ## Install Pip3+Ansible, Terraform and Kubernetes tools
 	sudo chown -R ${USER}: ${HOME}/bin ;\
 	chmod 755 -R ${HOME}/bin
 	@echo "Toolbox ready to be used. Enjoy!"
 
-kubernetes: kubectl kubectx helm krew kind ## Install Kubernetes tools: Kubectl, Helm, Krew, Kind and Kubectl
+kubernetes: kubectl kubectx helm helm-repo krew ## Install Kubernetes tools: Kubectl & Helm
 	chmod 755 -R ${HOME}/bin
 	@echo "Kubernetes tools enabled. Enjoy!"
 
 cloud: aws azure google ## Install AWS-Cli v2, Azure Cli and Google SDK
 	@echo "Cloud tools enabled. Enjoy!"
 
-addons: gh-cli tig git-secret cheat docker-compose asdf hadolint ## Install Addons: tig, asdf, cheat, docker-compose, asdf +More
-	@echo "Shell Add-ons enabled. Enjoy!"
-
-minis: minikube minishift ## Install Minikube and Minishift local kubernetes clusters
+minis: minikube minishift kind ## Install Minikube and Minishift local kubernetes clusters
 	@echo "Minis installed. Enjoy!"
 
 tftools: tflint tfdocs tfsec ## Install Terraform local tools: tflint, terraform-docs and
 	@echo "Installing / upgrading Terraform tools"
 
-# PROFILE
+## ---
 
+## Profile
 bash: ## Install Bash profile
 	@echo "Setting up BASH profile" ;\
 	export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/bin:$HOME/.local/bin ;\
@@ -95,8 +104,7 @@ tmux: ## Install TMUX profile
 	wget -q https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf -O ${HOME}/.tmux.conf ;\
 	ln -s -f ${DOTFILES}/tmux.local ${HOME}/.tmux.conf.local
 
-# TOOLS
-
+## IaC
 ansible: ## Install Pip3+Ansible. Set version with `make ansible ANSIBLE_VERSION="2.9.10"` (default version: 2.9.10)
 	@echo "Setting up Ansible" ;\
 	${HOME}/.local/bin/pip3 install --user ansible==${ANSIBLE_VERSION} ;\
@@ -111,6 +119,7 @@ terraform: ## Install Terraform. Set version with `make terraform TERRAFORM_VERS
 	${HOME}/bin/terraform version
 	@echo "Terraform done!"
 
+## Kubernetes
 kubectl: ## Install Kubectl. Set version with `make kubectl KUBECTL_VERSION="v1.17.3"` (default version: v1.17.3)
 	@echo "Setting up Kubectl" ;\
 	wget -q https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl -O ${HOME}/bin/kubectl ;\
@@ -118,7 +127,23 @@ kubectl: ## Install Kubectl. Set version with `make kubectl KUBECTL_VERSION="v1.
 	${HOME}/bin/kubectl version --client=true --short=true
 	@echo "Kubectl done!"
 
-helm: ## Install Helm. Set version with `make helm HELM_VERSION="v3.2.4"` (default version: v3.2.4)
+krew: ## Install Krew: Kubectl plugin manager
+	@echo "Istall Krew" ;\
+	curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.{tar.gz,yaml}" ;\
+	tar zxvf krew.tar.gz ;\
+	./krew-linux_amd64 install --manifest=krew.yaml --archive=krew.tar.gz ;\
+	./krew-linux_amd64 update ;\
+	rm krew* LICENSE
+	@echo "Krew done!"
+
+kubectx:  ## Install Kubectx and Kubens
+	@echo "Setting up Kubectx" ;\
+	wget -q https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx -O ${HOME}/bin/kubectx ;\
+	wget -q https://raw.githubusercontent.com/ahmetb/kubectx/master/kubens -O ${HOME}/bin/kubens ;\
+	chmod u+x ${HOME}/bin/kube*
+	@echo "Kubectx and Kubens done!"
+
+helm: ## Install Helm. Set version with `make helm HELM_VERSION="v3.3.0"` (default version: v3.3.0)
 	@echo "Setting up Helm" ;\
 	wget -q https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz -O helm.tar.gz ;\
 	tar -xf helm.tar.gz --strip-components=1 -C ${HOME}/bin ;\
@@ -126,8 +151,20 @@ helm: ## Install Helm. Set version with `make helm HELM_VERSION="v3.2.4"` (defau
 	${HOME}/bin/helm version --short
 	@echo "Helm done!"
 
-# CLOUD
-
+helm-repo: ## Add Helm repositories
+	@echo "Adding & updating some helm repositories:" ;\
+	echo "Adding Kubernetes Charts" ;\
+	${HOME}/bin/helm repo add stable https://kubernetes-charts.storage.googleapis.com ;\
+	${HOME}/bin/helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com ;\
+	echo "Adding Nginx Charts" ;\
+	${HOME}/bin/helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx ;\
+	${HOME}/bin/helm repo update ;\
+	echo ""
+	${HOME}/bin/helm repo list
+	echo ""
+	@echo "Helm repositories succesfully added"
+	
+## Cloud Cli
 azure: ## Install Azure Cli (az)
 	@echo "Installing Azure Cli" ;\
 	curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash ;\
@@ -151,34 +188,20 @@ google: ## Install Google SDK (glcoud)
 	sudo sh -c "apt update -qq && apt install -qq -y --no-install-recommends google-cloud-sdk"
 	@echo "GCloud SDK done!"
 
-# ADDONS
-
+## Addons
+docker-compose: ## Install docker-compose (default version: latest)
+	@echo "Installing Docker compose" ;\
+	wget -q https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64 -O ${HOME}/bin/docker-compose ;\
+	chmod 755 ${HOME}/bin/docker-compose
+	${HOME}/bin/docker-compose -v
+	@echo "Docker compose done!"
+	
 gh-cli: ## Install Github Cli
 	@echo "Install Github Cli" ;\
 	wget https://github.com/cli/cli/releases/download/v1.1.0/gh_1.1.0_linux_amd64.deb ;\
 	sudo bash -c "dpkg -i ./gh_1.1.0_linux_amd64.deb" ;\
-  rm gh_1.1.0_linux_amd64.deb
+	rm gh_1.1.0_linux_amd64.deb
 	@echo "Github cli installed!"
-
-pre-commit: ## Install Pre-Commit
-	@echo "Install Pre-Commit" ;\
-	${HOME}/.local/bin/pip3 install pre-commit --user
-
-krew: ## Install Krew: Kubectl plugin manager
-	@echo "Istall Krew" ;\
-	curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.{tar.gz,yaml}" ;\
-	tar zxvf krew.tar.gz ;\
-	./krew-linux_amd64 install --manifest=krew.yaml --archive=krew.tar.gz ;\
-	./krew-linux_amd64 update ;\
-	rm krew* LICENSE
-	@echo "Krew done!"
-
-kubectx:  ## Install Kubectx and Kubens
-	@echo "Setting up Kubectx" ;\
-	wget -q https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx -O ${HOME}/bin/kubectx ;\
-	wget -q https://raw.githubusercontent.com/ahmetb/kubectx/master/kubens -O ${HOME}/bin/kubens ;\
-	chmod u+x ${HOME}/bin/kube*
-	@echo "Kubectx and Kubens done!"
 
 tig: ## Install Tig
 	@echo "Installing Tig" ;\
@@ -211,29 +234,24 @@ asdf: ## Install asdf
 
 hadolint: ## Install Hadolint
 	@echo "Installing Hadolint" ;\
-  wget https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64 -O ${HOME}/bin/hadolint ;\
-  chmod u+x ${HOME}/bin/hadolint
+	wget https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64 -O ${HOME}/bin/hadolint ;\
+	chmod u+x ${HOME}/bin/hadolint
 	@echo "Hadolint done!"
 
+## Minis
 minikube: ## Install Minikube
 	@echo "Installing Minikube" ;\
 	wget -q https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64 -O ${HOME}/bin/minikube ;\
 	chmod 755 ${HOME}/bin/minikube
 	@echo "Minikube done!"
 
-minishift: ## Install Minishift. Set version with `make minishift MINISHIFT_VERSION="1.34.2"` (default version: 1.34.2)
+minishift: ## Install Minishift. Set version with `make minishift MINISHIFT_VERSION="1.34.3"` (default version: 1.34.3)
 	@echo "Install Minishift" ;\
-	wget -q https://github.com/minishift/minishift/releases/latest/download/minishift-${MINISHIFT_VERSION}-linux-amd64.tgz -O minishift.tar.tgz ;\
-	tar -xf minishift.tar.tgz --strip-components=1 -C ${HOME}/bin ;\
-	rm minishift.tar.tgz ${HOME}/bin/README.adoc ${HOME}/bin/LICENSE
+	wget -q https://github.com/minishift/minishift/releases/download/v${MINISHIFT_VERSION}/minishift-${MINISHIFT_VERSION}-linux-amd64.tgz -O minishift.tgz ;\
+	tar -xf minishift.tgz  --strip-components=1 -C ${HOME}/bin ;\
+	rm minishift.tgz ${HOME}/bin/README.adoc ${HOME}/bin/LICENSE ;\
+	${HOME}/bin/minishift version
 	@echo "Minishift done!"
-
-docker-compose: ## Install docker-compose (default version: latest)
-	@echo "Installing Docker compose" ;\
-	wget -q https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64 -O ${HOME}/bin/docker-compose ;\
-	chmod 755 ${HOME}/bin/docker-compose
-	${HOME}/bin/docker-compose -v
-	@echo "Docker compose done!"
 
 kind: ## Install Kind (Kubernetes on docker)
 	@echo "Installing Kind" ;\
@@ -242,7 +260,6 @@ kind: ## Install Kind (Kubernetes on docker)
 	@echo "Kind done!"
 
 # Terraform command line addons
-
 tflint: ## Install / Updrade TFLint util
 	@echo "Installing Terraform Linter: tflint" ;\
 	wget -q https://github.com/terraform-linters/tflint/releases/latest/download/tflint_linux_amd64.zip ;\
