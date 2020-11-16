@@ -19,7 +19,7 @@ ANSIBLE_VERSION:="2.9.10"
 HELM_VERSION:="v3.3.0"
 KUBECTL_VERSION:="v1.17.3"
 MINISHIFT_VERSION:="1.34.2"
-TERRAFORM_VERSION:="0.13.4"
+TERRAFORM_VERSION:="0.13.5"
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
@@ -37,7 +37,7 @@ dependencies: pip pre-commit ## Install Linux package dependencies
 	@echo "Installing package dependencies" ;\
 	sudo bash -c "apt update -qq &&\
 	apt install -qq -y --no-install-recommends \
-	wget unzip \
+	wget unzip nmap \
 	ca-certificates apt-transport-https lsb-release gnupg" ;\
 
 pip: ## Install Python Pip3
@@ -163,7 +163,7 @@ helm-repo: ## Add Helm repositories
 	${HOME}/bin/helm repo list
 	echo ""
 	@echo "Helm repositories succesfully added"
-	
+
 ## Cloud Cli
 azure: ## Install Azure Cli (az)
 	@echo "Installing Azure Cli" ;\
@@ -195,7 +195,7 @@ docker-compose: ## Install docker-compose (default version: latest)
 	chmod 755 ${HOME}/bin/docker-compose
 	${HOME}/bin/docker-compose -v
 	@echo "Docker compose done!"
-	
+
 gh-cli: ## Install Github Cli
 	@echo "Install Github Cli" ;\
 	wget https://github.com/cli/cli/releases/download/v1.1.0/gh_1.1.0_linux_amd64.deb ;\
