@@ -17,6 +17,9 @@ elif [[ $commands[go] ]]; then
   export PATH="$(go env GOPATH)/bin:$PATH"
 fi
 
+# TMUX
+if [ "$TMUX" = "" ]; then tmux; fi
+
 # EDITOR
 export VISUAL='vi'
 
