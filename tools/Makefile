@@ -31,8 +31,9 @@ help: ## Shows this makefile help
 all: dependencies profile iac cloud addons ## Install Profile, IaC, Cloud and terminal addons
 	@echo "Setting up local environment"
 
+
 ## Basic Tools like Python3-Pip, Pre-commit or Profile settings
-dependencies: pip ## Install Linux package dependencies
+dependencies: pip pre-commit ## Install Linux package dependencies
 	@echo "Installing package dependencies" ;\
 	sudo bash -c "apt update -qq &&\
 	apt install -qq -y --no-install-recommends \
@@ -45,10 +46,13 @@ pip: ## Install Python Pip3
 	python3 get-pip.py --user ;\
 	rm get-pip.py
 
+pre-commit: ## Install Pre-Commit
+	@echo "Install Pre-Commit" ;\
+	${HOME}/.local/bin/pip3 install pre-commit --user
+
 ## Basic Environment
-profile: dependencies ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
-	${MAKE} all -C profile
-	@echo "Local profile setted up. Enjoy!"
+profile: zsh tmux neovim ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
+	@echo "Custom profile ready to rumble. Enjoy!"
 
 addons: gh-cli tig git-secret cheat docker-compose asdf hadolint ## Install Addons: tig, asdf, cheat, docker-compose, asdf +More
 	@echo "Shell Add-ons enabled. Enjoy!"
@@ -71,6 +75,34 @@ minis: minikube minishift kind ## Install Minikube and Minishift local kubernete
 
 tftools: tflint tfdocs tfsec ## Install Terraform local tools: tflint, terraform-docs and
 	@echo "Installing / upgrading Terraform tools"
+
+## ---
+
+## Profile
+bash: ## Install Bash profile
+	@echo "Setting up BASH profile" ;\
+	export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/bin:$HOME/.local/bin ;\
+	ln -s -f ${DOTFILES}/bashrc ${HOME}/.bashrc
+
+zsh: ## Sets ZSH as default Shell, and install ZSH profile and zplug with plugins
+	@echo "Setting up ZSH profile" ;\
+	sudo sh -c "apt update -qq && apt install -qq -y --no-install-recommends zsh" ;\
+	sudo sh -c "usermod --shell /bin/zsh ${USER}" ;\
+	ln -s -f ${DOTFILES}/zshrc ${HOME}/.zshrc
+
+neovim: ## Install Vim/Neovim profile and vimplug plugins
+	@echo "Setting up NeoVIM" ;\
+	sudo bash -c "apt update -qq && apt install -qq -y --no-install-recommends neovim vim" ;\
+	mkdir -p ~/.config/nvim ;\
+	ln -s -f ${DOTFILES}/vimrc ${HOME}/.config/nvim/init.vim ;\
+	ln -s -f ${DOTFILES}/vimrc ${HOME}/.vimrc
+	@echo "Vim & NeoVim done!"
+
+tmux: ## Install TMUX profile
+	@echo "Setting up TMUX" ;\
+	sudo bash -c "apt update -qq && apt install -qq -y --no-install-recommends tmux" ;\
+	wget -q https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf -O ${HOME}/.tmux.conf ;\
+	ln -s -f ${DOTFILES}/tmux.local ${HOME}/.tmux.conf.local
 
 ## IaC
 ansible: ## Install Pip3+Ansible. Set version with `make ansible ANSIBLE_VERSION="2.9.10"` (default version: 2.9.10)
