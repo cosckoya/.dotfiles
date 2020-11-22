@@ -24,16 +24,16 @@ help: ## Shows this makefile help
 all: dependencies profile cloud container tools ## Install everything
 
 profile: ## Install ZSH, Tmux and Neovim profiles
-	$(MAKE) all -C ${DOTFILES}/profile
+	$(MAKE) all -C profile
 
 cloud: ## Install AWS, Azure Cli and Google cli-tools
-	$(MAKE) all -C ${DOTFILES}/cloud
+	$(MAKE) all -C cloud
 
 container: ## Install Docker & Kubernetes tools
-	$(MAKE) all -C ${DOTFILES}/container
+	$(MAKE) all -C container
 
 tools: ## Install tools
-	$(MAKE) all -C ${DOTFILES}/tools
+	$(MAKE) all -C tools
 
 ## Main tasks
 dependencies: pip ## Install Linux package dependencies
