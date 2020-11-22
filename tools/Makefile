@@ -54,7 +54,7 @@ terraform: ## Install Terraform. Set version with `make terraform TERRAFORM_VERS
 	rm terraform.zip ;\
 	${HOME}/bin/terraform version
 	@echo "Terraform done!"
-	
+
 tflint: ## Install / Updrade TFLint util
 	@echo "Installing Terraform Linter: tflint" ;\
 	wget -q https://github.com/terraform-linters/tflint/releases/latest/download/tflint_linux_amd64.zip ;\
@@ -85,13 +85,13 @@ pre-commit: ## Install Pre-Commit
 
 tig: ## Install Tig
 	@echo "Installing Tig" ;\
-	sudo sh -c "apt update -qq && apt install -qq -y --no-install-recommends tig"
+	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends tig"
 	@echo "Tig done!"
 
 gh-cli: ## Install Github Cli
 	@echo "Install Github Cli" ;\
 	curl --silent "https://api.github.com/repos/cli/cli/releases/latest" | jq -r '.assets[].browser_download_url' | grep linux_amd64.deb | xargs wget ;\
-	sudo bash -c "apt-get install -f ./*.deb" ;\
+	sudo sh -c "apt-get install -f ./*.deb" ;\
 	rm *.deb* ;\
 	gh version
 	@echo "Github cli installed!"

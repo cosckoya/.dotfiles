@@ -95,7 +95,7 @@ docker-compose: ## Install Docker-compose
 dive: ## Install Dive
 	@echo "Installing Dive" ;\
 	curl --silent "https://api.github.com/repos/wagoodman/dive/releases/latest" | jq -r '.assets[].browser_download_url' | grep deb | xargs wget -q - ;\
-  sudo bash -c "apt install -f ./*.deb" ;\
+	sudo sh -c "apt-get install -f ./*.deb" ;\
 	rm *.deb* ;\
 	dive version
 	@echo "Dive Installed"
