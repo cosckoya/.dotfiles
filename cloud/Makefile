@@ -46,5 +46,5 @@ google: ## Install Google SDK (glcoud)
 	@echo "Installing Google SDK" ;\
 	sudo sh -c "echo 'deb https://packages.cloud.google.com/apt cloud-sdk main' > /etc/apt/sources.list.d/google-cloud-sdk.list" ;\
 	curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - ;\
-	sudo sh -c "apt update -qq && apt install -qq -y --no-install-recommends google-cloud-sdk"
+	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends google-cloud-sdk"
 	@echo "GCloud SDK done!"

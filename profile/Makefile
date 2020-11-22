@@ -35,19 +35,19 @@ bash: ## Install Bash profile
 
 zsh: ## Sets ZSH as default Shell, and install ZSH profile and zplug with plugins
 	@echo "Setting up ZSH profile" ;\
-	sudo sh -c "apt update -qq && apt install -qq -y --no-install-recommends zsh" ;\
+	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends zsh" ;\
 	sudo sh -c "usermod --shell /bin/zsh ${USER}" ;\
 	ln -s -f ${PROFILE}/zshrc ${HOME}/.zshrc
 
 neovim: ## Install Vim/Neovim profile and vimplug plugins
 	@echo "Setting up NeoVIM" ;\
-	sudo bash -c "apt update -qq && apt install -qq -y --no-install-recommends neovim vim" ;\
+	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends neovim vim" ;\
 	mkdir -p ~/.config/nvim ;\
 	ln -s -f ${PROFILE}/vimrc ${HOME}/.config/nvim/init.vim ;\
 	ln -s -f ${PROFILE}/vimrc ${HOME}/.vimrc
 
 tmux: ## Install TMUX profile
 	@echo "Setting up TMUX" ;\
-	sudo bash -c "apt update -qq && apt install -qq -y --no-install-recommends tmux" ;\
+	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends tmux" ;\
 	wget -q https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf -O ${HOME}/.tmux.conf ;\
 	ln -s -f ${PROFILE}/tmux.local ${HOME}/.tmux.conf.local
