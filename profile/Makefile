@@ -45,7 +45,6 @@ neovim: ## Install Vim/Neovim profile and vimplug plugins
 	mkdir -p ~/.config/nvim ;\
 	ln -s -f ${PROFILE}/vimrc ${HOME}/.config/nvim/init.vim ;\
 	ln -s -f ${PROFILE}/vimrc ${HOME}/.vimrc
-	@echo "Vim & NeoVim done!"
 
 tmux: ## Install TMUX profile
 	@echo "Setting up TMUX" ;\

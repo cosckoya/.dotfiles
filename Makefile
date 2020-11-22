@@ -1,7 +1,7 @@
 .ONESHELL:
-.SHELL := /bin/sh
-.PHONY: help
-.DEFAULT_GOAL := help
+.SHELL:=/bin/sh
+.PHONY: help all profile cloud container tools
+.DEFAULT_GOAL:=help
 CURRENT_FOLDER=$(shell basename "$$(pwd)")
 BOLD=$(shell tput bold)
 RED=$(shell tput setaf 1)
@@ -22,26 +22,25 @@ help: ## Shows this makefile help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 all: dependencies profile cloud container tools ## Install everything
-	@echo "Setting up local environment"
 
-profile: ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
-	${MAKE}  all -C profile
-	
+profile: ## Install ZSH, Tmux and Neovim profiles
+	$(MAKE) all -C ${DOTFILES}/profile
+
 cloud: ## Install AWS, Azure Cli and Google cli-tools
-	${MAKE} all -C cloud
+	$(MAKE) all -C ${DOTFILES}/cloud
 
 container: ## Install Docker & Kubernetes tools
-	${MAKE} all -C container
+	$(MAKE) all -C ${DOTFILES}/container
 
 tools: ## Install tools
-	${MAKE} all -C tools
+	$(MAKE) all -C ${DOTFILES}/tools
 
-## Basic Tools like Python3-Pip, Pre-commit or Profile settings
+## Main tasks
 dependencies: pip ## Install Linux package dependencies
 	@echo "Installing package dependencies" ;\
-	sudo bash -c "apt update -qq &&\
+	sudo sh -c "apt update -qq &&\
 	apt install -qq -y --no-install-recommends \
-	wget unzip nmap jq curl tree\
+	wget unzip nmap jq curl tree \
 	ca-certificates apt-transport-https lsb-release gnupg" ;\
 
 pip: ## Install Python Pip3
