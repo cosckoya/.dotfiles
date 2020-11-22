@@ -23,7 +23,7 @@ help: ## Shows this makefile help
 
 all: nmapautomator ## Install everything
 	@echo "Installing Security tools" ;\
-	chmod 755 -R ${HOME}
+	chmod 755 -R ${HOME}/bin
 
 nmapautomator: ## Install nmapAutomator script (requieres Nmap dependency)
 	wget https://raw.githubusercontent.com/21y4d/nmapAutomator/master/nmapAutomator.sh -O ${HOME}/bin/nmapautomator
