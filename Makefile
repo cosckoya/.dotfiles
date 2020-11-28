@@ -62,4 +62,3 @@ docker: ## Install Docker CE
 	@echo "Installing Docker CE" ;\
 	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - ;\
 	sudo sh -c "echo 'deb [arch=amd64] https://download.docker.com/linux/$$(lsb_release -is | tr A-Z a-z) $$(lsb_release -cs) stable' > /etc/apt/sources.list.d/docker-ce.list" ;\
-

@@ -85,44 +85,15 @@ $ make help
 
 Klaatu Barata Nitko!
 
-addons                         Install Addons: tig, asdf, cheat, docker-compose, asdf +More
-all                            Install Profile, IaC, Cloud and terminal addons
-ansible                        Install Pip3+Ansible. Set version with `make ansible ANSIBLE_VERSION="2.9.10"` (default version: 2.9.10)
-asdf                           Install asdf
-aws                            Install Amazon AWS-Cli v2 (aws)
-azure                          Install Azure Cli (az)
-bash                           Install Bash profile
-cheat                          Install cheat
-cloud                          Install AWS-Cli v2, Azure Cli and Google SDK
+all                            Install everything
+cloud                          Install AWS, Azure Cli and Google cli-tools
+container                      Install Docker & Kubernetes tools
 dependencies                   Install Linux package dependencies
-docker-compose                 Install docker-compose (default version: latest)
-gh-cli                         Install Github Cli
-git-secret                     Install git-secret
-google                         Install Google SDK (glcoud)
-hadolint                       Install Hadolint
-helm                           Install Helm. Set version with `make helm HELM_VERSION="v3.3.0"` (default version: v3.3.0)
-helm-repo                      Add Helm repositories
+docker                         Install Docker CE
 help                           Shows this makefile help
-iac                            Install Pip3+Ansible, Terraform and Kubernetes tools
-kind                           Install Kind (Kubernetes on docker)
-krew                           Install Krew: Kubectl plugin manager
-kubectl                        Install Kubectl. Set version with `make kubectl KUBECTL_VERSION="v1.17.3"` (default version: v1.17.3)
-kubectx                        Install Kubectx and Kubens
-kubernetes                     Install Kubernetes tools: Kubectl & Helm
-minikube                       Install Minikube
-minishift                      Install Minishift. Set version with `make minishift MINISHIFT_VERSION="1.34.3"` (default version: 1.34.3)
-minis                          Install Minikube and Minishift local kubernetes clusters
-neovim                         Install Vim/Neovim profile and vimplug plugins
+nodejs                         Install NodeJS with Yarn and NPM
 pip                            Install Python Pip3
-pre-commit                     Install Pre-Commit
-profile                        Install ZSH, TMUX and Vim/Neovim plugins and profiles
-terraform                      Install Terraform. Set version with `make terraform TERRAFORM_VERSION="0.12.28"` (default version: 0.12.28)
-tfdocs                         Install / Updated Terraform-docs
-tflint                         Install / Updrade TFLint util
-tfsec                          Install / Updated tfsec: Terraform Security Compliance
-tftools                        Install Terraform local tools: tflint, terraform-docs and
-tig                            Install Tig
-tmux                           Install TMUX profile
-zsh                            Sets ZSH as default Shell, and install ZSH profile and zplug with plugins 
+profile                        Install ZSH, Tmux and Neovim profiles
+tools                          Install tools 
 ```
 <!-- END makefile-doc -->
