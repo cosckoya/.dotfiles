@@ -89,7 +89,7 @@ precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 PROMPT="%F{113}%m%F{227}の%F{197}%n %{$reset_color%}❯ "
-# の ✯ ☭ ツ ㅎ
+# の ✯ ☭ ツ ㅎ Æ
 # 魔(demon) 亀 (Kame) 武(Wu) 悟 (Go)
 zstyle ':vcs_info:git:*' formats '%F{240}(%b)%r%f'
 zstyle ':vcs_info:*' enable git
