@@ -1,2 +1,2 @@
 # Terraform Autocomplete
-complete -o nospace -C /home/cosckoya/bin/terraform terraform
+complete -o nospace -C $(which terraform) terraform
