@@ -1,8 +1,8 @@
 # History
 HIST_STAMPS="yyyy-mm-dd"
 HISTFILE=$HOME/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 
 # PATHS
 export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.krew/bin
@@ -89,6 +89,8 @@ precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 PROMPT="%F{113}%m%F{227}の%F{197}%n %{$reset_color%}❯ "
+# の ✯ ☭ ツ ㅎ
+# 魔(demon) 亀 (Kame) 武(Wu) 悟 (Go)
 zstyle ':vcs_info:git:*' formats '%F{240}(%b)%r%f'
 zstyle ':vcs_info:*' enable git
 
