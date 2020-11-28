@@ -29,6 +29,7 @@ all: azure aws google ## Install cloud tools
 azure: ## Install Azure Cli (az)
 	@echo "Installing Azure Cli" ;\
 	curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash ;\
+	ln -s -f ${CLOUD}/azure.zsh ${HOME}/.zsh.d/azure.zsh ;\
 	az version
 	@echo "Azure Cli done!"
 
@@ -39,6 +40,7 @@ aws: ## Install Amazon AWS-Cli v2 (aws)
 	sudo ./aws/install -i ${HOME}/.config/aws-cli -b ${HOME}/bin --update ;\
 	sudo chown -R ${USER}: ${HOME}/bin ${HOME}/.config/aws-cli ;\
 	rm -rf ./aws awscliv2.zip ;\
+	ln -s -f ${CLOUD}/aws.zsh ${HOME}/.zsh.d/aws.zsh ;\
 	${HOME}/bin/aws --version
 	@echo "AWS cli done!"
 
@@ -46,5 +48,7 @@ google: ## Install Google SDK (glcoud)
 	@echo "Installing Google SDK" ;\
 	sudo sh -c "echo 'deb https://packages.cloud.google.com/apt cloud-sdk main' > /etc/apt/sources.list.d/google-cloud-sdk.list" ;\
 	curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - ;\
-	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends google-cloud-sdk"
+	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends google-cloud-sdk" ;\
+	ln -s -f ${CLOUD}/gcp.zsh ${HOME}/.zsh.d/gcp.zsh ;\
+	gcloud version
 	@echo "GCloud SDK done!"

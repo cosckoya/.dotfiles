@@ -37,6 +37,7 @@ zsh: ## Sets ZSH as default Shell, and install ZSH profile and zplug with plugin
 	@echo "Setting up ZSH profile" ;\
 	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends zsh" ;\
 	sudo sh -c "usermod --shell /bin/zsh ${USER}" ;\
+	mkdir -p ${HOME}/.zsh.d ;\
 	ln -s -f ${PROFILE}/zshrc ${HOME}/.zshrc
 
 neovim: ## Install Vim/Neovim profile and vimplug plugins

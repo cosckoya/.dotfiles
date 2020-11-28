@@ -10,6 +10,11 @@ export MANPATH=$MANPATH:/usr/local/man
 export LANG=en_US.UTF-8
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
+## Common
+if [ -d ~/zsh.d ]; then
+  source ~/.zsh.d/*.zsh
+fi
+
 ## GOLANG
 if [ -d "$GOPATH" ]; then
   export PATH="$GOPATH/bin:$PATH"
@@ -90,8 +95,3 @@ zstyle ':vcs_info:*' enable git
 # AUTOCOMPLETE
 autoload -U +X bashcompinit && bashcompinit
 autoload -U +X compinit && compinit
-complete -C "$HOME/bin/aws_completer" aws
-source /etc/bash_completion.d/azure-cli
-source /etc/bash_completion.d/gcloud
-source <(helm completion zsh)
-source $HOME/.asdf/asdf.sh && source $HOME/.asdf/completions/asdf.bash

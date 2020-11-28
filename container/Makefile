@@ -113,6 +113,7 @@ minishift: ## Install Minishift
 	curl --silent "https://api.github.com/repos/minishift/minishift/releases/latest" | jq -r '.assets[].browser_download_url' | grep linux-amd64.tgz | xargs wget ;\
 	tar -xf minishift*.tgz --strip-components=1 -C ${HOME}/bin ;\
 	rm *.tgz* ${HOME}/bin/README.adoc ${HOME}/bin/LICENSE ;\
+	ln -s -f ${CONTAINER}/helm.zsh ${HOME}/.zsh.d/helm.zsh ;\
 	${HOME}/bin/minishift version
 	@echo "Minishift done!"
 
