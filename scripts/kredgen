@@ -1,0 +1,48 @@
+#!/bin/bash
+# Create kubeconfig credentials with pre-defined RBAC policies
+
+while getopts :u:n: opt; do
+  case $opt in
+    u)
+      user="${OPTARG}"
+      ;;
+    n)
+      namespace="${OPTARG}"
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      ;;
+  esac
+done
+
+
+
+/usr/local/bin/kubectl create namespace $user
+/usr/local/bin/kubectl -n $namespace create sa $user
+# ROLES: cluster-admin, admin, edit, view
+/usr/local/bin/kubectl -n $namespace create clusterrolebinding $user --clusterrole view --serviceaccount=$namespace:$user
+/usr/local/bin/kubectl -n $namespace create rolebinding $user --clusterrole admin --serviceaccount=$namespace:$user
+
+secret=`/usr/local/bin/kubectl -n $namespace get sa $user -o json | jq -r .secrets[].name`
+/usr/local/bin/kubectl -n $namespace get secret $secret -o json | jq -r '.data["ca.crt"]' | base64 -d > ca.crt
+token=`/usr/local/bin/kubectl -n $namespace get secret ${secret} -o json | jq -r '.data["token"]' | base64 -d`
+cluster_name=`/usr/local/bin/kubectl config view -o json | jq -r .clusters[].name`
+endpoint=`/usr/local/bin/kubectl config view -o json | jq -r .clusters[].cluster.server`
+
+KUBECONFIG=k8s-${user}-conf /usr/local/bin/kubectl config set-cluster ${cluster_name} \
+    --embed-certs=true \
+    --server=${endpoint} \
+    --certificate-authority=./ca.crt
+
+KUBECONFIG=k8s-${user}-conf /usr/local/bin/kubectl config set-credentials ${user} --token=${token}
+
+KUBECONFIG=k8s-${user}-conf /usr/local/bin/kubectl config set-context ${user} \
+    --cluster=${cluster_name} \
+    --namespace=${namespace} \
+    --user=${user}
+
+KUBECONFIG=k8s-${user}-conf /usr/local/bin/kubectl config use-context ${user}
+
+# Delete rootCA & Rename Kubeconfig file
+rm ca.crt
+mv k8s-$(user)-conf kubeconfig.$namespace.$user
