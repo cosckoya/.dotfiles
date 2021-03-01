@@ -1,10 +1,9 @@
 
-# Windows & Pane Creation 
+# Windows & Pane Creation
 tmux_conf_new_window_retain_current_path=false
 tmux_conf_new_pane_retain_current_path=true
 tmux_conf_new_pane_reconnect_ssh=false
 tmux_conf_new_session_prompt=false
-
 
 # Display
 tmux_conf_theme_24b_colour=false

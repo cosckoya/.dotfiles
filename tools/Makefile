@@ -52,7 +52,7 @@ terraform: ## Install Terraform. Set version with `make terraform TERRAFORM_VERS
 	wget -q https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -O terraform.zip ;\
 	unzip -o terraform.zip -d ${HOME}/bin ;\
 	rm terraform.zip ;\
-	ln -s -f ${TOOLS}/terraform.zsh ${HOME}/.zsh.d/terraform.zsh ;\	
+	ln -s -f ${TOOLS}/terraform.zsh ${HOME}/.zsh.d/terraform.zsh ;\
 	${HOME}/bin/terraform version
 	@echo "Terraform done!"
 
