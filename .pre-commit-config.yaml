@@ -2,7 +2,7 @@ repos:
 - repo: https://github.com/smian/pre-commit-makefile.git
   rev: master
   hooks:
-    - id: makefile-doc
+  - id: makefile-doc
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: master
   hooks:
