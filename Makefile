@@ -1,6 +1,6 @@
 .ONESHELL:
 .SHELL:=/bin/sh
-.PHONY: help all profile cloud container tools
+.PHONY: help all profile tools cloud container iac
 .DEFAULT_GOAL:=help
 CURRENT_FOLDER=$(shell basename "$$(pwd)")
 BOLD=$(shell tput bold)
@@ -21,19 +21,22 @@ help: ## Shows this makefile help
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-all: dependencies profile cloud container tools ## Install everything
+all: dependencies profile tools cloud container iac ## Install everything
 
 profile: ## Install ZSH, Tmux and Neovim profiles
 	$(MAKE) all -C profile
 
-cloud: ## Install AWS, Azure Cli and Google cli-tools
-	$(MAKE) all -C cloud
-
+tools: ## Install tools
+	$(MAKE) all -C tools
+	
 container: ## Install Docker & Kubernetes tools
 	$(MAKE) all -C container
 
-tools: ## Install tools
-	$(MAKE) all -C tools
+cloud: ## Install AWS, Azure Cli and Google SDK
+	$(MAKE) all -C cloud
+
+iac: ## Install IaC
+	$(MAKE) all -C iac
 
 ## Main tasks
 dependencies: pip nodejs docker ## Install Linux package dependencies

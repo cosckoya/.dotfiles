@@ -86,11 +86,12 @@ $ make help
 Klaatu Barata Nitko!
 
 all                            Install everything
-cloud                          Install AWS, Azure Cli and Google cli-tools
+cloud                          Install AWS, Azure Cli and Google SDK
 container                      Install Docker & Kubernetes tools
 dependencies                   Install Linux package dependencies
 docker                         Install Docker CE
 help                           Shows this makefile help
+iac                            Install IaC
 nodejs                         Install NodeJS with Yarn and NPM
 pip                            Install Python Pip3
 profile                        Install ZSH, Tmux and Neovim profiles
