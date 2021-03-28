@@ -14,10 +14,7 @@ VERSION=scratch
 ## Paths
 DOTFILES=${HOME}/.dotfiles
 CONTAINER=${DOTFILES}/container
-
-## Versions
-HELM_VERSION:="v3.3.0"
-KUBECTL_VERSION:="v1.17.3"
+ASDF=${HOME}/.asdf/bin/asdf
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
@@ -31,7 +28,7 @@ all: docker kubernetes minis ## Install Docker & Kubernetes tools
 	@echo "Container tools installed!"
 
 ## Tools by type
-kubernetes: kubectl kubectx helm helm-repo krew ## Install Kubernetes tools: Kubectl & Helm
+kubernetes: kubectl kubectx helm krew ## Install Kubernetes tools: Kubectl & Helm
 	@echo "Kubernetes tools enabled."
 
 docker: docker-compose dive ## Install Docker tools: compose, dive
@@ -41,14 +38,24 @@ minis: minikube minishift kind ## Install Minikube and Minishift local kubernete
 	@echo "Minis installed."
 
 ## Kubernetes
-kubectl: ## Install Kubectl. Set version with `make kubectl KUBECTL_VERSION="v1.17.3"` (default version: v1.17.3)
+kubectl: ## Install Kubectl
 	@echo "Setting up Kubectl" ;\
-	wget -q https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl -O ${HOME}/bin/kubectl ;\
-	chmod u+x ${HOME}/bin/kubectl ;\
-	${HOME}/bin/kubectl version --client=true --short=true
+	${ASDF} plugin-add kubectl ;\
+	${ASDF} install kubectl latest ;\
+	${ASDF} local kubectl latest ;\
+	$$(which kubectl) version --client=true --short=true
 	@echo "Kubectl done!"
 
-krew: ## Install Krew: Kubectl plugin manager
+helm: ## Install Helm
+	@echo "Setting up Helm" ;\
+	${ASDF} plugin-add helm ;\
+	${ASDF} install helm latest ;\
+	${ASDF} local helm latest ;\
+	$$(which helm) version --short ;\
+	ln -s -f ${CONTAINER}/helm.zsh ${HOME}/.zsh.d/helm.zsh	
+	@echo "Helm done!"
+
+krew: ## Install Krew
 	@echo "Istall Krew" ;\
 	curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.{tar.gz,yaml}" ;\
 	tar zxvf krew.tar.gz ;\
@@ -57,33 +64,12 @@ krew: ## Install Krew: Kubectl plugin manager
 	rm krew* LICENSE
 	@echo "Krew done!"
 
-kubectx:  ## Install Kubectx and Kubens
+kubectx:  ## Install Kubectx
 	@echo "Setting up Kubectx" ;\
-	wget -q https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx -O ${HOME}/bin/kubectx ;\
-	wget -q https://raw.githubusercontent.com/ahmetb/kubectx/master/kubens -O ${HOME}/bin/kubens ;\
-	chmod u+x ${HOME}/bin/kube*
-	@echo "Kubectx and Kubens done!"
-
-helm: ## Install Helm. Set version with `make helm HELM_VERSION="v3.3.0"` (default version: v3.3.0)
-	@echo "Setting up Helm" ;\
-	wget -q https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz -O helm.tar.gz ;\
-	tar -xf helm.tar.gz --strip-components=1 -C ${HOME}/bin ;\
-	rm helm.tar.gz ${HOME}/bin/LICENSE ${HOME}/bin/README.md ;\
-	${HOME}/bin/helm version --short
-	@echo "Helm done!"
-
-helm-repo: ## Add Helm repositories
-	@echo "Adding & updating some helm repositories:" ;\
-	echo "Adding Kubernetes Charts" ;\
-	${HOME}/bin/helm repo add stable https://kubernetes-charts.storage.googleapis.com ;\
-	${HOME}/bin/helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com ;\
-	echo "Adding Nginx Charts" ;\
-	${HOME}/bin/helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx ;\
-	${HOME}/bin/helm repo update ;\
-	echo ""
-	${HOME}/bin/helm repo list
-	echo ""
-	@echo "Helm repositories succesfully added"
+	${ASDF} plugin-add kubectx ;\
+	${ASDF} install kubectx latest ;\
+	${ASDF} local kubectx latest
+	@echo "Kubectx done!"
 
 ## Docker
 docker-compose: ## Install Docker-compose
