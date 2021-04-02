@@ -52,7 +52,7 @@ helm: ## Install Helm
 	${ASDF} install helm latest ;\
 	${ASDF} local helm latest ;\
 	$$(which helm) version --short ;\
-	ln -s -f ${CONTAINER}/helm.zsh ${HOME}/.zsh.d/helm.zsh	
+	ln -s -f ${CONTAINER}/helm.zsh ${HOME}/.zsh.d/helm.zsh
 	@echo "Helm done!"
 
 krew: ## Install Krew
@@ -105,7 +105,7 @@ minishift: ## Install Minishift
 
 kind: ## Install Kind (Kubernetes on docker)
 	@echo "Installing Kind" ;\
-	wget -q https://storage.googleapis.com/k8s-staging-kind/latest/kind-linux-amd64 -O ${HOME}/bin/kind ;\
+	wget -q https://github.com/kubernetes-sigs/kind/releases/latest/download/kind-linux-amd64 -O ${HOME}/bin/kind ;\
 	chmod u+x ${HOME}/bin/kind ;\
 	${HOME}/bin/kind version
 	@echo "Kind done!"
