@@ -24,7 +24,7 @@ help: ## Shows this makefile help
 
 all: tools ## Install linux tools
 
-tools: pre-commit gh-cli tig cheat asdf ## Install Linux tools
+tools: pre-commit tig cheat asdf ## Install Linux tools
 	@echo "Shell Add-ons enabled. Enjoy!"
 
 ## Tools
@@ -36,14 +36,6 @@ tig: ## Install Tig
 	@echo "Installing Tig" ;\
 	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends tig"
 	@echo "Tig done!"
-
-gh-cli: ## Install Github Cli
-	@echo "Install Github Cli" ;\
-	curl --silent "https://api.github.com/repos/cli/cli/releases/latest" | jq -r '.assets[].browser_download_url' | grep linux_amd64.deb | xargs wget ;\
-	sudo sh -c "apt-get install -f ./*.deb" ;\
-	rm *.deb* ;\
-	gh version
-	@echo "Github cli installed!"
 
 cheat: ## Install cheat
 	@echo "Installing Cheat" ;\
