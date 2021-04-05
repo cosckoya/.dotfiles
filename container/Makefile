@@ -42,7 +42,7 @@ kubectl: ## Install Kubectl
 	@echo "Setting up Kubectl" ;\
 	${ASDF} plugin-add kubectl ;\
 	${ASDF} install kubectl latest ;\
-	${ASDF} local kubectl latest ;\
+	${ASDF} global kubectl latest ;\
 	$$(which kubectl) version --client=true --short=true
 	@echo "Kubectl done!"
 
@@ -50,7 +50,7 @@ helm: ## Install Helm
 	@echo "Setting up Helm" ;\
 	${ASDF} plugin-add helm ;\
 	${ASDF} install helm latest ;\
-	${ASDF} local helm latest ;\
+	${ASDF} global helm latest ;\
 	$$(which helm) version --short ;\
 	ln -s -f ${CONTAINER}/helm.zsh ${HOME}/.zsh.d/helm.zsh
 	@echo "Helm done!"
@@ -68,7 +68,7 @@ kubectx:  ## Install Kubectx
 	@echo "Setting up Kubectx" ;\
 	${ASDF} plugin-add kubectx ;\
 	${ASDF} install kubectx latest ;\
-	${ASDF} local kubectx latest
+	${ASDF} global kubectx latest
 	@echo "Kubectx done!"
 
 ## Docker
@@ -80,9 +80,9 @@ docker-compose: ## Install Docker-compose
 
 dive: ## Install Dive
 	@echo "Installing Dive" ;\
-	curl --silent "https://api.github.com/repos/wagoodman/dive/releases/latest" | jq -r '.assets[].browser_download_url' | grep deb | xargs wget -q - ;\
-	sudo sh -c "apt-get install -f ./*.deb" ;\
-	rm *.deb* ;\
+	${ASDF} plugin-add dive ;\
+	${ASDF} install dive latest ;\
+	${ASDF} global dive latest ;\
 	dive version
 	@echo "Dive Installed"
 

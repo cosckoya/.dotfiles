@@ -43,7 +43,7 @@ terraform: ## Install Terraform.
 	@echo "Setting up HashiCorp Terraform" ;\
 	${ASDF} plugin-add terraform ;\
 	${ASDF} install terraform latest ;\
-	${ASDF} local terraform latest ;\
+	${ASDF} global terraform latest ;\
 	$$(which terraform) version ;\
 	ln -s -f ${IAC}/terraform.zsh ${HOME}/.zsh.d/terraform.zsh
 	@echo "Terraform done!"
@@ -52,7 +52,7 @@ tfdocs: ## Install Terraform-docs
 	@echo "Installing terraform-docs" ;\
 	${ASDF} plugin-add terraform-docs ;\
 	${ASDF} install terraform-docs latest ;\
-	${ASDF} local terraform-docs latest ;\
+	${ASDF} global terraform-docs latest ;\
 	$$(which terraform-docs) --version
 	@echo "Terraform terraform-docs installed"
 
@@ -60,14 +60,14 @@ tflint: ## Install Tflint
 	@echo "Installing Tflint" ;\
 	${ASDF} plugin-add tflint ;\
 	${ASDF} install tflint latest ;\
-	${ASDF} local tflint latest ;\
+	${ASDF} global tflint latest ;\
 	$$(which tflint) --version
 	@echo "Terraform TFLint installed"
-	
+
 tfsec: ## Install Tfsec
 	@echo "Installing TFSec" ;\
 	${ASDF} plugin-add tfsec ;\
 	${ASDF} install tfsec latest ;\
-	${ASDF} local tfsec latest ;\
+	${ASDF} global tfsec latest ;\
 	$$(which tfsec) --version
 	@echo "Terraform tfsec installed"
