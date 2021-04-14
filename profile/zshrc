@@ -100,3 +100,9 @@ autoload -U +X compinit && compinit
 
 # add Pulumi to the PATH
 #export PATH=$PATH:$HOME/.pulumi/bin
+
+# Kubectl Plugin
+zinit load superbrothers/zsh-kubectl-prompt
+zstyle ':zsh-kubectl-prompt:' separator '|'
+#RPROMPT='%{$fg[cyan]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+RPROMPT='%F{#af00ff%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
