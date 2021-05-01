@@ -26,18 +26,13 @@ all: profile ## Install Profile, IaC, Cloud and terminal addons
 	@echo "Local environment succesfully configured"
 
 ## Profile Settings
-profile: bash zsh tmux neovim ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
+profile: zsh tmux neovim ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
 	@echo "Custom profile ready to rumble. Enjoy!"
-
-bash: ## Install Bash profile
-	@echo "Setting up BASH profile" ;\
-	ln -s -f ${PROFILE}/bashrc ${HOME}/.bashrc
 
 zsh: ## Sets ZSH as default Shell, and install ZSH profile and zplug with plugins
 	@echo "Setting up ZSH profile" ;\
 	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends zsh" ;\
 	sudo sh -c "usermod --shell /bin/zsh ${USER}" ;\
-	mkdir -p ${HOME}/.zsh.d ;\
 	ln -s -f ${PROFILE}/zshrc ${HOME}/.zshrc
 
 neovim: ## Install Vim/Neovim profile and vimplug plugins

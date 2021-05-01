@@ -44,8 +44,7 @@ terraform: ## Install Terraform.
 	${ASDF} plugin-add terraform ;\
 	${ASDF} install terraform latest ;\
 	${ASDF} global terraform latest ;\
-	$$(which terraform) version ;\
-	ln -s -f ${IAC}/terraform.zsh ${HOME}/.zsh.d/terraform.zsh
+	$$(which terraform) version
 	@echo "Terraform done!"
 
 tfdocs: ## Install Terraform-docs

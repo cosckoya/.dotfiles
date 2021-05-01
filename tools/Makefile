@@ -51,6 +51,5 @@ cheat: ## Install cheat
 asdf: ## Install asdf
 	@echo "Installing ASDF" ;\
 	rm -rf ${HOME}/.asdf ;\
-	git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf ;\
-	ln -s -f ${TOOLS}/asdf.zsh ${HOME}/.zsh.d/asdf.zsh
+	git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
 	@echo "ASDF done!"
