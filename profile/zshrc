@@ -39,15 +39,6 @@ fi
 autoload -Uz bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 
-if [[ -d $HOME/.asdf ]]; then source $HOME/.asdf/asdf.sh && source $HOME/.asdf/completions/asdf.bash; fi # ASDF
-if [[ -f $(which kubectl) ]]; then source <(kubectl completion zsh); fi                                  # Kubectl
-if [[ -d $HOME/.krew/bin ]]; then export PATH="$PATH:$HOME/.krew/bin"; fi                                # Krew
-if [[ -f $(which helm) ]]; then source <(helm completion zsh); fi                                        # Helm
-if [[ -f $(which terraform) ]]; then complete -o nospace -C $(which terraform) terraform; fi             # Terraform
-if [[ -f $(which aws) ]]; then complete -C "$HOME/bin/aws_completer" aws; fi                             # AWS
-if [[ -f $(which az) ]]; then source /etc/bash_completion.d/azure-cli; fi                                # Azure
-if [[ -f $(which gcloud) ]]; then; source /etc/bash_completion.d/gcloud; fi                              # Google
-
 setopt auto_cd                                                              # cd by typing directory name if it's not a command
 setopt auto_list                                                            # automatically list choices on ambiguous completion
 setopt auto_menu                                                            # automatically use menu completion
@@ -59,6 +50,16 @@ zstyle ':completion:*:make:*:targets' call-command true                     # ou
 zstyle ':completion:*:make:*' tag-order targets
 zstyle ':completion:*:descriptions' format '%B%d%b'
 zstyle ':completion:*' special-dirs true
+
+if [[ -d $HOME/.asdf ]]; then source $HOME/.asdf/asdf.sh && source $HOME/.asdf/completions/asdf.bash; fi # ASDF
+if [[ -f $(which kubectl) ]]; then source <(kubectl completion zsh); fi                                  # Kubectl
+if [[ -d $HOME/.krew/bin ]]; then export PATH="$PATH:$HOME/.krew/bin"; fi                                # Krew
+if [[ -f $(which helm) ]]; then source <(helm completion zsh); fi                                        # Helm
+if [[ -f $(which kind) ]]; then source <(kind completion zsh); fi                                        # Kind
+if [[ -f $(which terraform) ]]; then complete -o nospace -C $(which terraform) terraform; fi             # Terraform
+if [[ -f $(which aws) ]]; then complete -C "$HOME/bin/aws_completer" aws; fi                             # AWS
+if [[ -f $(which az) ]]; then source /etc/bash_completion.d/azure-cli; fi                                # Azure
+if [[ -f $(which gcloud) ]]; then; source /etc/bash_completion.d/gcloud; fi                              # Google
 
 # zInit: https://github.com/zdharma/zinit
 if [[ ! -d ~/.zinit ]]; then
@@ -75,6 +76,7 @@ zinit for light-mode \
   zsh-users/zsh-autosuggestions \
   zsh-users/zsh-completions \
   zsh-users/zsh-history-substring-search \
+  superbrothers/zsh-kubectl-prompt \
   pick"async.zsh" src"pure.zsh" \
   sindresorhus/pure
 
@@ -89,12 +91,9 @@ precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 zstyle ':vcs_info:git:*' formats '%F{240}(%b)%r%f'
 zstyle ':vcs_info:*' enable git
+zstyle ':zsh-kubectl-prompt:' separator '|'
 PROMPT="%F{113}%m%F{227}の%F{197}%n %{$reset_color%}❯ " # 魔(demon) 亀 (Kame) 武(Wu) 悟 (Go) の ✯ ☭ ツ ㅎ Æ
-
-# Kubectl
 if [[ -d $HOME/.kube ]]; then
-  zinit load superbrothers/zsh-kubectl-prompt
-  zstyle ':zsh-kubectl-prompt:' separator '|'
   RPROMPT='%F{#af00ff%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
 else
   RPROMPT='%F{227}Klaatu Barada Nitko!'
