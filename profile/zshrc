@@ -1,22 +1,31 @@
+# ~/.zshrc file for zsh interactive shells.
+# see /usr/share/doc/zsh/examples/zshrc for examples
+
+setopt autocd         # cd by typing directory name if it's not a command
+setopt auto_list      # automatically list choices on ambiguous completion
+setopt auto_menu      # automatically use menu completion
+setopt always_to_end  # move cursor to end if word had one match
+
 # History
 HIST_STAMPS="yyyy-mm-dd"
-HISTFILE=$HOME/.zsh_history
+HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=$HISTSIZE
-setopt hist_ignore_all_dups # remove older duplicate entries from history
-setopt hist_reduce_blanks   # remove superfluous blanks from history items
-setopt inc_append_history   # save history entries as soon as they are entered
-setopt share_history        # share history between different instances of the shell
+setopt inc_append_history     # save history entries as soon as they are entered
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+#setopt share_history          # share history between different instances of the shell
+
+# force zsh to show the complete history
+alias history="history 0"
 
 # Paths
 export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/.local/bin
 export MANPATH=$MANPATH:/usr/local/man
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export LANG=en_US.UTF-8
-
-# Alias
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
 
 # TMUX
 if [[ "$TMUX" = "" ]]; then tmux; fi
@@ -30,20 +39,14 @@ fi
 
 if [ -d "$GOPATH" ]; then export PATH="$PATH:$GOPATH/bin"; fi # GOLANG
 
-# Zshrc
-if [[ -d ~/.zsh.d ]]; then
-  source ~/.zsh.d/common.zsh
-fi
+# if [[ -d ~/.zsh.d ]]; then source ~/.zsh.d/common.zsh; fi
 
-# Autocomplete
+# Autocompletion
 autoload -Uz bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 
-setopt auto_cd                                                              # cd by typing directory name if it's not a command
-setopt auto_list                                                            # automatically list choices on ambiguous completion
-setopt auto_menu                                                            # automatically use menu completion
-setopt always_to_end                                                        # move cursor to end if word had one match
-zstyle ':completion:*' menu select                                          # select completions with arrow keys
+zstyle ':completion:*:*:*:*:*' menu select                                  # select completions with arrow keys
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'                    # case insensitive tab completion
 zstyle ':completion:*' group-name ''                                        # group results by category
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
 zstyle ':completion:*:make:*:targets' call-command true                     # outputs all possible results for make targets
@@ -89,12 +92,41 @@ autoload -U promptinit && promptinit
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-zstyle ':vcs_info:git:*' formats '%F{240}(%b)%r%f'
+zstyle ':vcs_info:git:*' formats '%F{247}(%b)%r%f'
 zstyle ':vcs_info:*' enable git
 zstyle ':zsh-kubectl-prompt:' separator '|'
-PROMPT="%F{113}%m%F{227}の%F{197}%n %{$reset_color%}❯ " # 魔(demon) 亀 (Kame) 武(Wu) 悟 (Go) の ✯ ☭ ツ ㅎ Æ
+
+PROMPT=$'%F{032}┌──(%F{120}%m%F{226}の%F{196}%n%F{032})\n└─#%{$reset_color%} ' # 魔(demon) 亀 (Kame) 武(Wu) 悟 (Go) の ✯ ☭ ツ ㅎ Æ 💀
 if [[ -d $HOME/.kube ]]; then
-  RPROMPT='%F{#af00ff%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+  RPROMPT='%F{092}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
 else
-  RPROMPT='%F{227}Klaatu Barada Nitko!'
+  RPROMPT='%F{226}Klaatu Barada Nitko!'
 fi
+
+# enable color support of ls, less and man, and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+    alias diff='diff --color=auto'
+    alias ip='ip --color=auto'
+
+    export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+    export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
+    export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+    export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
+    export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+    export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+    export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+
+    # Take advantage of $LS_COLORS for completion as well
+    zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+fi
+
+
+
