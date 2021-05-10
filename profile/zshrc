@@ -42,7 +42,7 @@ if [ -d "$GOPATH" ]; then export PATH="$PATH:$GOPATH/bin"; fi # GOLANG
 # if [[ -d ~/.zsh.d ]]; then source ~/.zsh.d/common.zsh; fi
 # Alias
 if [[ -f $(which docker) ]]; then
-  alias kali="docker run -ti kalilinux/kali bash"
+  alias kali="docker run --rm -ti kalilinux/kali bash"
 fi
 
 # Autocompletion
