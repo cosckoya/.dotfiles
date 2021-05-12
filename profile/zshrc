@@ -22,7 +22,7 @@ setopt hist_verify            # show command with history expansion to user befo
 alias history="history 0"
 
 # Paths
-export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/.local/bin
+export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/Library/Python/3.9/bin
 export MANPATH=$MANPATH:/usr/local/man
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export LANG=en_US.UTF-8
@@ -40,9 +40,13 @@ fi
 if [ -d "$GOPATH" ]; then export PATH="$PATH:$GOPATH/bin"; fi # GOLANG
 
 # if [[ -d ~/.zsh.d ]]; then source ~/.zsh.d/common.zsh; fi
-# Alias
+
+# Docker Alias
 if [[ -f $(which docker) ]]; then
-  alias kali="docker run -ti kalilinux/kali bash"
+  alias kali='docker run --rm -ti kalilinux/kali bash'
+  alias ubuntu='docker run --rm -ti ubuntu:latest bash'
+  alias debian='docker run --rm -ti debian:10-slim bash'
+  alias centos='docker run --rm -ti centos:8 bash'
 fi
 
 # Autocompletion
@@ -50,7 +54,7 @@ autoload -Uz bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 
 zstyle ':completion:*:*:*:*:*' menu select                                  # select completions with arrow keys
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'                    # case insensitive tab completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'                   # case insensitive tab completion
 zstyle ':completion:*' group-name ''                                        # group results by category
 zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
 zstyle ':completion:*:make:*:targets' call-command true                     # outputs all possible results for make targets
@@ -58,15 +62,23 @@ zstyle ':completion:*:make:*' tag-order targets
 zstyle ':completion:*:descriptions' format '%B%d%b'
 zstyle ':completion:*' special-dirs true
 
-if [[ -d $HOME/.asdf ]]; then source $HOME/.asdf/asdf.sh && source $HOME/.asdf/completions/asdf.bash; fi # ASDF
+if [[ -d $HOME/.asdf ]]; then
+  source $HOME/.asdf/asdf.sh && \
+  source $HOME/.asdf/completions/asdf.bash && \
+  alias asdf='arch -x86_64 asdf'
+fi
+
 if [[ -f $(which kubectl) ]]; then source <(kubectl completion zsh); fi                                  # Kubectl
 if [[ -d $HOME/.krew/bin ]]; then export PATH="$PATH:$HOME/.krew/bin"; fi                                # Krew
 if [[ -f $(which helm) ]]; then source <(helm completion zsh); fi                                        # Helm
 if [[ -f $(which kind) ]]; then source <(kind completion zsh); fi                                        # Kind
 if [[ -f $(which terraform) ]]; then complete -o nospace -C $(which terraform) terraform; fi             # Terraform
 if [[ -f $(which aws) ]]; then complete -C "$HOME/bin/aws_completer" aws; fi                             # AWS
-if [[ -f $(which az) ]]; then source /etc/bash_completion.d/azure-cli; fi                                # Azure
-if [[ -f $(which gcloud) ]]; then; source /etc/bash_completion.d/gcloud; fi                              # Google
+#if [[ -f $(which az) ]]; then source /etc/bash_completion.d/azure-cli; fi                                # Azure
+if [[ -d $(brew --prefix)/Caskroom/google-cloud-sdk ]]; then
+  source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc" && \
+  source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+fi
 
 # zInit: https://github.com/zdharma/zinit
 if [[ ! -d ~/.zinit ]]; then
@@ -109,7 +121,7 @@ fi
 
 # enable color support of ls, less and man, and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    test -r ~/.dircolors && eval “$(dircolors -b ~/.dircolors)" || eval “$(dircolors -b)"
     alias ls='ls --color=auto'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
@@ -118,7 +130,30 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
     alias diff='diff --color=auto'
-    alias ip='ip --color=auto'
+    #alias ip='ip --color=auto'
+
+    export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+    export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
+    export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+    export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
+    export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+    export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+    export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+
+    # Take advantage of $LS_COLORS for completion as well
+    zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+elif [[ -f $(which gdircolors) ]]; then
+    test -r ~/.dircolors && eval “$(gdircolors -b ~/.dircolors)" || eval “$(gdircolors -b)"
+    alias ls='ls -G'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep -G'
+    alias fgrep='fgrep -G'
+    alias egrep='egrep -G'
+    alias diff='diff -G'
+    alias ip='ip'
 
     export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
     export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
