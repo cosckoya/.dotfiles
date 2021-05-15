@@ -8,9 +8,9 @@ if [[ -d $HOME/.asdf ]]; then                                                   
   fi
 fi
 
-if [[ -f $(which gcloud) ]]; then                                                                        # Google
+if [[ -x $(which gcloud) ]]; then                                                                        # Google
   source /etc/bash_completion.d/gcloud
-elif [[ -d $(brew --prefix)/Caskroom/google-cloud-sdk ]]; then
+if [[ -d $(brew --prefix)/Caskroom/google-cloud-sdk ]]; then
   source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc" && \
   source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 fi
