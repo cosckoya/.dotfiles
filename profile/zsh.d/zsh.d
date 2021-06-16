@@ -1,0 +1,1 @@
+/home/cosckoya/.dotfiles/profile/zsh.d

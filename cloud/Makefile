@@ -14,6 +14,7 @@ VERSION=scratch
 ## Paths
 DOTFILES=${HOME}/.dotfiles
 CLOUD=${DOTFILES}/cloud
+ASDF=${HOME}/.asdf/bin/asdf
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
@@ -28,7 +29,7 @@ all: azure aws google ## Install cloud tools
 ## Cloud MGMT tools
 azure: ## Install Azure Cli (az)
 	@echo "Installing Azure Cli" ;\
-	curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash ;\
+	curl -sL https://aka.ms/InstallAzureCli | bash ;\
 	az version
 	@echo "Azure Cli done!"
 
@@ -43,9 +44,7 @@ aws: ## Install Amazon AWS-Cli v2 (aws)
 	@echo "AWS cli done!"
 
 google: ## Install Google SDK (glcoud)
-	@echo "Installing Google SDK" ;\
-	sudo sh -c "echo 'deb https://packages.cloud.google.com/apt cloud-sdk main' > /etc/apt/sources.list.d/google-cloud-sdk.list" ;\
-	curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - ;\
-	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends google-cloud-sdk" ;\
-	gcloud version
-	@echo "GCloud SDK done!"
+	@echo "Setting up glcoud" ;\
+	${ASDF} plugin-add gcloud ;\
+	${ASDF} install gcloud latest ;\
+	${ASDF} global gcloud latest

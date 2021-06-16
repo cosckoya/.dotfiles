@@ -24,18 +24,13 @@ help: ## Shows this makefile help
 
 all: tools ## Install linux tools
 
-tools: pre-commit tig cheat asdf ## Install Linux tools
+tools: pre-commit cheat asdf ## Install Linux tools
 	@echo "Shell Add-ons enabled. Enjoy!"
 
 ## Tools
 pre-commit: ## Install Pre-Commit
 	@echo "Install Pre-Commit" ;\
 	${HOME}/.local/bin/pip3 install pre-commit --user
-
-tig: ## Install Tig
-	@echo "Installing Tig" ;\
-	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends tig"
-	@echo "Tig done!"
 
 cheat: ## Install cheat
 	@echo "Installing Cheat" ;\
@@ -47,9 +42,3 @@ cheat: ## Install cheat
 	git clone https://github.com/cheat/cheatsheets.git ${HOME}/.config/cheat/cheatsheets/community ;\
 	ln -s -f ${TOOLS}/cheats ${HOME}/.config/cheat/cheatsheets/personal
 	@echo "Cheat done!"
-
-asdf: ## Install asdf
-	@echo "Installing ASDF" ;\
-	rm -rf ${HOME}/.asdf ;\
-	git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
-	@echo "ASDF done!"

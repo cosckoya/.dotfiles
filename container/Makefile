@@ -28,7 +28,7 @@ all: docker kubernetes minis ## Install Docker & Kubernetes tools
 	@echo "Container tools installed!"
 
 ## Tools by type
-kubernetes: kubectl kubectx helm krew ## Install Kubernetes tools: Kubectl & Helm
+kubernetes: kubectl kubectx helm krew oc ## Install Kubernetes tools: Kubectl & Helm
 	@echo "Kubernetes tools enabled."
 
 docker: docker-compose dive ## Install Docker tools: compose, dive
@@ -102,6 +102,12 @@ minishift: ## Install Minishift
 	ln -s -f ${CONTAINER}/helm.zsh ${HOME}/.zsh.d/helm.zsh ;\
 	${HOME}/bin/minishift version
 	@echo "Minishift done!"
+
+oc: ## Install OC
+	@echo "Installing OC" ;\
+	${ASDF} plugin-add oc ;\
+	${ASDF} install oc latest ;\
+	${ASDF} global oc latest
 
 kind: ## Install Kind (Kubernetes on docker)
 	@echo "Installing Kind" ;\
