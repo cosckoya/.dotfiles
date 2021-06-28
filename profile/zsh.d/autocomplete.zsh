@@ -8,8 +8,8 @@ if [[ -d $HOME/.asdf ]]; then                                                   
   fi
 fi
 
-if [[ -x $(which gcloud) ]]; then                                                                        # Google
-  source /etc/bash_completion.d/gcloud
+if [[ -x $(asdf which gcloud) ]]; then                                                                   # Google
+  source $(asdf which gcloud | awk -F '/bin' '{print $1}')/completion.zsh.inc
 elif [[ -d $(brew --prefix)/Caskroom/google-cloud-sdk ]]; then
   source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc" && \
   source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
@@ -20,4 +20,4 @@ if [[ -x $(which helm) ]]; then source <(helm completion zsh); fi               
 if [[ -x $(which kind) ]]; then source <(kind completion zsh); fi                                        # Kind
 if [[ -x $(which terraform) ]]; then complete -o nospace -C $(which terraform) terraform; fi             # Terraform
 if [[ -x $(which aws) ]]; then complete -C "$HOME/bin/aws_completer" aws; fi                             # AWS
-if [[ -x $(which az) ]]; then source /etc/bash_completion.d/azure-cli; fi                                # Azure
+if [[ -x $(which az) ]]; then source "$HOME/lib/azure-cli/az.completion"; fi                             # Azure
