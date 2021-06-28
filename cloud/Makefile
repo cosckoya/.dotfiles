@@ -8,7 +8,7 @@ RED=$(shell tput setaf 1)
 RESET=$(shell tput sgr0)
 
 ## Global
-NAME=cloud-
+NAME=cloud
 VERSION=scratch
 
 ## Paths
