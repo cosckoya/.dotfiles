@@ -24,7 +24,7 @@ help: ## Shows this makefile help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 all: docker kubernetes minis ## Install Docker & Kubernetes tools
-	chmod 755 -R ${HOME}/bin
+	@chmod 755 -R ${HOME}/bin
 	@echo "Container tools installed!"
 
 ## Tools by type
@@ -89,19 +89,19 @@ dive: ## Install Dive
 ## Minis
 minikube: ## Install Minikube
 	@echo "Installing Minikube" ;\
-	wget -q https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64 -O ${HOME}/bin/minikube ;\
-	chmod 755 ${HOME}/bin/minikube ;\
-	${HOME}/bin/minikube version
-	@echo "Minikube done!"
-
+	${ASDF} plugin-add minikube ;\
+	${ASDF} install minikube latest ;\
+	${ASDF} global minikube latest ;\
+	$$(which minikube) version
+	@echo "Minikube Installed"
+	
 minishift: ## Install Minishift
-	@echo "Install Minishift" ;\
-	curl --silent "https://api.github.com/repos/minishift/minishift/releases/latest" | jq -r '.assets[].browser_download_url' | grep linux-amd64.tgz | xargs wget ;\
-	tar -xf minishift*.tgz --strip-components=1 -C ${HOME}/bin ;\
-	rm *.tgz* ${HOME}/bin/README.adoc ${HOME}/bin/LICENSE ;\
-	ln -s -f ${CONTAINER}/helm.zsh ${HOME}/.zsh.d/helm.zsh ;\
-	${HOME}/bin/minishift version
-	@echo "Minishift done!"
+	@echo "Installing Minishift" ;\
+	${ASDF} plugin-add minishift ;\
+	${ASDF} install minishift latest ;\
+	${ASDF} global minishift latest ;\
+	$$(which minishif) version
+	@echo "Minishift Installed"
 
 oc: ## Install OC
 	@echo "Installing OC" ;\
@@ -111,7 +111,8 @@ oc: ## Install OC
 
 kind: ## Install Kind (Kubernetes on docker)
 	@echo "Installing Kind" ;\
-	wget -q https://github.com/kubernetes-sigs/kind/releases/latest/download/kind-linux-amd64 -O ${HOME}/bin/kind ;\
-	chmod u+x ${HOME}/bin/kind ;\
-	${HOME}/bin/kind version
-	@echo "Kind done!"
+	${ASDF} plugin-add kind ;\
+	${ASDF} install kind latest ;\
+	${ASDF} global kind latest ;\
+	$$(which kind) version
+	

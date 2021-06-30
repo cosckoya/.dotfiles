@@ -14,6 +14,7 @@ VERSION=scratch
 ## Paths
 DOTFILES=${HOME}/.dotfiles
 TOOLS=${DOTFILES}/tools
+ASDF=${HOME}/.asdf/bin/asdf
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
@@ -30,15 +31,15 @@ tools: pre-commit cheat asdf ## Install Linux tools
 ## Tools
 pre-commit: ## Install Pre-Commit
 	@echo "Install Pre-Commit" ;\
-	${HOME}/.local/bin/pip3 install pre-commit --user
+	$$(which pip3) install pre-commit --user
 
 cheat: ## Install cheat
-	@echo "Installing Cheat" ;\
-	wget -q https://github.com/cheat/cheat/releases/latest/download/cheat-linux-amd64.gz ;\
-	gzip -dc < cheat-linux-amd64.gz > ${HOME}/bin/cheat ;\
-	rm -rf cheat-linux-amd64.gz ${HOME}/.config/cheat ;\
-	chmod 755 ${HOME}/bin/cheat ;\
+	@echo "Setting up Cheats" ;\
+	${ASDF} plugin-add cheat ;\
+	${ASDF} install cheat latest ;\
+	${ASDF} global cheat latest ;\
+	rm -rf ${HOME}/.config/cheat ;\
 	mkdir -p ${HOME}/.config/cheat/cheatsheets && cheat --init > ${HOME}/.config/cheat/conf.yml ;\
 	git clone https://github.com/cheat/cheatsheets.git ${HOME}/.config/cheat/cheatsheets/community ;\
 	ln -s -f ${TOOLS}/cheats ${HOME}/.config/cheat/cheatsheets/personal
-	@echo "Cheat done!"
+	@echo "Cheats done!"
