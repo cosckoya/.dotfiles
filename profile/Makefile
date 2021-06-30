@@ -33,8 +33,8 @@ profile: zsh tmux neovim ## Install ZSH, TMUX and Vim/Neovim plugins and profile
 
 zsh:
 ifeq ($(OS), Linux)
-	@echo "Setting up ZSH shell to user" ;\
-	sudo sh -c "usermod --shell /bin/zsh ${USER}"
+	@echo "Setting up ZSH shell to user"
+	@sudo sh -c "usermod --shell /bin/zsh ${USER}"
 endif
 	@sh -c "ln -s -f ${PROFILE}/zshrc ${HOME}/.zshrc"
 	@sh -c "ln -s -f ${PROFILE}/zsh.d ${HOME}/.zsh.d"
