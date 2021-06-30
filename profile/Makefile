@@ -10,6 +10,7 @@ RESET=$(shell tput sgr0)
 ## Global
 NAME=profile
 VERSION=scratch
+OS=$(shell uname -s)
 
 ## Paths
 DOTFILES=${HOME}/.dotfiles
@@ -30,11 +31,14 @@ all: profile ## Install Profile, IaC, Cloud and terminal addons
 profile: zsh tmux neovim ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
 	@echo "Custom profile ready to rumble. Enjoy!"
 
-zsh: ## Sets ZSH as default Shell, and install ZSH profile and zplug with plugins
-	@echo "Setting up ZSH profile" ;\
-	sudo sh -c "usermod --shell /bin/zsh ${USER}" ;\
-	ln -s -f ${PROFILE}/zshrc ${HOME}/.zshrc
-	ln -s -f ${PROFILE}/zsh.d ${HOME}/.zsh.d
+zsh:
+ifeq ($(OS), Linux)
+	@echo "Setting up ZSH shell to user"
+	@sudo sh -c "usermod --shell /bin/zsh ${USER}"
+endif
+	@sh -c "ln -s -f ${PROFILE}/zshrc ${HOME}/.zshrc"
+	@sh -c "ln -s -f ${PROFILE}/zsh.d ${HOME}/.zsh.d"
+	@echo "ZSH configured"
 
 neovim: ## Install Vim/Neovim profile and vimplug plugins
 	@echo "Setting up NeoVIM" ;\
