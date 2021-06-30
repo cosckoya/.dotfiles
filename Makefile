@@ -10,9 +10,11 @@ RESET=$(shell tput sgr0)
 ## Global
 NAME=main
 VERSION=scratch
+OS=$(shell uname -s)
 
 ## Paths
 DOTFILES=${HOME}/.dotfiles
+ASDF=${HOME}/.asdf/bin/asdf
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
@@ -42,9 +44,12 @@ iac: ## Install IaC
 dependencies: asdf pip nodejs docker ## Install Linux package dependencies
 
 nodejs: ## Install NodeJS with Yarn and NPM
-	@echo "Installing NodeJS, Yarn and NPM" ;\
-	wget install-node.now.sh/lts && sudo bash lts -y && rm lts ;\
-	sudo sh -c "npm install --global yarn"
+	@echo "Installing Nodejs" ;\
+	${ASDF} plugin-add nodejs ;\
+	${ASDF} install nodejs latest ;\
+	${ASDF} global nodejs latest ;\
+	sudo sh -c "npm install --global yarn" ;\
+	$$(which node) --version
 
 pip: ## Install Python Pip3
 	@echo "Installing Python Pip3" ;\
@@ -53,11 +58,15 @@ pip: ## Install Python Pip3
 	rm get-pip.py
 
 docker: ## Install Docker CE
+ifeq ($(OS), Darwin)
+	@echo "Install Docker from APP Store"
+else
 	@echo "Installing Docker CE" ;\
 	curl -fsSL https://get.docker.com -o get-docker.sh ;\
 	sudo sh -c "sh get-docker.sh" ;\
 	rm ./get-docker.sh ;\
 	sudo sh -c "usermod -aG docker ${USER}"
+endif
 
 asdf: ## Install asdf
 	@echo "Installing ASDF" ;\
