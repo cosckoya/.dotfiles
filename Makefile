@@ -43,8 +43,8 @@ iac: ## Install IaC
 ## Main tasks
 dependencies: asdf pip nodejs docker ## Install Linux package dependencies
 
-nodejs: ## Install NodeJS with Yarn and NPM
-	@echo "Installing Nodejs" ;\
+nodejs: ## Install NodeJS
+	@echo "Installing Nodejs & Yarn" ;\
 	${ASDF} plugin-add nodejs ;\
 	${ASDF} install nodejs latest ;\
 	${ASDF} global nodejs latest ;\

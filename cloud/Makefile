@@ -10,6 +10,7 @@ RESET=$(shell tput sgr0)
 ## Global
 NAME=cloud
 VERSION=scratch
+OS=$(shell uname -s)
 
 ## Paths
 DOTFILES=${HOME}/.dotfiles
@@ -33,14 +34,21 @@ azure: ## Install Azure Cli (az)
 	az version
 	@echo "Azure Cli done!"
 
-aws: ## Install Amazon AWS-Cli v2 (aws)
+aws: ## Install Amazon AWS-Cli v2
 	@echo "Installing AWS Cli"
-	curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" ;\
-	unzip -qq awscliv2.zip ;\
-	sudo ./aws/install -i ${HOME}/.config/aws-cli -b ${HOME}/bin --update ;\
-	sudo chown -R ${USER}: ${HOME}/bin ${HOME}/.config/aws-cli ;\
-	rm -rf ./aws awscliv2.zip ;\
-	${HOME}/bin/aws --version
+ifeq ($(OS), Linux)
+	@curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" ;\
+	@unzip -qq awscliv2.zip ;\
+	@sudo ./aws/install -i ${HOME}/.config/aws-cli -b ${HOME}/bin --update ;\
+	@sudo chown -R ${USER}: ${HOME}/bin ${HOME}/.config/aws-cli ;\
+	@rm -rf ./aws awscliv2.zip ;\
+	@${HOME}/bin/aws --version
+else
+	@curl -s "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "awscliv2.pkg"
+	@sudo installer -pkg awscliv2.pkg -target /
+	@rm awscliv2.pkg
+	@$(shell which aws) --version
+endif
 	@echo "AWS cli done!"
 
 google: ## Install Google SDK (glcoud)

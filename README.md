@@ -94,7 +94,7 @@ dependencies                   Install Linux package dependencies
 docker                         Install Docker CE
 help                           Shows this makefile help
 iac                            Install IaC
-nodejs                         Install NodeJS with Yarn and NPM
+nodejs                         Install NodeJS
 pip                            Install Python Pip3
 profile                        Install ZSH, Tmux and Neovim profiles
 tools                          Install tools 
