@@ -58,15 +58,11 @@ pip: ## Install Python Pip3
 	rm get-pip.py
 
 docker: ## Install Docker CE
-ifeq ($(OS), Darwin)
-	@echo "Install Docker from APP Store"
-else
 	@echo "Installing Docker CE" ;\
 	curl -fsSL https://get.docker.com -o get-docker.sh ;\
 	sudo sh -c "sh get-docker.sh" ;\
 	rm ./get-docker.sh ;\
 	sudo sh -c "usermod -aG docker ${USER}"
-endif
 
 asdf: ## Install asdf
 	@echo "Installing ASDF" ;\
