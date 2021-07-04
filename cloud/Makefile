@@ -30,24 +30,23 @@ all: azure aws google ## Install cloud tools
 ## Cloud MGMT tools
 azure: ## Install Azure Cli (az)
 	@echo "Installing Azure Cli"
-	@curl -sL https://aka.ms/InstallAzureCli | bash ;\
+	@curl -sL https://aka.ms/InstallAzureCli | bash
 	@$(shell az version)
 	@echo "Azure Cli done!"
 
 aws: ## Install Amazon AWS-Cli v2
 	@echo "Installing AWS Cli"
-	@curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" ;\
-	@unzip -qq awscliv2.zip ;\
-	@sudo ./aws/install -i ${HOME}/.config/aws-cli -b ${HOME}/bin --update ;\
-	@sudo chown -R ${USER}: ${HOME}/bin ${HOME}/.config/aws-cli ;\
-	@rm -rf ./aws awscliv2.zip ;\
-	@${HOME}/bin/aws --version ;\
+	@curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+	@unzip -qq awscliv2.zip
+	@sudo ./aws/install -i ${HOME}/.config/aws-cli -b ${HOME}/bin --update
+	@sudo chown -R ${USER}: ${HOME}/bin ${HOME}/.config/aws-cli
+	@rm -rf ./aws awscliv2.zip
+	@${HOME}/bin/aws --version
 	@echo "AWS cli done!"
 
 google: ## Install Google SDK (glcoud)
 	@echo "Setting up glcoud"
-	${ASDF} plugin-add gcloud ;\
-	${ASDF} install gcloud latest ;\
-	${ASDF} global gcloud latest ;\
-	wget -q "https://raw.githubusercontent.com/twistedpair/google-cloud-sdk/master/google-cloud-sdk/completion.zsh.inc" -O ${DOTFILES}/profile/zsh.d/gcp.completion
-	$(shell gcloud version)
+	@${ASDF} plugin-add gcloud
+	@${ASDF} install gcloud latest
+	@${ASDF} global gcloud latest
+	@$(shell gcloud version)

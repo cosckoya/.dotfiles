@@ -39,21 +39,14 @@ minis: minikube minishift kind ## Install Minikube and Minishift local kubernete
 
 ## Kubernetes
 kubectl: ## Install Kubectl
-	@echo "Setting up Kubectl" ;\
 	${ASDF} plugin-add kubectl ;\
 	${ASDF} install kubectl latest ;\
-	${ASDF} global kubectl latest ;\
-	$$(which kubectl) version --client=true --short=true
-	@echo "Kubectl done!"
+	${ASDF} global kubectl latest
 
 helm: ## Install Helm
-	@echo "Setting up Helm" ;\
 	${ASDF} plugin-add helm ;\
 	${ASDF} install helm latest ;\
-	${ASDF} global helm latest ;\
-	$$(which helm) version --short ;\
-	ln -s -f ${CONTAINER}/helm.zsh ${HOME}/.zsh.d/helm.zsh
-	@echo "Helm done!"
+	${ASDF} global helm latest
 
 krew: ## Install Krew
 	@echo "Istall Krew" ;\
@@ -65,11 +58,9 @@ krew: ## Install Krew
 	@echo "Krew done!"
 
 kubectx:  ## Install Kubectx
-	@echo "Setting up Kubectx" ;\
 	${ASDF} plugin-add kubectx ;\
 	${ASDF} install kubectx latest ;\
 	${ASDF} global kubectx latest
-	@echo "Kubectx done!"
 
 ## Docker
 docker-compose: ## Install Docker-compose
@@ -82,26 +73,20 @@ dive: ## Install Dive
 	@echo "Installing Dive" ;\
 	${ASDF} plugin-add dive ;\
 	${ASDF} install dive latest ;\
-	${ASDF} global dive latest ;\
-	dive version
-	@echo "Dive Installed"
+	${ASDF} global dive latest
 
 ## Minis
 minikube: ## Install Minikube
 	@echo "Installing Minikube" ;\
 	${ASDF} plugin-add minikube ;\
 	${ASDF} install minikube latest ;\
-	${ASDF} global minikube latest ;\
-	$$(which minikube) version
-	@echo "Minikube Installed"
-	
+	${ASDF} global minikube latest
+
 minishift: ## Install Minishift
 	@echo "Installing Minishift" ;\
 	${ASDF} plugin-add minishift ;\
 	${ASDF} install minishift latest ;\
-	${ASDF} global minishift latest ;\
-	$$(which minishif) version
-	@echo "Minishift Installed"
+	${ASDF} global minishift latest
 
 oc: ## Install OC
 	@echo "Installing OC" ;\
@@ -113,6 +98,4 @@ kind: ## Install Kind (Kubernetes on docker)
 	@echo "Installing Kind" ;\
 	${ASDF} plugin-add kind ;\
 	${ASDF} install kind latest ;\
-	${ASDF} global kind latest ;\
-	$$(which kind) version
-	
+	${ASDF} global kind latest
