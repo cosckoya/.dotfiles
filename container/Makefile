@@ -28,7 +28,7 @@ all: docker kubernetes minis ## Install Docker & Kubernetes tools
 	@echo "Container tools installed!"
 
 ## Tools by type
-kubernetes: kubectl kubectx helm krew oc ## Install Kubernetes tools: Kubectl & Helm
+kubernetes: kubectl kubectx helm kustomize krew oc ## Install Kubernetes tools: Kubectl & Helm
 	@echo "Kubernetes tools enabled."
 
 docker: docker-compose dive ## Install Docker tools: compose, dive
@@ -48,8 +48,13 @@ helm: ## Install Helm
 	${ASDF} install helm latest ;\
 	${ASDF} global helm latest
 
+kubectx: ## Install Kubectx
+	${ASDF} plugin-add kubectx ;\
+	${ASDF} install kubectx latest ;\
+	${ASDF} global kubectx latest
+
 krew: ## Install Krew
-	@echo "Istall Krew" ;\
+	@echo "Install Krew" ;\
 	curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.{tar.gz,yaml}" ;\
 	tar zxvf krew.tar.gz ;\
 	./krew-linux_amd64 install --manifest=krew.yaml --archive=krew.tar.gz ;\
@@ -57,10 +62,10 @@ krew: ## Install Krew
 	rm krew* LICENSE
 	@echo "Krew done!"
 
-kubectx:  ## Install Kubectx
-	${ASDF} plugin-add kubectx ;\
-	${ASDF} install kubectx latest ;\
-	${ASDF} global kubectx latest
+kustomize: ## Install Kustomize
+	${ASDF} plugin-add kustomize ;\
+	${ASDF} install kustomize latest ;\
+	${ASDF} global kustomize latest
 
 ## Docker
 docker-compose: ## Install Docker-compose
