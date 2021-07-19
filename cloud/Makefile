@@ -31,8 +31,7 @@ all: azure aws google ## Install cloud tools
 azure: ## Install Azure Cli (az)
 	@echo "Installing Azure Cli"
 	@curl -sL https://aka.ms/InstallAzureCli | bash
-	@$(shell az version)
-	@echo "Azure Cli done!"
+	@az version
 
 aws: ## Install Amazon AWS-Cli v2
 	@echo "Installing AWS Cli"
@@ -49,4 +48,4 @@ google: ## Install Google SDK (glcoud)
 	@${ASDF} plugin-add gcloud
 	@${ASDF} install gcloud latest
 	@${ASDF} global gcloud latest
-	@$(shell gcloud version)
+	@gcloud version

@@ -25,21 +25,20 @@ help: ## Shows this makefile help
 
 all: tools ## Install linux tools
 
-tools: pre-commit cheat asdf ## Install Linux tools
+tools: pre-commit cheat ## Install Linux tools
 	@echo "Shell Add-ons enabled. Enjoy!"
 
 ## Tools
 pre-commit: ## Install Pre-Commit
-	@echo "Install Pre-Commit" ;\
-	$$(which pip3) install pre-commit --user
+	@echo "Install Pre-Commit"
+	@$$(which pip3) install pre-commit --user
 
 cheat: ## Install cheat
-	@echo "Setting up Cheats" ;\
-	${ASDF} plugin-add cheat ;\
-	${ASDF} install cheat latest ;\
-	${ASDF} global cheat latest ;\
-	rm -rf ${HOME}/.config/cheat ;\
-	mkdir -p ${HOME}/.config/cheat/cheatsheets && cheat --init > ${HOME}/.config/cheat/conf.yml ;\
-	git clone https://github.com/cheat/cheatsheets.git ${HOME}/.config/cheat/cheatsheets/community ;\
-	ln -s -f ${TOOLS}/cheats ${HOME}/.config/cheat/cheatsheets/personal
-	@echo "Cheats done!"
+	@echo "Setting up Cheats"
+	@${ASDF} plugin-add cheat
+	@${ASDF} install cheat latest
+	@${ASDF} global cheat latest
+	@rm -rf ${HOME}/.config/cheat
+	@mkdir -p ${HOME}/.config/cheat/cheatsheets && cheat --init > ${HOME}/.config/cheat/conf.yml
+	@git clone https://github.com/cheat/cheatsheets.git ${HOME}/.config/cheat/cheatsheets/community
+	@ln -s -f ${TOOLS}/cheats ${HOME}/.config/cheat/cheatsheets/personal

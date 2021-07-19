@@ -19,11 +19,11 @@ if [[ -x $(asdf which gcloud) ]]; then                                         #
 fi
 
 if [[ -x $(which aws) ]]; then complete -C $(which aws_completer) aws; fi      # AWS
-if [[ -x $(which az) ]]; then source "$HOME/.zsh.d/az.completion"; fi          # Azure
+if [[ -x $(which az) ]]; then source "$HOME/lib/azure-cli"; fi                 # Azure
 
 ##
 # Kubernetes
-## 
+##
 
 if [[ -x $(which kubectl) ]]; then source <(kubectl completion zsh); fi        # Kubectl
 if [[ -x $(which helm) ]]; then source <(helm completion zsh); fi              # Helm
