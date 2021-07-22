@@ -10,9 +10,11 @@ RESET=$(shell tput sgr0)
 ## Global
 NAME=main
 VERSION=scratch
+OS=$(shell uname -s)
 
 ## Paths
 DOTFILES=${HOME}/.dotfiles
+ASDF=${HOME}/.asdf/bin/asdf
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
@@ -39,21 +41,15 @@ iac: ## Install IaC
 	$(MAKE) all -C iac
 
 ## Main tasks
-dependencies: pip nodejs docker ## Install Linux package dependencies
-	@echo "Installing package dependencies" ;\
-	sudo sh -c "apt-get update -qq &&\
-	apt-get install -qq -y --no-install-recommends \
-	wget unzip nmap jq curl tree \
-	yarn \
-	docker-ce docker-ce-cli containerd.io \
-	ca-certificates apt-transport-https lsb-release \
-	software-properties-common gnupg-agent gnupg" ;\
+dependencies: asdf pip nodejs docker ## Install Linux package dependencies
 
-nodejs: ## Install NodeJS with Yarn and NPM
-	@echo "Installing NodeJS, Yarn and NPM" ;\
-	wget install-node.now.sh/lts && sudo bash lts -y && rm lts ;\
-	curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - ;\
-	sudo sh -c "echo 'deb https://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list"
+nodejs: ## Install NodeJS
+	@echo "Installing Nodejs & Yarn" ;\
+	${ASDF} plugin-add nodejs ;\
+	${ASDF} install nodejs latest ;\
+	${ASDF} global nodejs latest ;\
+	sudo sh -c "npm install --global yarn" ;\
+	$$(which node) --version
 
 pip: ## Install Python Pip3
 	@echo "Installing Python Pip3" ;\
@@ -63,5 +59,13 @@ pip: ## Install Python Pip3
 
 docker: ## Install Docker CE
 	@echo "Installing Docker CE" ;\
-	curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - ;\
-	sudo sh -c "echo 'deb [arch=amd64] https://download.docker.com/linux/$$(lsb_release -is | tr A-Z a-z) $$(lsb_release -cs) stable' > /etc/apt/sources.list.d/docker-ce.list"
+	curl -fsSL https://get.docker.com -o get-docker.sh ;\
+	sudo sh -c "sh get-docker.sh" ;\
+	rm ./get-docker.sh ;\
+	sudo sh -c "usermod -aG docker ${USER}"
+
+asdf: ## Install asdf
+	@echo "Installing ASDF" ;\
+	rm -rf ${HOME}/.asdf ;\
+	git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
+	@echo "ASDF done!"
