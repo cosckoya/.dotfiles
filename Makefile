@@ -49,6 +49,7 @@ nodejs: ## Install NodeJS
 	${ASDF} install nodejs latest ;\
 	${ASDF} global nodejs latest ;\
 	sudo sh -c "npm install --global yarn" ;\
+	sudo sh -c "npm install --global npm" ;\
 	$$(which node) --version
 
 pip: ## Install Python Pip3
