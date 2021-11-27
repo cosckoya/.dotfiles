@@ -51,7 +51,7 @@ source ~/.zsh.d/autocomplete.zsh
 
 # zInit: https://github.com/zdharma/zinit
 if [[ ! -d ~/.zinit ]]; then
-  git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+  git clone https://github.com/zdharma-continuum/zinit.git ~/.zinit/bin
 fi
 
 source ~/.zinit/bin/zinit.zsh
@@ -79,7 +79,7 @@ zstyle ':vcs_info:git:*' formats '%F{247}(%b)%r%f'
 zstyle ':vcs_info:*' enable git
 zstyle ':zsh-kubectl-prompt:' separator '|'
 
-PROMPT=$'%F{032}┌──(%F{120}%m%F{226}の%F{196}%n%F{032})\n└─#%{$reset_color%} ' 
+PROMPT=$'%F{032}┌──(%F{120}%m%F{226}の%F{196}%n%F{032})\n└─#%{$reset_color%} '
 # 魔(demon) 亀 (Kame) 武(Wu) 悟 (Go) の ✯ ☭ ツ ㅎ Æ 💀
 if [[ -d $HOME/.kube ]]; then
   RPROMPT='%F{092}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
@@ -125,5 +125,5 @@ elif [[ -x $(which gdircolors) ]]; then
   export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
   export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
   zinit ice atclone"gdircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
-  zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"  
+  zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 fi
