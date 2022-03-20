@@ -75,12 +75,15 @@ autoload -U promptinit && promptinit
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-zstyle ':vcs_info:git:*' formats '%F{247}(%b)%r%f'
+#zstyle ':vcs_info:git:*' formats "%F{247}(%b)%r%f"
+zstyle ':vcs_info:git:*' formats "(%b)%r"
 zstyle ':vcs_info:*' enable git
 zstyle ':zsh-kubectl-prompt:' separator '|'
 
 PROMPT=$'%F{032}┌──(%F{120}%m%F{226}の%F{196}%n%F{032})\n└─#%{$reset_color%} '
 # 魔(demon) 亀 (Kame) 武(Wu) 悟 (Go) の ✯ ☭ ツ ㅎ Æ 💀
+
+# Kubectl RPROMPT
 if [[ -d $HOME/.kube ]]; then
   RPROMPT='%F{092}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
 else
