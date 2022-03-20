@@ -10,6 +10,8 @@ RESET=$(shell tput sgr0)
 ## Global
 NAME=containers
 VERSION=scratch
+OS=$(shell uname | tr '[:upper:]' '[:lower:]')
+ARCH=$(shell uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$$/arm64/')
 
 ## Paths
 DOTFILES=${HOME}/.dotfiles
@@ -22,6 +24,11 @@ help: ## Shows this makefile help
 	@echo "Klaatu Barata Nitko!"
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+info: ## Show Arch and OS info
+	@echo ""
+	@echo $(OS)
+	@echo $(ARCH)
 
 all: docker kubernetes minis ## Install Docker & Kubernetes tools
 	@chmod 755 -R ${HOME}/bin
