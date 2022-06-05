@@ -1,85 +1,72 @@
+# ~/.zshrc file for zsh interactive shells.
+# see /usr/share/doc/zsh/examples/zshrc for examples
+
 # History
 HIST_STAMPS="yyyy-mm-dd"
-HISTFILE=$HOME/.histfile
+HISTFILE=~/.zsh_history
 HISTSIZE=10000
-SAVEHIST=10000
+SAVEHIST=$HISTSIZE
 
-# PATHS
+# Paths
 export PATH=$PATH:$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.krew/bin
 export MANPATH=$MANPATH:/usr/local/man
-export LANG=en_US.UTF-8
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+export LANG=en_US.UTF-8
 
-## Common
-if [ -d ~/zsh.d ]; then
-  source ~/.zsh.d/*.zsh
-fi
+# Options
+setopt autocd                 # cd by typing directory name if it's not a command
+setopt auto_list              # automatically list choices on ambiguous completion
+setopt auto_menu              # automatically use menu completion
+setopt always_to_end          # move cursor to end if word had one match
+setopt inc_append_history     # save history entries as soon as they are entered
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+#setopt share_history          # share history between different instances of the shell
 
-## GOLANG
-if [ -d "$GOPATH" ]; then
-  export PATH="$GOPATH/bin:$PATH"
-elif [[ $commands[go] ]]; then
-  export PATH="$(go env GOPATH)/bin:$PATH"
-fi
+# force zsh to show the complete history
+alias history="history 0"
 
-# TMUX
-if [ "$TMUX" = "" ]; then tmux; fi
+# Tool paths
+source ~/.zsh.d/tools.zsh
 
-# EDITOR
-export VISUAL='vi'
+# Alias
+source ~/.zsh.d/alias.zsh
 
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR="$VISUAL"
-else
-  export EDITOR="$VISUAL"
-fi
+# Autocompletion
+autoload -Uz bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
 
-# ALIAS
-alias vi='nvim'
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
+zstyle ':completion:*:*:*:*:*' menu select                                  # select completions with arrow keys
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'                    # case insensitive tab completion
+zstyle ':completion:*' group-name ''                                        # group results by category
+zstyle ':completion:::::' completer _expand _complete _ignored _approximate # enable approximate matches for completion
+zstyle ':completion:*:make:*:targets' call-command true                     # outputs all possible results for make targets
+zstyle ':completion:*:make:*' tag-order targets
+zstyle ':completion:*:descriptions' format '%B%d%b'
+zstyle ':completion:*' special-dirs true
 
-# ZINIT
-# REF. https://github.com/zdharma/zinit
-## Check if zinit is installed
+source ~/.zsh.d/autocomplete.zsh
+
+# zInit: https://github.com/zdharma/zinit
 if [[ ! -d ~/.zinit ]]; then
-  git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+  git clone https://github.com/zdharma-continuum/zinit.git ~/.zinit/bin
 fi
 
 source ~/.zinit/bin/zinit.zsh
+
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# zinit self-update
-
-# ZINIT: Plugins
-zinit light zsh-users/zsh-autosuggestions
-#zinit light zsh-users/zsh-completions
-#zinit light zsh-users/zsh-syntax-highlighting
-#zinit light zsh-users/zsh-history-substring-search
-zinit light zdharma/fast-syntax-highlighting
-zinit load zdharma/history-search-multi-word
-
-zinit for \
-    light-mode  zsh-users/zsh-autosuggestions \
-    light-mode  zdharma/fast-syntax-highlighting \
-                zdharma/history-search-multi-word \
-    light-mode pick"async.zsh" src"pure.zsh" \
-                sindresorhus/pure
-
-zinit ice atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
-zinit light trapd00r/LS_COLORS
-
-# ZINIT: Snippets
-# Oh-my-zsh
-zinit snippet OMZ::plugins/git/git.plugin.zsh
-zinit snippet OMZ::plugins/tig/tig.plugin.zsh
-zinit snippet OMZ::plugins/kubectl/kubectl.plugin.zsh
-zinit snippet OMZ::plugins/helm/helm.plugin.zsh
-zinit snippet OMZ::plugins/docker/_docker
-zinit snippet OMZ::plugins/minikube/minikube.plugin.zsh
-zinit snippet OMZ::plugins/terraform/terraform.plugin.zsh
-zinit snippet OMZ::plugins/asdf/asdf.plugin.zsh
+zinit for light-mode \
+  zsh-users/zsh-syntax-highlighting \
+  zsh-users/zsh-autosuggestions \
+  zsh-users/zsh-completions \
+  zsh-users/zsh-history-substring-search \
+  superbrothers/zsh-kubectl-prompt \
+  pick"async.zsh" src"pure.zsh" \
+  sindresorhus/pure
 
 # Zstyle!
 autoload -Uz vcs_info
@@ -88,15 +75,58 @@ autoload -U promptinit && promptinit
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-PROMPT="%F{113}%m%F{227}の%F{197}%n %{$reset_color%}❯ "
-# の ✯ ☭ ツ ㅎ Æ
-# 魔(demon) 亀 (Kame) 武(Wu) 悟 (Go)
-zstyle ':vcs_info:git:*' formats '%F{240}(%b)%r%f'
+#zstyle ':vcs_info:git:*' formats "%F{247}(%b)%r%f"
+zstyle ':vcs_info:git:*' formats "(%b)%r"
 zstyle ':vcs_info:*' enable git
+zstyle ':zsh-kubectl-prompt:' separator '|'
 
-# AUTOCOMPLETE
-autoload -U +X bashcompinit && bashcompinit
-autoload -U +X compinit && compinit
+PROMPT=$'%F{032}┌──(%F{120}%m%F{226}の%F{196}%n%F{032})\n└─#%{$reset_color%} '
+# 魔(demon) 亀 (Kame) 武(Wu) 悟 (Go) の ✯ ☭ ツ ㅎ Æ 💀
 
-# add Pulumi to the PATH
-#export PATH=$PATH:$HOME/.pulumi/bin
+# Kubectl RPROMPT
+if [[ -d $HOME/.kube ]]; then
+  RPROMPT='%F{092}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+else
+  RPROMPT='%F{226}Klaatu Barada Nitko!'
+fi
+
+# enable color support of ls, less and man, and also add handy aliases
+if [ -x $(which dircolors) ]; then
+  test -r ~/.dircolors && eval “$(dircolors -b ~/.dircolors)" || eval “$(dircolors -b)"
+  alias ls='ls --color=auto'
+  alias dir='dir --color=auto'
+  alias vdir='vdir --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+  alias diff='diff --color=auto'
+  alias ip='ip --color=auto'
+  export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+  export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
+  export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+  export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
+  export LESS_TERMCAP_se=$'\E[0m'       # reset reverse video
+  export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+  export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+  zinit ice atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
+  zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+elif [[ -x $(which gdircolors) ]]; then
+  test -r ~/.dircolors && eval “$(gdircolors -b ~/.dircolors)" || eval “$(gdircolors -b)"
+  alias ls='ls -G'
+  #alias dir='dir --color=auto'
+  #alias vdir='vdir --color=auto'
+  alias grep='grep -G'
+  alias fgrep='fgrep -G'
+  alias egrep='egrep -G'
+  alias diff='diff -G'
+  #alias ip='ip'
+  export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+  export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
+  export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+  export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
+  export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+  export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+  export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+  zinit ice atclone"gdircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
+  zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+fi

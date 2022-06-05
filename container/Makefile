@@ -10,6 +10,8 @@ RESET=$(shell tput sgr0)
 ## Global
 NAME=containers
 VERSION=scratch
+OS=$(shell uname | tr '[:upper:]' '[:lower:]')
+ARCH=$(shell uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$$/arm64/')
 
 ## Paths
 DOTFILES=${HOME}/.dotfiles
@@ -23,12 +25,17 @@ help: ## Shows this makefile help
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+info: ## Show Arch and OS info
+	@echo ""
+	@echo $(OS)
+	@echo $(ARCH)
+
 all: docker kubernetes minis ## Install Docker & Kubernetes tools
-	chmod 755 -R ${HOME}/bin
+	@chmod 755 -R ${HOME}/bin
 	@echo "Container tools installed!"
 
 ## Tools by type
-kubernetes: kubectl kubectx helm krew ## Install Kubernetes tools: Kubectl & Helm
+kubernetes: kubectl kubectx helm kustomize krew oc ## Install Kubernetes tools: Kubectl & Helm
 	@echo "Kubernetes tools enabled."
 
 docker: docker-compose dive ## Install Docker tools: compose, dive
@@ -39,37 +46,33 @@ minis: minikube minishift kind ## Install Minikube and Minishift local kubernete
 
 ## Kubernetes
 kubectl: ## Install Kubectl
-	@echo "Setting up Kubectl" ;\
 	${ASDF} plugin-add kubectl ;\
 	${ASDF} install kubectl latest ;\
-	${ASDF} local kubectl latest ;\
-	$$(which kubectl) version --client=true --short=true
-	@echo "Kubectl done!"
+	${ASDF} global kubectl latest
 
 helm: ## Install Helm
-	@echo "Setting up Helm" ;\
 	${ASDF} plugin-add helm ;\
 	${ASDF} install helm latest ;\
-	${ASDF} local helm latest ;\
-	$$(which helm) version --short ;\
-	ln -s -f ${CONTAINER}/helm.zsh ${HOME}/.zsh.d/helm.zsh	
-	@echo "Helm done!"
+	${ASDF} global helm latest
+
+kubectx: ## Install Kubectx
+	${ASDF} plugin-add kubectx ;\
+	${ASDF} install kubectx latest ;\
+	${ASDF} global kubectx latest
 
 krew: ## Install Krew
-	@echo "Istall Krew" ;\
-	curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.{tar.gz,yaml}" ;\
-	tar zxvf krew.tar.gz ;\
+	@echo "Install Krew" ;\
+	curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew{-linux_amd64.tar.gz,.yaml}" ;\
+	tar zxvf krew-linux_amd64.tar.gz ;\
 	./krew-linux_amd64 install --manifest=krew.yaml --archive=krew.tar.gz ;\
 	./krew-linux_amd64 update ;\
 	rm krew* LICENSE
 	@echo "Krew done!"
 
-kubectx:  ## Install Kubectx
-	@echo "Setting up Kubectx" ;\
-	${ASDF} plugin-add kubectx ;\
-	${ASDF} install kubectx latest ;\
-	${ASDF} local kubectx latest
-	@echo "Kubectx done!"
+kustomize: ## Install Kustomize
+	${ASDF} plugin-add kustomize ;\
+	${ASDF} install kustomize latest ;\
+	${ASDF} global kustomize latest
 
 ## Docker
 docker-compose: ## Install Docker-compose
@@ -80,32 +83,31 @@ docker-compose: ## Install Docker-compose
 
 dive: ## Install Dive
 	@echo "Installing Dive" ;\
-	curl --silent "https://api.github.com/repos/wagoodman/dive/releases/latest" | jq -r '.assets[].browser_download_url' | grep deb | xargs wget -q - ;\
-	sudo sh -c "apt-get install -f ./*.deb" ;\
-	rm *.deb* ;\
-	dive version
-	@echo "Dive Installed"
+	${ASDF} plugin-add dive ;\
+	${ASDF} install dive latest ;\
+	${ASDF} global dive latest
 
 ## Minis
 minikube: ## Install Minikube
 	@echo "Installing Minikube" ;\
-	wget -q https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64 -O ${HOME}/bin/minikube ;\
-	chmod 755 ${HOME}/bin/minikube ;\
-	${HOME}/bin/minikube version
-	@echo "Minikube done!"
+	${ASDF} plugin-add minikube ;\
+	${ASDF} install minikube latest ;\
+	${ASDF} global minikube latest
 
 minishift: ## Install Minishift
-	@echo "Install Minishift" ;\
-	curl --silent "https://api.github.com/repos/minishift/minishift/releases/latest" | jq -r '.assets[].browser_download_url' | grep linux-amd64.tgz | xargs wget ;\
-	tar -xf minishift*.tgz --strip-components=1 -C ${HOME}/bin ;\
-	rm *.tgz* ${HOME}/bin/README.adoc ${HOME}/bin/LICENSE ;\
-	ln -s -f ${CONTAINER}/helm.zsh ${HOME}/.zsh.d/helm.zsh ;\
-	${HOME}/bin/minishift version
-	@echo "Minishift done!"
+	@echo "Installing Minishift" ;\
+	${ASDF} plugin-add minishift ;\
+	${ASDF} install minishift latest ;\
+	${ASDF} global minishift latest
+
+oc: ## Install OC
+	@echo "Installing OC" ;\
+	${ASDF} plugin-add oc ;\
+	${ASDF} install oc latest ;\
+	${ASDF} global oc latest
 
 kind: ## Install Kind (Kubernetes on docker)
 	@echo "Installing Kind" ;\
-	wget -q https://storage.googleapis.com/k8s-staging-kind/latest/kind-linux-amd64 -O ${HOME}/bin/kind ;\
-	chmod u+x ${HOME}/bin/kind ;\
-	${HOME}/bin/kind version
-	@echo "Kind done!"
+	${ASDF} plugin-add kind ;\
+	${ASDF} install kind latest ;\
+	${ASDF} global kind latest

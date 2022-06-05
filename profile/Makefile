@@ -10,10 +10,12 @@ RESET=$(shell tput sgr0)
 ## Global
 NAME=profile
 VERSION=scratch
+OS=$(shell uname -s)
 
 ## Paths
 DOTFILES=${HOME}/.dotfiles
 PROFILE=${DOTFILES}/profile
+ASDF=${HOME}/.asdf/bin/asdf
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
@@ -26,29 +28,26 @@ all: profile ## Install Profile, IaC, Cloud and terminal addons
 	@echo "Local environment succesfully configured"
 
 ## Profile Settings
-profile: bash zsh tmux neovim ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
+profile: zsh tmux neovim ## Install ZSH, TMUX and Vim/Neovim plugins and profiles
 	@echo "Custom profile ready to rumble. Enjoy!"
 
-bash: ## Install Bash profile
-	@echo "Setting up BASH profile" ;\
-	ln -s -f ${PROFILE}/bashrc ${HOME}/.bashrc
-
-zsh: ## Sets ZSH as default Shell, and install ZSH profile and zplug with plugins
-	@echo "Setting up ZSH profile" ;\
-	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends zsh" ;\
-	sudo sh -c "usermod --shell /bin/zsh ${USER}" ;\
-	mkdir -p ${HOME}/.zsh.d ;\
-	ln -s -f ${PROFILE}/zshrc ${HOME}/.zshrc
+zsh:
+ifeq ($(OS), Linux)
+	@echo "Setting up ZSH shell to user"
+	@sudo sh -c "usermod --shell /bin/zsh ${USER}"
+endif
+	@rm ${HOME}/.zshrc ${HOME}/.zsh.d
+	@sh -c "ln -s -f ${PROFILE}/zshrc ${HOME}/.zshrc"
+	@sh -c "ln -s -f ${PROFILE}/zsh.d ${HOME}/.zsh.d"
+	@echo "ZSH configured"
 
 neovim: ## Install Vim/Neovim profile and vimplug plugins
 	@echo "Setting up NeoVIM" ;\
-	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends neovim vim" ;\
 	mkdir -p ~/.config/nvim ;\
 	ln -s -f ${PROFILE}/vimrc ${HOME}/.config/nvim/init.vim ;\
 	ln -s -f ${PROFILE}/vimrc ${HOME}/.vimrc
 
 tmux: ## Install TMUX profile
 	@echo "Setting up TMUX" ;\
-	sudo sh -c "apt-get update -qq && apt-get install -qq -y --no-install-recommends tmux" ;\
 	wget -q https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf -O ${HOME}/.tmux.conf ;\
 	ln -s -f ${PROFILE}/tmux.local ${HOME}/.tmux.conf.local

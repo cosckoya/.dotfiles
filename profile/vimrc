@@ -24,7 +24,7 @@ filetype plugin on
 
 " THEME
 set guifont=Menlo\ Regular:h16
-set lines=45 columns=95
+" set lines=60 columns=120
 set colorcolumn=90
 set number
 syntax on
@@ -80,7 +80,7 @@ map <C-o> :NERDTreeToggle<CR>
 
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
-  \     'colorscheme': 'one_dark',
+  \     'colorscheme': 'srcery_drk',
   \     'active': {
   \         'left': [['mode', 'paste' ], ['readonly', 'filename', 'modified']],
   \         'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding']]

@@ -60,18 +60,19 @@
 
 Linux Profile by Cosckoya
 ```
-# Requires the following debian / ubuntu packages
-
-Run on command line:
-
-```bash
-sudo apt install -y git \
-              make \
-              curl \
-              python3 \
-              python3-distutils
+# Requires the following Linux packages
 ```
-Help:
+git
+zsh
+neovim
+make
+automake
+curl
+python3
+python3-distutils
+
+```
+# Help
 ```bash
 make help
 ```
@@ -86,13 +87,14 @@ $ make help
 Klaatu Barata Nitko!
 
 all                            Install everything
+asdf                           Install asdf
 cloud                          Install AWS, Azure Cli and Google SDK
 container                      Install Docker & Kubernetes tools
 dependencies                   Install Linux package dependencies
 docker                         Install Docker CE
 help                           Shows this makefile help
 iac                            Install IaC
-nodejs                         Install NodeJS with Yarn and NPM
+nodejs                         Install NodeJS
 pip                            Install Python Pip3
 profile                        Install ZSH, Tmux and Neovim profiles
 tools                          Install tools 
