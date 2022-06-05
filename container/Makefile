@@ -62,8 +62,8 @@ kubectx: ## Install Kubectx
 
 krew: ## Install Krew
 	@echo "Install Krew" ;\
-	curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew.{tar.gz,yaml}" ;\
-	tar zxvf krew.tar.gz ;\
+	curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew{-linux_amd64.tar.gz,.yaml}" ;\
+	tar zxvf krew-linux_amd64.tar.gz ;\
 	./krew-linux_amd64 install --manifest=krew.yaml --archive=krew.tar.gz ;\
 	./krew-linux_amd64 update ;\
 	rm krew* LICENSE
