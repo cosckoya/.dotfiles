@@ -16,6 +16,7 @@ OS=$(shell uname -s)
 DOTFILES=${HOME}/.dotfiles
 CLOUD=${DOTFILES}/cloud
 ASDF=${HOME}/.asdf/bin/asdf
+ZSHD_DIR=$(firstword $(wildcard ${HOME}/.asereje.zshd.dafunk/))
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
@@ -49,3 +50,13 @@ google: ## Install Google SDK (glcoud)
 	@${ASDF} install gcloud latest
 	@${ASDF} global gcloud latest
 	@gcloud version
+
+autocomplete: ## Install Shell Autocomplete
+	@echo "Setting up shell autocomplete"
+ifeq (,$(ZSHD_DIR))
+	@echo "~/zsh.d directory found!"
+else
+	@echo "~/zsh.d directory not found!"
+	@echo "Creating directory..."
+	@mkdir -p ${ZSHD_DIR}
+endif
