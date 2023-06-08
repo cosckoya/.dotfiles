@@ -23,7 +23,7 @@ help: ## Shows this makefile help
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-all: dependencies profile tools cloud container iac ## Install everything
+all: dependencies profile tools container ## Install everything
 
 profile: ## Install ZSH, Tmux and Neovim profiles
 	$(MAKE) all -C profile
@@ -33,12 +33,6 @@ tools: ## Install tools
 
 container: ## Install Docker & Kubernetes tools
 	$(MAKE) all -C container
-
-cloud: ## Install AWS, Azure Cli and Google SDK
-	$(MAKE) all -C cloud
-
-iac: ## Install IaC
-	$(MAKE) all -C iac
 
 ## Main tasks
 dependencies: asdf pip nodejs docker ## Install Linux package dependencies
@@ -57,13 +51,6 @@ pip: ## Install Python Pip3
 	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py ;\
 	python3 get-pip.py --user ;\
 	rm get-pip.py
-
-docker: ## Install Docker CE
-	@echo "Installing Docker CE" ;\
-	curl -fsSL https://get.docker.com -o get-docker.sh ;\
-	sudo sh -c "sh get-docker.sh" ;\
-	rm ./get-docker.sh ;\
-	sudo sh -c "usermod -aG docker ${USER}"
 
 asdf: ## Install asdf
 	@echo "Installing ASDF" ;\

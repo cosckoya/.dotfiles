@@ -88,12 +88,9 @@ Klaatu Barata Nitko!
 
 all                            Install everything
 asdf                           Install asdf
-cloud                          Install AWS, Azure Cli and Google SDK
 container                      Install Docker & Kubernetes tools
 dependencies                   Install Linux package dependencies
-docker                         Install Docker CE
 help                           Shows this makefile help
-iac                            Install IaC
 nodejs                         Install NodeJS
 pip                            Install Python Pip3
 profile                        Install ZSH, Tmux and Neovim profiles
