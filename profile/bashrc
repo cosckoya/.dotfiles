@@ -1,0 +1,4 @@
+
+export PATH=$PATH:/home/cosckoya/bin
+
+source '/home/cosckoya/lib/azure-cli/az.completion'
