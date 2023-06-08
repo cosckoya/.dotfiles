@@ -31,17 +31,16 @@ info: ## Show Arch and OS info
 	@echo $(ARCH)
 
 all: docker kubernetes minis ## Install Docker & Kubernetes tools
-	@chmod 755 -R ${HOME}/bin
 	@echo "Container tools installed!"
 
 ## Tools by type
-kubernetes: kubectl kubectx helm kustomize krew oc ## Install Kubernetes tools: Kubectl & Helm
+kubernetes: kubectl kubectx helm krew ## Install Kubernetes tools: Kubectl & Helm
 	@echo "Kubernetes tools enabled."
 
-docker: docker-compose dive ## Install Docker tools: compose, dive
+docker: docker-ce docker-compose dive ## Install Docker tools: compose, dive
 	@echo "Docker tools enabled."
 
-minis: minikube minishift kind ## Install Minikube and Minishift local kubernetes clusters
+minis: kind ## Install Minikube and Minishift local kubernetes clusters
 	@echo "Minis installed."
 
 ## Kubernetes
@@ -61,23 +60,23 @@ kubectx: ## Install Kubectx
 	${ASDF} global kubectx latest
 
 krew: ## Install Krew
-	@echo "Install Krew" ;\
-	curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew{-linux_amd64.tar.gz,.yaml}" ;\
-	tar zxvf krew-linux_amd64.tar.gz ;\
-	./krew-linux_amd64 install --manifest=krew.yaml --archive=krew.tar.gz ;\
-	./krew-linux_amd64 update ;\
-	rm krew* LICENSE
-	@echo "Krew done!"
-
-kustomize: ## Install Kustomize
-	${ASDF} plugin-add kustomize ;\
-	${ASDF} install kustomize latest ;\
-	${ASDF} global kustomize latest
+	${ASDF} plugin-add krew ;\
+	${ASDF} install krew latest ;\
+	${ASDF} global krew latest
 
 ## Docker
+
+docker-ce: ## Install Docker CE
+	@echo "Installing Docker CE" ;\
+	curl -fsSL https://get.docker.com -o get-docker.sh ;\
+	sudo sh -c "sh get-docker.sh" ;\
+	rm ./get-docker.sh ;\
+	sudo sh -c "usermod -aG docker ${USER}"
+
 docker-compose: ## Install Docker-compose
 	@echo "Installing Docker Compose" ;\
 	wget -q https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64 -O ${HOME}/bin/docker-compose ;\
+	chmod 755 -R ${HOME}/bin/docker-compose ;\
 	${HOME}/bin/docker-compose -v
 	@echo "Docker compose done!"
 
@@ -86,25 +85,6 @@ dive: ## Install Dive
 	${ASDF} plugin-add dive ;\
 	${ASDF} install dive latest ;\
 	${ASDF} global dive latest
-
-## Minis
-minikube: ## Install Minikube
-	@echo "Installing Minikube" ;\
-	${ASDF} plugin-add minikube ;\
-	${ASDF} install minikube latest ;\
-	${ASDF} global minikube latest
-
-minishift: ## Install Minishift
-	@echo "Installing Minishift" ;\
-	${ASDF} plugin-add minishift ;\
-	${ASDF} install minishift latest ;\
-	${ASDF} global minishift latest
-
-oc: ## Install OC
-	@echo "Installing OC" ;\
-	${ASDF} plugin-add oc ;\
-	${ASDF} install oc latest ;\
-	${ASDF} global oc latest
 
 kind: ## Install Kind (Kubernetes on docker)
 	@echo "Installing Kind" ;\
