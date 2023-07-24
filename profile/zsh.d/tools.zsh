@@ -1,16 +1,16 @@
 # Tool paths
 
 # TMUX
-if [[ "$TMUX" = "" ]]; then tmux; fi
+tmux 2>/dev/null || true
 
 # EDITOR
-if [[ -f $(which nvim) ]]; then
+if command -v nvim >/dev/null 2>&1; then
   export VISUAL='vi'
   export EDITOR="$VISUAL"
   alias vi='nvim'
 fi
 
 # GOLANG
-if [ -d "$GOPATH" ]; then 
+if [[ -d "$GOPATH" ]]; then
   export PATH="$PATH:$GOPATH/bin"
-fi 
+fi

@@ -1,6 +1,6 @@
 .ONESHELL:
 .SHELL:=/bin/sh
-.PHONY: help all profile tools cloud container iac
+.PHONY: help all profile tools container iac
 .DEFAULT_GOAL:=help
 CURRENT_FOLDER=$(shell basename "$$(pwd)")
 BOLD=$(shell tput bold)
@@ -35,25 +35,25 @@ container: ## Install Docker & Kubernetes tools
 	$(MAKE) all -C container
 
 ## Main tasks
-dependencies: asdf pip nodejs docker ## Install Linux package dependencies
+dependencies: asdf pip nodejs ## Install Linux package dependencies
 
 nodejs: ## Install NodeJS
-	@echo "Installing Nodejs & Yarn" ;\
-	${ASDF} plugin-add nodejs ;\
-	${ASDF} install nodejs latest ;\
-	${ASDF} global nodejs latest ;\
-	sudo sh -c "npm install --global yarn" ;\
-	sudo sh -c "npm install --global npm" ;\
+	@echo "Installing Nodejs & Yarn"
+	${ASDF} plugin-add nodejs
+	${ASDF} install nodejs latest
+	${ASDF} global nodejs latest
+	sudo sh -c "npm install --global yarn"
+	sudo sh -c "npm install --global npm"
 	$$(which node) --version
 
 pip: ## Install Python Pip3
-	@echo "Installing Python Pip3" ;\
-	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py ;\
-	python3 get-pip.py --user ;\
+	@echo "Installing Python Pip3"
+	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+	python3 get-pip.py --user
 	rm get-pip.py
 
 asdf: ## Install asdf
-	@echo "Installing ASDF" ;\
-	rm -rf ${HOME}/.asdf ;\
+	@echo "Installing ASDF"
+	rm -rf ${HOME}/.asdf
 	git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
 	@echo "ASDF done!"

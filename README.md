@@ -81,7 +81,7 @@ make all
 ```
 <!-- START makefile-doc -->
 ```
-$ make help
+$ make help 
 
 Klaatu Barata Nitko!
 
@@ -93,6 +93,6 @@ help                           Shows this makefile help
 nodejs                         Install NodeJS
 pip                            Install Python Pip3
 profile                        Install ZSH, Tmux and Neovim profiles
-tools                          Install tools
+tools                          Install tools 
 ```
 <!-- END makefile-doc -->
