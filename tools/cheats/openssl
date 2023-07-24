@@ -1,33 +1,70 @@
-# Check a Certificate Signing Request (CSR)
-openssl req -text -noout -verify -in <certificate>.csr
+# Generating a Private Key
+openssl genpkey -algorithm RSA -out private.key
+## Creating a Password-Protected Private Key
+openssl genpkey -algorithm RSA -aes256 -out private.key
+## Creating a Password-Protected Private Key
+openssl rsa -in private.key -pubout -out public.key
 
 # Check a private key
-openssl rsa -in <privatekey> -check
+openssl rsa -in private.key -check
+
+# Generating a Certificate Signing Request (CSR) 
+openssl req -new -key private.key -out certificate.csr
+
+# Signing a CSR with a CA
+openssl x509 -req -in certificate.csr -CA intermediateCA.crt -CAkey private.key -CAcreateserial -out certificate.crt -days 365
+
+# Check a Certificate Signing Request (CSR)
+openssl req -text -noout -verify -in certificate.csr
+## Checking CSR Details
+openssl req -in certificate.csr -noout -text
+
+# Generating a Self-Signed Certificate
+openssl req -new -x509 -key private.key -out certificate.crt -days 365
 
 # Check a x509 certificate
-openssl x509 -in <certificate> -text -noout
+openssl x509 -in certificate.crt -text -noout
+## Viewing Certificate Expiry
+openssl x509 -enddate -noout -in certificate.crt
 
 # Check a DER certificate
-openssl x509 -in <certificate> -inform DER -text
-
-# Check a PKCS#12 file (.pfx or .p12)
-openssl pkcs12 -info -in <certificate>.<p12|pfx>
+openssl x509 -in certificate.der -inform DER -text
 
 # Generate a PKCS12 certificate
-openssl pkcs12 -export -out <certificate>.<p12|pfx> -inkey <privatekey> -in <certificate> -certfile <intermediateCA>
+openssl pkcs12 -export -out certificate.<p12|pfx> -inkey private.key -in certificate.crt -certfile intermediateCA.crt
+
+# Check a PKCS#12 file (.pfx or .p12)
+openssl pkcs12 -info -in certificate.<p12|pfx>
 
 # Check a PKCS12 certificate
-openssl pkcs12 -in <certificate>.<p12|pfx> -nocerts -nodes -out <privatekey>
-openssl pkcs12 -in <certificate>.<p12|pfx> -clcerts -nodes -nokeys -out <certificate>
-openssl pkcs12 -in <certificate>.<p12|pfx> -cacerts -nodes -nokeys -chain -out <intermediateCA>
+openssl pkcs12 -in certificate.<p12|pfx> -nocerts -nodes -out private.key
+openssl pkcs12 -in certificate.<p12|pfx> -clcerts -nodes -nokeys -out certificate.crt
+openssl pkcs12 -in certificate.<p12|pfx> -cacerts -nodes -nokeys -chain -out intermediateCA.crt
 
 # Export certificate and private key from PKCS12 certificate
-openssl pkcs12 -in <certificate>.<p12|pfx> -nocerts -nodes | sed -ne '/-BEGIN PRIVATE KEY-/,/-END PRIVATE KEY-/p' > <privatekey>
-openssl pkcs12 -in <certificate>.<p12|pfx> -clcerts -nokeys | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > <certificate>
-openssl pkcs12 -in <certificate>.<p12|pfx> -cacerts -nokeys -chain | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > <intermediateCA>
+openssl pkcs12 -in certificate.<p12|pfx> -nocerts -nodes | sed -ne '/-BEGIN PRIVATE KEY-/,/-END PRIVATE KEY-/p' > private.key
+openssl pkcs12 -in certificate.<p12|pfx> -clcerts -nokeys | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > certificate.crt
+openssl pkcs12 -in certificate.<p12|pfx> -cacerts -nokeys -chain | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > intermediateCA.crt
 
+# -- 
+# Encrypting and Decrypting Files
+# Encrypting
+openssl enc -aes256 -in sensitive.txt -out sensitive.enc
+# Decrypting
+openssl enc -aes256 -d -in sensitive.enc -out sensitive.txt
+
+# Encrypting and Decrypting Files with a Passphrase
+## Encrypting File
+openssl enc -aes256 -salt -in sensitive.txt -out sensitive.enc
+## Decrypting File
+openssl enc -aes256 -d -in sensitive.enc -out sensitive_decrypted.txt
+
+# -- 
 # Check SSL on site
-openssl s_client -showcerts -servername <server_name> -connect www.schiller.edu:443
+openssl s_client -showcerts -servername <server_name> -connect <server_name>:<server_port>
 
 # Check SSL on site: date
-echo | openssl s_client -showcerts -servername <server_name> -connect <url>:443 | openssl x509 -noout -dates
+echo | openssl s_client -showcerts -servername <server_name> -connect <server_name>:<server_port> | openssl x509 -noout -dates
+
+# Testing Heartbleed Vulnerability
+openssl s_client -connect <server_name>:<server_port> -tlsextdebug -tls1 -x -no_ssl3
