@@ -1,13 +1,22 @@
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
 
+# Zinit: https://github.com/zdharma/zinit
+if [[ ! -d ~/.zinit/bin ]]; then
+  git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+fi
+
 # Paths
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/Library/Python/3.9/bin:$HOME/.krew/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$PATH
 export MANPATH=/usr/local/man:$MANPATH
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 export LANG=en_US.UTF-8
 
+# Initialize Zinit
+source $HOME/.zinit/bin/zi.zsh
+
 # History
+alias history="history 0"
 HIST_STAMPS="yyyy-mm-dd"
 HISTFILE=~/.zsh_history
 HISTSIZE=1000
@@ -33,27 +42,28 @@ source ~/.zsh.d/alias.zsh
 # Autocompletion
 autoload -Uz bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
-
-# Zinit: https://github.com/zdharma/zinit
-if [[ ! -d ~/.zinit/bin ]]; then
-  git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
-fi
-
-source ~/.zinit/bin/zinit.zsh
-
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-zinit light-mode for \
-  zsh-users/zsh-syntax-highlighting \
+# Zinit Plugins
+zi ice pick"async.zsh" src"pure.zsh"
+zi light sindresorhus/pure
+
+zinit for \
+    light-mode \
   zsh-users/zsh-autosuggestions \
   zsh-users/zsh-completions \
-  zsh-users/zsh-history-substring-search \
+    light-mode \
+  zdharma-continuum/fast-syntax-highlighting \
+  zdharma-continuum/history-search-multi-word \
+    light-mode \
   superbrothers/zsh-kubectl-prompt \
-  pick"async.zsh" src"pure.zsh" \
+    light-mode \
+    pick"async.zsh" \
+    src"pure.zsh" \
   sindresorhus/pure
 
-# Customizations
+# Prompt Customizations
 autoload -Uz vcs_info
 autoload -U colors && colors
 autoload -U promptinit && promptinit
@@ -101,7 +111,7 @@ if command -v dircolors >/dev/null 2>&1; then
   export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
   export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
   export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
-  export LESS_TERMCAP_se=$'\E[0m'       # reset reverse video
+  export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
   export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
   export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
   zinit ice atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
@@ -130,10 +140,3 @@ elif command -v gdircolors >/dev/null 2>&1; then
   zinit ice atclone"gdircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
   zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 fi
- 
-
-# History
-alias history="history 0"
-
-# Initialize Zinit
-source $HOME/.zinit/bin/zinit.zsh
