@@ -44,6 +44,8 @@ autoload -Uz bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
+# Shell Custom Autocompletions
+source ~/.zsh.d/autocomplete.zsh
 
 # Zinit Plugins
 zi ice pick"async.zsh" src"pure.zsh"
