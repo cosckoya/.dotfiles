@@ -25,7 +25,7 @@ help: ## Shows this makefile help
 
 all: tools ## Install linux tools
 
-tools: pre-commit cheat github-cli ## Install Linux tools
+tools: pre-commit cheat ## Install Linux tools
 	@echo "Shell Add-ons enabled. Enjoy!"
 
 ## Tools
@@ -42,9 +42,3 @@ cheat: ## Install cheat
 	@mkdir -p ${HOME}/.config/cheat/cheatsheets && cheat --init > ${HOME}/.config/cheat/conf.yml
 	@git clone https://github.com/cheat/cheatsheets.git ${HOME}/.config/cheat/cheatsheets/community
 	@ln -s -f ${TOOLS}/cheats ${HOME}/.config/cheat/cheatsheets/personal
-
-github-cli: ## Install Github CLI
-	@echo "Installing Github CLI"
-	@${ASDF} plugin-add github-cli
-	@${ASDF} install github-cli lastest
-	@${ASDF} global github-cli latest
