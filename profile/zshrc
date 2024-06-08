@@ -142,3 +142,6 @@ elif command -v gdircolors >/dev/null 2>&1; then
   zinit ice atclone"gdircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh" nocompile'!'
   zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 fi
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /home/cosckoya/.asdf/installs/terraform/1.8.5/bin/terraform terraform
