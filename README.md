@@ -83,16 +83,14 @@ make all
 ```
 $ make help 
 
-Klaatu Barata Nitko!
+Usage: make [target]
 
+Targets:
 all                            Install everything
 asdf                           Install asdf
-container                      Install Docker & Kubernetes tools
-dependencies                   Install Linux package dependencies
+containers                     Install Docker & Kubernetes tools
 help                           Shows this makefile help
-nodejs                         Install NodeJS
-pip                            Install Python Pip3
-profile                        Install ZSH, Tmux and Neovim profiles
+profile                        Install ZSH, Tmux, and Neovim profiles
 tools                          Install tools 
 ```
 <!-- END makefile-doc -->

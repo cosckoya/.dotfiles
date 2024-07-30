@@ -1,7 +1,9 @@
 # Tool paths
 
 # TMUX
-tmux 2>/dev/null || true
+#if [ "$DESKTOP_SESSION" != "bspwm" ] && ! tmux has-session 2>/dev/null; then
+#  tmux
+#fi
 
 # EDITOR
 if command -v nvim >/dev/null 2>&1; then
