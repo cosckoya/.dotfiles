@@ -15,7 +15,6 @@ OS=$(shell uname -s)
 ## Paths
 DOTFILES=${HOME}/.dotfiles
 PROFILE=${DOTFILES}/profile
-ASDF=${HOME}/.asdf/bin/asdf
 
 ## Burn, baby, burn
 help: ## Shows this makefile help

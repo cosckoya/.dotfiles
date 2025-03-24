@@ -10,11 +10,11 @@ RESET=$(shell tput sgr0)
 ## Global
 NAME=main
 VERSION=scratch
-OS=$(shell uname -s)
+OS=$(shell uname -s | tr '[:upper:]' '[:lower:]')
+ARCH=$(shell uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$$/arm64/')
 
 ## Paths
 DOTFILES=${HOME}/.dotfiles
-ASDF=${HOME}/.asdf/bin/asdf
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
@@ -37,6 +37,7 @@ containers: ## Install Docker & Kubernetes tools
 
 asdf: ## Install asdf
 	@echo "Installing ASDF"
-	rm -rf ${HOME}/.asdf
-	git clone https://github.com/asdf-vm/asdf.git ${HOME}/.asdf || (echo "$(RED)Error: Cloning ASDF failed.$(RESET)" && exit 1)
+	wget -q https://github.com/asdf-vm/asdf/releases/latest/download/asdf-latest-linux-amd64.tar.gz -O ${HOME}/asdf-linux-amd64.tar.gz ;\
+	tar -xzf ${HOME}/asdf-linux-amd64.tar.gz -C ${HOME}/bin ;\
+	rm ${HOME}/asdf-linux-amd64.tar.gz
 	@echo "ASDF installation completed successfully"

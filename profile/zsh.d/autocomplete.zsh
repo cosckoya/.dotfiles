@@ -1,6 +1,5 @@
-if [[ -d $HOME/.asdf ]]; then
-  source "$HOME/.asdf/asdf.sh"
-  source "$HOME/.asdf/completions/asdf.bash"
+if command -v asdf >/dev/null 2>&1; then
+  #source <(asdf completion zsh)
   if [[ $(uname -m) != "x86_64" ]]; then
     alias asdf='arch -x86_64 asdf'
   fi

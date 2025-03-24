@@ -16,7 +16,6 @@ ARCH=$(shell uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' 
 ## Paths
 DOTFILES=${HOME}/.dotfiles
 CONTAINER=${DOTFILES}/cloud
-ASDF=${HOME}/.asdf/bin/asdf
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
@@ -30,26 +29,26 @@ all: terraform checkov trivy terraform-docs
 
 ## terraform
 terraform: ## Install Terraform
-	${ASDF} plugin-add terraform ;\
-	${ASDF} install terraform latest ;\
-	${ASDF} global terraform latest
+	asdf plugin-add terraform ;\
+	asdf install terraform latest ;\
+	asdf global terraform latest
 
 checkov: ## Install CheckOV
-	${ASDF} plugin-add checkov ;\
-	${ASDF} install checkov latest ;\
-	${ASDF} global checkov latest
+	asdf plugin-add checkov ;\
+	asdf install checkov latest ;\
+	asdf global checkov latest
 
 terraform-docs: ## Install Terraform-docs
-	${ASDF} plugin-add terraform-docs ;\
-	${ASDF} install terraform-docs latest ;\
-	${ASDF} global terraform-docs latest
+	asdf plugin-add terraform-docs ;\
+	asdf install terraform-docs latest ;\
+	asdf global terraform-docs latest
 
 tfsec: ## Install TFSec
-	${ASDF} plugin-add tfsec ;\
-	${ASDF} install tfsec latest ;\
-	${ASDF} global tfsec latest
+	asdf plugin-add tfsec ;\
+	asdf install tfsec latest ;\
+	asdf global tfsec latest
 
 trivy: ## Install Trivy
-	${ASDF} plugin-add trivy ;\
-	${ASDF} install trivy latest ;\
-	${ASDF} global trivy latest	
+	asdf plugin-add trivy ;\
+	asdf install trivy latest ;\
+	asdf global trivy latest	

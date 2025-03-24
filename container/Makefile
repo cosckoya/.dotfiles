@@ -16,7 +16,6 @@ ARCH=$(shell uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' 
 ## Paths
 DOTFILES=${HOME}/.dotfiles
 CONTAINER=${DOTFILES}/container
-ASDF=${HOME}/.asdf/bin/asdf
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
@@ -45,24 +44,24 @@ minis: kind ## Install Minikube and Minishift local kubernetes clusters
 
 ## Kubernetes
 kubectl: ## Install Kubectl
-	${ASDF} plugin-add kubectl ;\
-	${ASDF} install kubectl latest ;\
-	${ASDF} global kubectl latest
+	asdf plugin-add kubectl ;\
+	asdf install kubectl latest ;\
+	asdf global kubectl latest
 
 helm: ## Install Helm
-	${ASDF} plugin-add helm ;\
-	${ASDF} install helm latest ;\
-	${ASDF} global helm latest
+	asdf plugin-add helm ;\
+	asdf install helm latest ;\
+	asdf global helm latest
 
 kubectx: ## Install Kubectx
-	${ASDF} plugin-add kubectx ;\
-	${ASDF} install kubectx latest ;\
-	${ASDF} global kubectx latest
+	asdf plugin-add kubectx ;\
+	asdf install kubectx latest ;\
+	asdf global kubectx latest
 
 krew: ## Install Krew
-	${ASDF} plugin-add krew ;\
-	${ASDF} install krew latest ;\
-	${ASDF} global krew latest
+	asdf plugin-add krew ;\
+	asdf install krew latest ;\
+	asdf global krew latest
 
 ## Docker
 
@@ -82,12 +81,12 @@ docker-compose: ## Install Docker-compose
 
 dive: ## Install Dive
 	@echo "Installing Dive" ;\
-	${ASDF} plugin-add dive ;\
-	${ASDF} install dive latest ;\
-	${ASDF} global dive latest
+	asdf plugin-add dive ;\
+	asdf install dive latest ;\
+	asdf global dive latest
 
 kind: ## Install Kind (Kubernetes on docker)
 	@echo "Installing Kind" ;\
-	${ASDF} plugin-add kind ;\
-	${ASDF} install kind latest ;\
-	${ASDF} global kind latest
+	asdf plugin-add kind ;\
+	asdf install kind latest ;\
+	asdf global kind latest
