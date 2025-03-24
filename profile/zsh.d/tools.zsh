@@ -20,3 +20,7 @@ fi
 if command -v npm >/dev/null 2>&1; then
   export PATH=$PATH:$(npm get prefix)/bin
 fi
+
+if command -v asdf >/dev/null 2>&1; then
+  export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+fi
