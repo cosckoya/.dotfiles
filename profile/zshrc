@@ -7,7 +7,7 @@ if [[ ! -d ~/.zinit/bin ]]; then
 fi
 
 # Paths
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.asdf/shims:$PATH
 export MANPATH=/usr/local/man:$MANPATH
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 export LANG=en_US.UTF-8
