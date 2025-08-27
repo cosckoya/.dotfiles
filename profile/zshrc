@@ -35,6 +35,7 @@ setopt hist_verify
 
 # Tool paths
 source ~/.zsh.d/tools.zsh
+source ~/.zsh.d/toolbox.zsh
 
 # Alias
 source ~/.zsh.d/alias.zsh
