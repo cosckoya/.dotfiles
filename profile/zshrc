@@ -1,9 +1,9 @@
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
 
-# Zinit: https://github.com/zdharma/zinit
-if [[ ! -d ~/.zinit/bin ]]; then
-  git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+# Zinit: https://github.com/zdharma-continuum/zinit
+if [[ ! -d ~/.local/share/zinit/zinit.git ]]; then
+  git clone https://github.com/zdharma-continuum/zinit.git ~/.local/share/zinit/zinit.git
 fi
 
 # Paths
@@ -13,7 +13,7 @@ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 export LANG=en_US.UTF-8
 
 # Initialize Zinit
-source $HOME/.zinit/bin/zi.zsh
+source $HOME/.local/share/zinit/zinit.git/zinit.zsh
 
 # History
 alias history="history 0"
@@ -49,8 +49,8 @@ autoload -Uz _zinit
 source ~/.zsh.d/autocomplete.zsh
 
 # Zinit Plugins
-zi ice pick"async.zsh" src"pure.zsh"
-zi light sindresorhus/pure
+zinit ice pick"async.zsh" src"pure.zsh"
+zinit light sindresorhus/pure
 
 zinit for \
     light-mode \
@@ -60,11 +60,7 @@ zinit for \
   zdharma-continuum/fast-syntax-highlighting \
   zdharma-continuum/history-search-multi-word \
     light-mode \
-  superbrothers/zsh-kubectl-prompt \
-    light-mode \
-    pick"async.zsh" \
-    src"pure.zsh" \
-  sindresorhus/pure
+  superbrothers/zsh-kubectl-prompt
 
 # Prompt Customizations
 autoload -Uz vcs_info

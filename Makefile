@@ -37,8 +37,7 @@ containers: ## Install Docker & Kubernetes tools
 
 asdf: ## Install asdf
 	@echo "Installing ASDF"
+	wget -q https://github.com/asdf-vm/asdf/releases/download/v0.18.0/asdf-v0.18.0-linux-amd64.tar.gz -O ${HOME}/asdf-linux-amd64.tar.gz ;\
 	tar -xzf ${HOME}/asdf-linux-amd64.tar.gz -C ${HOME}/bin ;\
-  #	wget -q https://github.com/asdf-vm/asdf/releases/latest/download/asdf-latest-linux-amd64.tar.gz -O ${HOME}/asdf-linux-amd64.tar.gz ;\
-	wget -q  https://github.com/asdf-vm/asdf/releases/download/v0.18.0/asdf-v0.18.0-linux-amd64.tar.gzi -O ${HOME}/asdf-linux-amd64.tar.gz ;\
 	rm ${HOME}/asdf-linux-amd64.tar.gz
 	@echo "ASDF installation completed successfully"

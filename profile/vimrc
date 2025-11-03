@@ -14,8 +14,10 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 " FORMAT
-set encoding=utf-8
-set ambiwidth=single
+if !has('nvim')
+  set encoding=utf-8
+  set ambiwidth=single
+endif
 set fileencoding=utf-8
 set fileformats=unix
 let mapleader=" "
@@ -25,8 +27,9 @@ filetype on
 filetype plugin on
 
 " THEME
-set guifont=Menlo\ Regular:h16
-" set lines=60 columns=120
+if has('gui_running')
+  set guifont=Menlo\ Regular:h16
+endif
 set colorcolumn=90
 set number
 syntax on
@@ -74,17 +77,20 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install --frozen-lockfile --production',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
+" Prettier (requires yarn/npm)
+if executable('yarn') || executable('npm')
+  Plug 'prettier/vim-prettier', {
+    \ 'do': 'yarn install --frozen-lockfile --production',
+    \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
+endif
 
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
-      \ 'colorscheme': 'srcery_drk',
+      \ 'colorscheme': 'default',
       \ 'active': {
       \   'left': [['mode', 'paste' ], ['readonly', 'filename', 'modified']],
       \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding']]
-      \ }      
+      \ }
   \ }
 
 call plug#end()
