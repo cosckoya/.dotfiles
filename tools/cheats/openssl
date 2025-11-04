@@ -8,7 +8,7 @@ openssl rsa -in private.key -pubout -out public.key
 # Check a private key
 openssl rsa -in private.key -check
 
-# Generating a Certificate Signing Request (CSR) 
+# Generating a Certificate Signing Request (CSR)
 openssl req -new -key private.key -out certificate.csr
 
 # Signing a CSR with a CA
@@ -46,7 +46,7 @@ openssl pkcs12 -in certificate.<p12|pfx> -nocerts -nodes | sed -ne '/-BEGIN PRIV
 openssl pkcs12 -in certificate.<p12|pfx> -clcerts -nokeys | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > certificate.crt
 openssl pkcs12 -in certificate.<p12|pfx> -cacerts -nokeys -chain | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > intermediateCA.crt
 
-# -- 
+# --
 # Encrypting and Decrypting Files
 # Encrypting
 openssl enc -aes256 -in sensitive.txt -out sensitive.enc
@@ -59,7 +59,7 @@ openssl enc -aes256 -salt -in sensitive.txt -out sensitive.enc
 ## Decrypting File
 openssl enc -aes256 -d -in sensitive.enc -out sensitive_decrypted.txt
 
-# -- 
+# --
 # Check SSL on site
 openssl s_client -showcerts -servername <server_name> -connect <server_name>:<server_port>
 

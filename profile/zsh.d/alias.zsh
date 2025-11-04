@@ -7,7 +7,7 @@ if command -v docker >/dev/null 2>&1; then
   alias parrot='docker run --rm -ti parrotsec/core bash'
   alias debian='docker run --rm -ti debian:latest bash'
   alias archlinux='docker run --rm -ti archlinux:latest bash'
-  
+
   # Security tools
   alias wpscan='docker run -it --rm wpscanteam/wpscan'
   alias nikto='docker run --rm -ti secfigo/nikto'

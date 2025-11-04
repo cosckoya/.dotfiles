@@ -27,7 +27,7 @@ asdf plugin remove <name>
 asdf plugin update --all
 
 ## Manage
-# Install 
+# Install
 asdf install <name>
 asdf install <name> <version>
 asdf install <name> latest[:<version>]

@@ -1,0 +1,27 @@
+# Checkmake configuration for dotfiles Makefiles
+# See: https://github.com/checkmake/checkmake
+
+[minphony]
+  # Require .PHONY declarations for targets
+  disabled = false
+
+[phonydeclared]
+  # Ensure phony targets are actually declared
+  disabled = false
+
+[timestampexpanded]
+  # Warn about timestamp-dependent make behavior
+  disabled = false
+
+[maxbodylength]
+  # Maximum recipe body length (lines)
+  disabled = true
+  # length = 15
+
+[escapedollarsign]
+  # Warn about unescaped dollar signs
+  disabled = false
+
+[portability]
+  # Warn about portability issues
+  disabled = false

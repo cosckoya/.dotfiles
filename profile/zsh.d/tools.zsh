@@ -1,7 +1,5 @@
 # Tool initialization and PATH setup
-
-# Auto-start tmux (except in bspwm desktop environment)
-[[ "$DESKTOP_SESSION" != "bspwm" ]] && ! tmux has-session 2>/dev/null && tmux
+# Note: tmux auto-start has been moved to tmux.zsh for better integration
 
 # Editor configuration
 if command -v nvim >/dev/null 2>&1; then

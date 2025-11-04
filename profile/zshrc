@@ -1,6 +1,49 @@
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
 
+# Load configuration first
+if [[ -f ~/.zsh.d/config.zsh ]]; then
+  source ~/.zsh.d/config.zsh
+fi
+
+# Tmux auto-start (must be at the beginning)
+if command -v tmux >/dev/null 2>&1 && [[ "$TMUX_AUTOSTART_ENABLED" != "false" ]]; then
+  # Check we're not already in tmux
+  if [[ -z "$TMUX" ]]; then
+    _skip_tmux=false
+
+    # Skip if in desktop environment (when TMUX_SKIP_DESKTOP is true)
+    if [[ "$TMUX_SKIP_DESKTOP" == "true" ]] && [[ -n "$DESKTOP_SESSION" ]]; then
+      # Check if current desktop session is in the skip list
+      for desktop in ${(s:,:)TMUX_SKIP_DESKTOP_SESSIONS}; do
+        if [[ "$DESKTOP_SESSION" == "$desktop" ]]; then
+          _skip_tmux=true
+          break
+        fi
+      done
+    fi
+
+    # Skip if in IDE (when TMUX_SKIP_IDE is true)
+    if [[ "$TMUX_SKIP_IDE" == "true" ]] && [[ -n "$INSIDE_EMACS" || -n "$VSCODE_PID" ]]; then
+      _skip_tmux=true
+    fi
+
+    # Skip if in SSH (when TMUX_SKIP_SSH is true)
+    if [[ "$TMUX_SKIP_SSH" == "true" ]] && [[ -n "$SSH_CONNECTION" ]]; then
+      _skip_tmux=true
+    fi
+
+    # Check if terminal is interactive and not skipped
+    if [[ $- == *i* ]] && [[ "$_skip_tmux" == "false" ]]; then
+      # Attach to existing session or create new one
+      tmux attach-session -t "${TMUX_AUTOSTART_SESSION:-default}" 2>/dev/null || \
+        tmux new-session -s "${TMUX_AUTOSTART_SESSION:-default}"
+    fi
+
+    unset _skip_tmux
+  fi
+fi
+
 # Zinit: https://github.com/zdharma-continuum/zinit
 if [[ ! -d ~/.local/share/zinit/zinit.git ]]; then
   git clone https://github.com/zdharma-continuum/zinit.git ~/.local/share/zinit/zinit.git
@@ -39,6 +82,9 @@ source ~/.zsh.d/toolbox.zsh
 
 # Alias
 source ~/.zsh.d/alias.zsh
+
+# Tmux helpers
+source ~/.zsh.d/tmux.zsh
 
 # Autocompletion
 autoload -Uz bashcompinit && bashcompinit

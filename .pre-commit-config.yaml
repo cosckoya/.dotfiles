@@ -1,10 +1,38 @@
 repos:
-- repo: https://github.com/smian/pre-commit-makefile.git
-  rev: 261f8fb4b31dfdc05d1a1d7fbde1f1462ecde66d
-  hooks:
-  - id: makefile-doc
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
+  rev: v6.0.0
   hooks:
   - id: check-merge-conflict
   - id: end-of-file-fixer
+  - id: trailing-whitespace
+  - id: check-yaml
+  - id: check-added-large-files
+  - id: check-case-conflict
+  - id: detect-private-key
+    exclude: 'tools/cheats/.*'
+  - id: mixed-line-ending
+    args: ['--fix=lf']
+#- repo: https://github.com/smian/pre-commit-makefile.git
+#  rev: 261f8fb4b31dfdc05d1a1d7fbde1f1462ecde66d
+#  hooks:
+#  - id: makefile-doc
+#- repo: https://github.com/pre-commit/pre-commit-hooks
+#  rev: v6.0.0
+#  hooks:
+#  - id: trailing-whitespace
+#    name: trim trailing whitespace (post makefile-doc)
+#    files: 'README\.md$'
+- repo: local
+  hooks:
+  - id: makefile-syntax
+    name: Check Makefile syntax
+    entry: bash -c 'for f in "$@"; do make -n -f "$f" help >/dev/null 2>&1 || exit 1; done' --
+    language: system
+    files: 'Makefile$'
+    pass_filenames: true
+  - id: checkmake
+    name: Lint Makefiles with checkmake
+    entry: bash -c 'command -v checkmake >/dev/null 2>&1 && checkmake "$@" || { echo "⚠️  checkmake not installed, skipping"; exit 0; }' --
+    language: system
+    files: 'Makefile$'
+    pass_filenames: true
