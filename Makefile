@@ -1,6 +1,6 @@
 .ONESHELL:
 SHELL := /bin/bash
-.PHONY: help all profile tools containers asdf
+.PHONY: help all profile zsh tmux kitty neovim tools asdf
 .DEFAULT_GOAL := help
 CURRENT_FOLDER := $(shell basename "$$(pwd)")
 BOLD := $(shell tput bold)
@@ -14,9 +14,10 @@ NAME := main
 VERSION := scratch
 OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 ARCH := $(shell uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$$/arm64/')
+USER := $(shell whoami)
 
 ## Paths
-DOTFILES := ${HOME}/.dotfiles
+DOTFILES := $(shell pwd)
 
 ## Burn, baby, burn
 help: ## Shows this makefile help
@@ -26,16 +27,14 @@ help: ## Shows this makefile help
 	@echo "Targets:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-all: asdf profile tools containers ## Install everything
+all: asdf profile ## Install everything
+	@echo "$(BOLD)$(GREEN)All installation completed successfully$(RESET)"
 
-profile: ## Install ZSH, Tmux, and Neovim profiles
-	$(MAKE) all -C profile
+profile: zsh tmux kitty neovim ## Install ZSH, Tmux, Kitty, and Neovim profiles
+	@echo "$(BOLD)$(GREEN)Profile installation completed$(RESET)"
 
-tools: ## Install tools
+tools: ## Install development tools
 	$(MAKE) all -C tools
-
-containers: ## Install Docker & Kubernetes tools
-	$(MAKE) all -C container
 
 asdf: ## Install asdf (always latest version)
 	@echo "$(BOLD)$(GREEN)Installing/Updating ASDF$(RESET)"
@@ -60,3 +59,55 @@ asdf: ## Install asdf (always latest version)
 	tar -xzf ${HOME}/asdf-linux.tar.gz -C ${HOME}/bin; \
 	rm ${HOME}/asdf-linux.tar.gz; \
 	echo "$(GREEN)ASDF v$$ASDF_VERSION installation completed successfully$(RESET)"
+
+zsh: ## Install ZSH profile
+	@echo "$(BOLD)Setting up ZSH shell$(RESET)"
+	@set -e; \
+	if ! command -v zsh >/dev/null 2>&1; then \
+		echo "$(RED)Error: ZSH is not installed. Please install it first.$(RESET)"; \
+		exit 1; \
+	fi
+ifeq ($(OS), linux)
+	@if [ "$$(getent passwd ${USER} | cut -d: -f7)" != "/bin/zsh" ]; then \
+		echo "Setting ZSH as default shell for user"; \
+		sudo usermod -s /bin/zsh ${USER}; \
+	else \
+		echo "$(YELLOW)ZSH is already the default shell$(RESET)"; \
+	fi
+endif
+	@rm -f ${HOME}/.zshrc ${HOME}/.zsh.d
+	@ln -s -f ${DOTFILES}/zshrc ${HOME}/.zshrc
+	@ln -s -f ${DOTFILES}/zsh.d ${HOME}/.zsh.d
+	@echo "$(GREEN)ZSH configured$(RESET)"
+
+neovim: ## Install Vim/Neovim profile
+	@echo "$(BOLD)Setting up NeoVIM$(RESET)"
+	@set -e; \
+	mkdir -p ${HOME}/.config/nvim; \
+	ln -s -f ${DOTFILES}/vimrc ${HOME}/.config/nvim/init.vim; \
+	ln -s -f ${DOTFILES}/vimrc ${HOME}/.vimrc; \
+	echo "$(GREEN)NeoVIM configured$(RESET)"
+
+tmux: ## Install TMUX profile
+	@echo "$(BOLD)Setting up TMUX$(RESET)"
+	@set -e; \
+	if ! command -v tmux >/dev/null 2>&1; then \
+		echo "$(YELLOW)Warning: tmux is not installed$(RESET)"; \
+	fi; \
+	ln -s -f ${DOTFILES}/tmux.conf ${HOME}/.tmux.conf; \
+	echo "$(GREEN)TMUX configured (unified configuration)$(RESET)"
+
+kitty: ## Install Kitty terminal profile
+	@echo "$(BOLD)Setting up Kitty Terminal$(RESET)"
+	@set -e; \
+	if ! command -v kitty >/dev/null 2>&1; then \
+		echo "$(YELLOW)Warning: kitty is not installed$(RESET)"; \
+	fi; \
+	mkdir -p ${HOME}/.config/kitty/themes; \
+	ln -s -f ${DOTFILES}/kitty.conf ${HOME}/.config/kitty/kitty.conf; \
+	if [ ! -f ${HOME}/.config/kitty/themes/Royal.conf ]; then \
+		echo "$(YELLOW)Downloading Royal theme...$(RESET)"; \
+		curl -s https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/Royal.conf \
+			-o ${HOME}/.config/kitty/themes/Royal.conf || echo "$(YELLOW)Theme download optional$(RESET)"; \
+	fi; \
+	echo "$(GREEN)Kitty configured with Royal theme$(RESET)"
