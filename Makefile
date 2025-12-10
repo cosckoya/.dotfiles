@@ -45,8 +45,8 @@ asdf: ## Install asdf (always latest version)
 		exit 1; \
 	fi; \
 	echo "Latest ASDF version: $$ASDF_VERSION"; \
-	if command -v asdf >/dev/null 2>&1; then \
-		CURRENT_VERSION=$$(asdf version | awk '{print $$1}' | sed 's/v//'); \
+	if [ -f ${HOME}/.asdf/asdf.sh ]; then \
+		CURRENT_VERSION=$$(${HOME}/.asdf/bin/asdf version 2>/dev/null | awk '{print $$1}' | sed 's/v//'); \
 		if [ "$$CURRENT_VERSION" = "$$ASDF_VERSION" ]; then \
 			echo "$(GREEN)ASDF is already up to date (v$$ASDF_VERSION)$(RESET)"; \
 			exit 0; \
@@ -54,10 +54,12 @@ asdf: ## Install asdf (always latest version)
 			echo "$(YELLOW)Updating ASDF from v$$CURRENT_VERSION to v$$ASDF_VERSION$(RESET)"; \
 		fi; \
 	fi; \
-	mkdir -p ${HOME}/bin; \
+	mkdir -p ${HOME}/.asdf; \
 	wget -q "https://github.com/asdf-vm/asdf/releases/download/v$$ASDF_VERSION/asdf-v$$ASDF_VERSION-linux-$(ARCH).tar.gz" -O ${HOME}/asdf-linux.tar.gz; \
-	tar -xzf ${HOME}/asdf-linux.tar.gz -C ${HOME}/bin; \
+	tar -xzf ${HOME}/asdf-linux.tar.gz -C ${HOME}/.asdf --strip-components=1; \
 	rm ${HOME}/asdf-linux.tar.gz; \
+	if [ ! -d ${HOME}/bin ]; then mkdir -p ${HOME}/bin; fi; \
+	ln -sf ${HOME}/.asdf/bin/asdf ${HOME}/bin/asdf; \
 	echo "$(GREEN)ASDF v$$ASDF_VERSION installation completed successfully$(RESET)"
 
 zsh: ## Install ZSH profile

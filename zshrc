@@ -130,11 +130,13 @@ _build_rprompt() {
 
 RPROMPT='$(_build_rprompt)'
 
-# Autocompletion - Ultra-fast initialization
-# Skip compinit cache checks and use -C (compiled cache only)
+# Autocompletion - Ultra-fast initialization with error handling
 autoload -Uz compinit
-if [[ -f ${HOME}/.zcompdump ]]; then
-  compinit -C
+# Use -C flag only if dump file exists and is recent
+if [[ -f ${HOME}/.zcompdump && ${HOME}/.zcompdump -nt /etc/passwd ]]; then
+  compinit -C -i 2>/dev/null || compinit -i 2>/dev/null
+else
+  compinit -i 2>/dev/null
 fi
 autoload -Uz bashcompinit && bashcompinit
 # Skip _zinit autoload for speed - only load when needed
