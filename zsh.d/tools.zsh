@@ -17,6 +17,7 @@ fi
 
 # PATH extensions - Add only if directories exist
 typeset -U path
+[[ -d "$HOME/bin" ]] && path+=("$HOME/bin")
 [[ -d "$GOPATH/bin" ]] && path+=("$GOPATH/bin")
 [[ -d "$HOME/.asdf/shims" ]] && path=("$HOME/.asdf/shims" $path)
 
