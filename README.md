@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="./img/death.png" alt="Dotfiles" width="400"/>
+<img src="./img/death.png" alt="Dotfiles"/>
 
-# 🚀 Modern Linux Dotfiles
+# Modern Linux Dotfiles
 
 ### *Your terminal. Supercharged.*
 
@@ -15,34 +15,34 @@
 
 ---
 
-## 📖 About
+## About
 
 A carefully crafted collection of configuration files that transform your terminal into a powerful, beautiful, and efficient development environment. Built specifically for **Linux users** who want a professional setup without the hassle.
 
-### ✨ Why These Dotfiles?
+### Why These Dotfiles?
 
-- **🎯 One Command Setup** - Install everything with `make all`
-- **⚡ Lightning Fast** - ~110ms ZSH startup (92% faster than typical configs)
-- **🎨 Beautiful by Default** - Modern theme with purple-green palette
-- **🔧 Zero Dependencies** - Works completely offline, no npm/cargo/go required
-- **🐧 Linux First** - Optimized specifically for Ubuntu and Debian systems
-- **📦 Modular Design** - Enable only what you need
+- **One Command Setup** - Install everything with `make all`
+- **Lightning Fast** - ~110ms ZSH startup (92% faster than typical configs)
+- **Beautiful by Default** - Modern theme with purple-green palette
+- **Zero Dependencies** - Works completely offline, no npm/cargo/go required
+- **Linux First** - Optimized specifically for Ubuntu and Debian systems
+- **Modular Design** - Enable only what you need
 
 ---
 
-## 🛠️ What's Inside
+## What's Inside
 
 | Component | Description | Status |
 |-----------|-------------|--------|
-| **ZSH** | Modern shell with smart completions & syntax highlighting | ✅ |
-| **Tmux** | Terminal multiplexer with vi-mode & clipboard support | ✅ |
-| **Neovim** | Lua-based config with LSP, autocompletion & snippets | ✅ |
-| **Kitty** | GPU-accelerated terminal with Royal theme | ✅ |
-| **ASDF** | Universal version manager for multiple languages | ✅ |
+| **ZSH** | Modern shell with smart completions & syntax highlighting | Ready |
+| **Tmux** | Terminal multiplexer with vi-mode & clipboard support | Ready |
+| **Neovim** | Lua-based config with LSP, autocompletion & snippets | Ready |
+| **Kitty** | GPU-accelerated terminal with Royal theme | Ready |
+| **ASDF** | Universal version manager for multiple languages | Ready |
 
 ---
 
-## 📋 System Requirements
+## System Requirements
 
 Tested and optimized for **Ubuntu 20.04+** and **Debian 11+**
 
@@ -66,7 +66,7 @@ Tested and optimized for **Ubuntu 20.04+** and **Debian 11+**
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # 1. Clone the repository
@@ -80,7 +80,7 @@ make all
 exec zsh
 ```
 
-### 🎯 Selective Installation
+### Selective Installation
 
 ```bash
 make profile      # ZSH + Tmux + Kitty + Neovim configs
@@ -98,7 +98,7 @@ make help
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ~/.dotfiles/
@@ -123,7 +123,7 @@ make help
 
 ---
 
-## ⚙️ Configuration Highlights
+## Configuration Highlights
 
 ### ZSH - Blazing Fast Startup
 - **~110ms startup time** (vs typical 1200ms)
@@ -157,7 +157,7 @@ make help
 
 ---
 
-## 🎨 Theming
+## Theming
 
 All components share a cohesive **purple-green** color palette:
 
@@ -171,7 +171,7 @@ All components share a cohesive **purple-green** color palette:
 
 ---
 
-## 🔑 Key Features
+## Key Features
 
 ### Smart Tmux Auto-Start
 Automatically starts tmux when appropriate, but **intelligently skips** in:
@@ -198,21 +198,21 @@ export TMUX_SKIP_DESKTOP="true"
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
-Built with ❤️ for the Linux community.
+Built for the Linux community.
 
 Special thanks to:
 - [Zinit](https://github.com/zdharma-continuum/zinit) - Lightning fast ZSH plugin manager
@@ -224,7 +224,7 @@ Special thanks to:
 
 <div align="center">
 
-**Made for Linux. Built with passion.**
+**The riddle of steel**
 
 [Report Bug](https://github.com/yourusername/dotfiles/issues) · [Request Feature](https://github.com/yourusername/dotfiles/issues)
 
