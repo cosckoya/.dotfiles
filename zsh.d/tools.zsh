@@ -15,13 +15,14 @@ else
   export EDITOR="$VISUAL"
 fi
 
-# ASDF initialization - only if properly installed
-if [[ -f "$HOME/.asdf/asdf.sh" ]]; then
+# ASDF initialization - using binary installation in $HOME/bin
+# The asdf binary is in $HOME/bin (not a symlink)
+# Data directory is $HOME/.asdf (shims, plugins, installs)
+if [[ -x "$HOME/bin/asdf" ]]; then
   export ASDF_DIR="$HOME/.asdf"
-  . "$ASDF_DIR/asdf.sh"
-  if [[ -f "$ASDF_DIR/completions/asdf.bash" ]]; then
-    . "$ASDF_DIR/completions/asdf.bash"
-  fi
+  export ASDF_DATA_DIR="$HOME/.asdf"
+  # Add asdf to PATH if not already there
+  [[ ":$PATH:" != *":$HOME/bin:"* ]] && export PATH="$HOME/bin:$PATH"
 fi
 
 # PATH extensions - Add only if directories exist

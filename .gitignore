@@ -46,6 +46,7 @@ personal/
 # AI Assistant configuration files
 .copilot-instructions.md
 .github/copilot-instructions.md
+CLAUDE.md
 .cursorrules
 .cursor/
 
