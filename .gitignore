@@ -1,0 +1,113 @@
+# ZSH
+.zsh_history
+.zsh_sessions/
+.zcompdump*
+*.zwc
+*.zwc.old
+
+# Zinit plugin manager and downloaded plugins
+.zinit/
+.local/share/zinit/
+
+# ASDF version manager
+.asdf/
+
+# Vim/Neovim
+*.swp
+*.swo
+*~
+.netrwhist
+.vim/
+.viminfo
+
+# Neovim plugins and cache
+.local/share/nvim/
+.cache/nvim/
+.config/nvim/plugged/
+.config/nvim/plugin/
+
+# Tmux
+.tmux/
+tmux.local
+*.tmux.log
+
+# Local overrides (user-specific customizations)
+*.local
+*.personal
+local/
+personal/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.iml
+.DS_Store
+
+# AI Assistant configuration files
+.copilot-instructions.md
+.github/copilot-instructions.md
+CLAUDE.md
+.cursorrules
+.cursor/
+
+# Claude Code CLI files
+.claude/
+.claude-plugin/
+.claude_history
+claude.log
+.claude-code/
+claude-code.log
+.claude-work/
+.claude-sessions/
+**/claude_plan.md
+**/claude_plan_*.md
+.claude-cache/
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Desktop.ini
+
+# Backup files
+*.bak
+*.backup
+*.orig
+*~
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Secrets and credentials
+.env
+.env.local
+*.key
+*.pem
+*.crt
+credentials.json
+secrets/
+
+# Build artifacts
+dist/
+build/
+
+# Downloaded tools and binaries
+bin/
+tools/bin/
+*.tar.gz
+*.zip
+
+# Kitty terminal
+.config/kitty/themes/
+
+# Neovim lazy.nvim cache
+config/nvim/plugin/
+config/nvim/.lazy.lua
+config/nvim/lazy-lock.json

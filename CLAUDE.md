@@ -1,0 +1,174 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Repository Overview
+
+Production-ready dotfiles for Linux development environments. Self-contained, offline-capable, and optimized for performance. Focused on ZSH, Tmux, Neovim, and Kitty terminal configurations with ~110ms ZSH startup time (92% faster than typical configurations).
+
+## Build and Installation Commands
+
+### Primary Installation
+```bash
+make all          # Install everything (asdf + profile)
+make profile      # Install ZSH, Tmux, Kitty, and Neovim configs only
+make asdf         # Install/update ASDF version manager
+```
+
+### Neovim Installation
+```bash
+make install-nvim # Install Neovim via snap (requires sudo)
+make neovim       # Configure Neovim with Lua setup
+```
+
+**Note**: Neovim 0.10+ is required. Install with `make install-nvim` which uses:
+```bash
+sudo snap install nvim --classic
+```
+
+### Individual Components
+```bash
+make zsh          # Install ZSH configuration and set as default shell
+make tmux         # Install Tmux configuration
+make kitty        # Install Kitty terminal configuration
+make neovim       # Install Neovim Lua configuration (requires nvim 0.10+)
+```
+
+### Utilities
+```bash
+make help         # Show all available targets
+```
+
+## Architecture and Key Components
+
+### Configuration Structure
+The repository uses a modular approach for maintainability:
+
+- **zshrc** - Main ZSH entry point that orchestrates module loading
+- **zsh.d/** - Modular ZSH configuration split by function:
+  - `config.zsh` - User-configurable variables (tmux auto-start behavior, session names)
+  - `tools.zsh` - Editor selection, PATH management, npm lazy-loading
+  - `alias.zsh` - Command aliases and functions (uses function syntax for performance)
+  - `autocomplete.zsh` - Lazy-loaded completions for kubectl/helm/kind
+  - `tmux.zsh` - Tmux helper functions
+  - `toolbox.zsh` - Utility functions
+- **config/tmux.conf** - Unified tmux 3.4+ configuration (238 lines, optimized from 1889-line original)
+- **vimrc** - Neovim/Vim configuration with vim-plug auto-installation
+- **config/kitty.conf** - Kitty terminal emulator settings
+- **Makefile** - Main installation orchestrator with color-coded output
+
+### Performance Optimizations
+
+**ZSH Startup (~110ms):**
+- Zinit plugin manager with turbo mode (asynchronous loading with staggered delays: wait"1", wait"2", wait"3")
+- Lazy-loading for completions and npm commands
+- Compinit caching with -C flag
+- Reduced history size (5000 vs 10000)
+- Conditional plugin loading with graceful fallbacks
+
+**Tmux Configuration:**
+- Native tmux 3.4+ syntax (no external dependencies)
+- Mouse support enabled with kitty-specific optimizations
+- Vi-style copy mode with system clipboard integration
+- Aggressive resize for multi-client scenarios
+
+**Module Loading Pattern:**
+- All tool checks use `command -v` before execution
+- PATH additions only occur if directories exist
+- Editor fallback chain: nvim → vim → nano
+- Zinit plugins only load if git is available
+
+### Key Implementation Details
+
+**Prompt System (RPROMPT):**
+- Dynamic right prompt built via `_build_rprompt()` function
+- Git branch (cyan #87) via vcs_info - only shows in git repos
+- Python virtualenv (magenta #213) - shows when activated
+- Kubernetes context (lime green #154) - shows if kubectl context exists
+- Fallback message "Klaatu Barada Nitko!" (yellow #226) when no context
+- Left prompt: `┌──(hostname の username)\n└─#` with color-coded components
+
+**Tmux Integration:**
+- Smart auto-start that respects IDE, SSH, and desktop environment contexts
+- Configurable via `TMUX_AUTOSTART_ENABLED`, `TMUX_SKIP_SSH`, `TMUX_SKIP_IDE`, `TMUX_SKIP_DESKTOP`
+- Default session name controlled by `TMUX_AUTOSTART_SESSION` (defaults to "default")
+- Vi-style keybindings with optimized scrolling (C-u/C-d for half-page)
+- Multi-platform clipboard support (xsel, wl-copy, pbcopy)
+
+**Color Scheme:**
+- Tmux uses purple-green palette (#442E59, #79658C, #917CA6, #27403B, #5D736D)
+- ZSH uses bright 256-color codes (32, 120, 226, 196, 87, 213, 154)
+- Dircolors configured in ~/.dircolors for consistent ls output
+
+### Lazy Loading Mechanism
+Completions and heavy tools use a self-removing wrapper pattern:
+```zsh
+# Function undefines itself after first use, then sources the real completion
+_load_tool_completion() {
+  source <(tool completion zsh)
+  unfunction _load_tool_completion
+}
+compdef _load_tool_completion tool
+```
+
+### Platform Compatibility
+- **Target OS:** Ubuntu/Debian Linux
+- **Required:** zsh 5.9+, git 2.40+, tmux 3.2+, neovim 0.10+
+- **Optional with fallbacks:** kubectl, helm, docker, npm, asdf, bat, fzf
+- **Clipboard:** Supports xsel, xclip, wl-copy, pbcopy
+- **Neovim Installation:** Via snap (`sudo snap install nvim --classic`) provides latest stable version
+
+## Important Configuration Variables
+
+When modifying tmux auto-start behavior, edit `zsh.d/config.zsh`:
+- `TMUX_AUTOSTART_ENABLED` - Enable/disable tmux auto-start (default: true)
+- `TMUX_AUTOSTART_SESSION` - Default session name (default: "default")
+- `TMUX_SKIP_SSH` - Skip tmux in SSH sessions (default: false)
+- `TMUX_SKIP_IDE` - Skip tmux in IDEs like VSCode (default: true)
+- `TMUX_SKIP_DESKTOP` - Skip tmux in graphical desktop sessions (default: true)
+- `TMUX_SKIP_DESKTOP_SESSIONS` - Comma-separated list of desktop sessions to skip (default: "bspwm,i3,gnome,kde,xfce")
+
+## Code Quality Guidelines
+
+From `.copilot-instructions.md`:
+
+**Performance:**
+- Never add startup checks without `command -v` guard
+- Always lazy-load completions that run external commands
+- Prefer conditional `[[ -d $path ]]` over command checks for paths
+- Use Zinit turbo mode with wait delays for non-critical plugins
+- Keep history size ≤ 5000
+
+**Compatibility:**
+- Check for tool existence before using
+- Provide fallbacks for critical tools
+- Use safe defaults if anything fails (no stderr pollution)
+- Support multiple clipboard managers
+- Test on Ubuntu/Debian with minimal tools
+
+**Code Style:**
+- Use 2-space indents for ZSH
+- Comment complex sections (vcs_info, turbo loading)
+- Avoid nested conditionals (use early returns)
+- Keep related configs together
+- Remove commented code before merging to main
+
+## Testing Commands
+
+```bash
+# Test ZSH startup performance
+time zsh -ic exit
+
+# Reload ZSH configuration
+exec zsh
+
+# Test tmux configuration
+tmux source ~/.tmux.conf
+
+# Test in fresh shell
+zsh -c 'source ~/.zshrc'
+```
+
+## Notes on Current Branch
+
+The repository is currently on branch `feature/nvim2lua`. Several files have been deleted according to git status, including old config files from the root directory (tmux.conf, kitty.conf) which have been moved to the `config/` directory. The tools/ directory Makefile and cheat sheets have also been removed.
