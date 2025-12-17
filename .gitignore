@@ -46,9 +46,21 @@ personal/
 # AI Assistant configuration files
 .copilot-instructions.md
 .github/copilot-instructions.md
-CLAUDE.md
 .cursorrules
 .cursor/
+
+# Claude Code CLI files
+.claude/
+.claude-plugin/
+.claude_history
+claude.log
+.claude-code/
+claude-code.log
+.claude-work/
+.claude-sessions/
+**/claude_plan.md
+**/claude_plan_*.md
+.claude-cache/
 
 # OS files
 .DS_Store

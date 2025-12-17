@@ -1,7 +1,56 @@
--- Editor Plugins: File Explorer, Fuzzy Finder, Syntax Highlighting
+-- Editor Plugins: Simple and Functional Configuration
+-- Only essential plugins for a pleasant editing experience
 
 return {
-  -- Nvim-Tree File Explorer (replaces NERDTree)
+  -- Which-Key: Display keybinding hints
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    config = function()
+      local wk = require("which-key")
+      wk.setup({
+        preset = "modern",
+        win = {
+          border = "rounded",
+        },
+      })
+
+      -- Register leader key groups
+      wk.add({
+        { "<leader>f", group = "Find" },
+        { "<leader>c", group = "Code" },
+        { "<leader>n", group = "Tree" },
+      })
+    end,
+  },
+
+  -- Autopairs: Auto close brackets, quotes, etc
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      require("nvim-autopairs").setup({
+        check_ts = false, -- No treesitter dependency
+        fast_wrap = {},
+      })
+
+      -- Integration with nvim-cmp
+      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+      local cmp = require("cmp")
+      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+    end,
+  },
+
+  -- Comment: Smart commenting
+  {
+    "numToStr/Comment.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("Comment").setup()
+    end,
+  },
+
+  -- Nvim-Tree File Explorer
   {
     "nvim-tree/nvim-tree.lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -11,7 +60,9 @@ return {
       vim.g.loaded_netrwPlugin = 1
 
       require("nvim-tree").setup({
-        sort_by = "case_sensitive",
+        sort = {
+          sorter = "case_sensitive",
+        },
         view = {
           width = 30,
         },
@@ -41,7 +92,7 @@ return {
         },
       })
 
-      -- Keybindings (replicate NERDTree keybindings)
+      -- Keybindings
       local keymap = vim.keymap.set
       local opts = { silent = true, noremap = true }
 
@@ -52,7 +103,7 @@ return {
     end,
   },
 
-  -- Telescope Fuzzy Finder (replaces FZF)
+  -- Telescope Fuzzy Finder - Simple configuration
   {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -75,14 +126,11 @@ return {
             ".git/",
             "*.pyc",
             "__pycache__",
-            "*.o",
-            "*.a",
           },
           mappings = {
             i = {
               ["<C-j>"] = "move_selection_next",
               ["<C-k>"] = "move_selection_previous",
-              ["<C-q>"] = "close",
               ["<Esc>"] = "close",
             },
           },
@@ -91,70 +139,6 @@ return {
           find_files = {
             hidden = true,
             theme = "dropdown",
-          },
-          live_grep = {
-            theme = "dropdown",
-          },
-          buffers = {
-            theme = "dropdown",
-          },
-        },
-        extensions = {},
-      })
-    end,
-  },
-
-  -- Treesitter for better syntax highlighting
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    event = { "BufReadPost", "BufNewFile" },
-    config = function()
-      local configs = require("nvim-treesitter.configs")
-
-      configs.setup({
-        -- Install parsers for these languages
-        ensure_installed = {
-          "python",
-          "go",
-          "bash",
-          "lua",
-          "vim",
-          "vimdoc",
-          "markdown",
-          "markdown_inline",
-          "json",
-          "yaml",
-          "toml",
-        },
-        -- Install parsers synchronously (only applied to `ensure_installed`)
-        sync_install = false,
-        -- Automatically install missing parsers when entering buffer
-        auto_install = true,
-        -- List of parsers to ignore installing
-        ignore_install = {},
-        highlight = {
-          enable = true,
-          -- Disable slow treesitter highlight for large files
-          disable = function(lang, buf)
-            local max_filesize = 100 * 1024 -- 100 KB
-            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-            if ok and stats and stats.size > max_filesize then
-              return true
-            end
-          end,
-          additional_vim_regex_highlighting = false,
-        },
-        indent = {
-          enable = true,
-        },
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "<CR>",
-            node_incremental = "<CR>",
-            scope_incremental = "<S-CR>",
-            node_decremental = "<BS>",
           },
         },
       })
