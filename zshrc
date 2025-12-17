@@ -102,23 +102,23 @@ PROMPT=$'%F{032}┌──(%F{120}%m%F{226}の%F{196}%n%F{032})\n└─#%{$reset_
 # Colors: 87=bright cyan (git), 213=magenta/rosa (venv), 154=verde lima (k8s), 226=amarillo (fallback)
 _build_rprompt() {
   local -a parts
-  
+
   # Git branch (bright cyan #87) - only show if vcs_info found a repo
   # Check for both vcs_info_msg_0_ being set AND not empty
   if [[ -n "${vcs_info_msg_0_}" ]]; then
     parts+=("${vcs_info_msg_0_}")
   fi
-  
+
   # Virtual environment (magenta/rosa #213)
   if [[ -n "$VIRTUAL_ENV" ]]; then
     parts+=("%F{213}($(basename $VIRTUAL_ENV))%f")
   fi
-  
+
   # Kubernetes (verde lima #154)
   if [[ -n "$ZSH_KUBECTL_PROMPT" ]]; then
     parts+=("%F{154}($ZSH_KUBECTL_PROMPT)%f")
   fi
-  
+
   # If we have git/venv or k8s, show them
   if (( ${#parts} > 0 )); then
     echo "${(j: :)parts}"
@@ -130,11 +130,13 @@ _build_rprompt() {
 
 RPROMPT='$(_build_rprompt)'
 
-# Autocompletion - Ultra-fast initialization
-# Skip compinit cache checks and use -C (compiled cache only)
+# Autocompletion - Ultra-fast initialization with error handling
 autoload -Uz compinit
-if [[ -f ${HOME}/.zcompdump ]]; then
-  compinit -C
+# Use -C flag only if dump file exists and is recent
+if [[ -f ${HOME}/.zcompdump && ${HOME}/.zcompdump -nt /etc/passwd ]]; then
+  compinit -C -i 2>/dev/null || compinit -i 2>/dev/null
+else
+  compinit -i 2>/dev/null
 fi
 autoload -Uz bashcompinit && bashcompinit
 # Skip _zinit autoload for speed - only load when needed
