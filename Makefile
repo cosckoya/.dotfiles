@@ -1,6 +1,6 @@
 .ONESHELL:
 SHELL := /bin/bash
-.PHONY: help all profile zsh tmux kitty neovim tools asdf
+.PHONY: help all profile zsh tmux kitty neovim install-nvim asdf
 .DEFAULT_GOAL := help
 CURRENT_FOLDER := $(shell basename "$$(pwd)")
 BOLD := $(shell tput bold)
@@ -33,8 +33,9 @@ all: asdf profile ## Install everything
 profile: zsh tmux kitty neovim ## Install ZSH, Tmux, Kitty, and Neovim profiles
 	@echo "$(BOLD)$(GREEN)Profile installation completed$(RESET)"
 
-tools: ## Install development tools
-	$(MAKE) all -C tools
+# tools: ## Install development tools
+# 	$(MAKE) all -C tools
+# Note: tools/ directory removed, target disabled
 
 asdf: ## Install asdf (always latest version)
 	@echo "$(BOLD)$(GREEN)Installing/Updating ASDF$(RESET)"
@@ -82,13 +83,37 @@ endif
 	@ln -s -f ${DOTFILES}/zsh.d ${HOME}/.zsh.d
 	@echo "$(GREEN)ZSH configured$(RESET)"
 
-neovim: ## Install Vim/Neovim profile
-	@echo "$(BOLD)Setting up NeoVIM$(RESET)"
+install-nvim: ## Install Neovim via snap (requires sudo)
+	@echo "$(BOLD)Installing Neovim via snap$(RESET)"
+	@if ! command -v snap >/dev/null 2>&1; then \
+		echo "$(RED)Error: snapd is not installed$(RESET)"; \
+		echo "Install with: sudo apt install snapd"; \
+		exit 1; \
+	fi; \
+	sudo snap install nvim --classic; \
+	nvim --version | head -1; \
+	echo "$(GREEN)Neovim installed successfully$(RESET)"
+
+neovim: ## Install Neovim Lua profile
+	@echo "$(BOLD)Setting up NeoVIM (Lua)$(RESET)"
 	@set -e; \
-	mkdir -p ${HOME}/.config/nvim; \
-	ln -s -f ${DOTFILES}/vimrc ${HOME}/.config/nvim/init.vim; \
+	if ! command -v nvim >/dev/null 2>&1; then \
+		echo "$(RED)Error: Neovim is not installed$(RESET)"; \
+		echo "$(YELLOW)Install with: make install-nvim$(RESET)"; \
+		exit 1; \
+	fi; \
+	NVIM_MAJOR=$$(nvim --version | head -1 | sed 's/NVIM v//' | cut -d'.' -f1); \
+	NVIM_MINOR=$$(nvim --version | head -1 | sed 's/NVIM v//' | cut -d'.' -f2); \
+	if [ "$$NVIM_MAJOR" -eq 0 ] && [ "$$NVIM_MINOR" -lt 10 ]; then \
+		echo "$(RED)Error: Neovim 0.10+ required (found $$(nvim --version | head -1))$(RESET)"; \
+		echo "$(YELLOW)Update with: make install-nvim$(RESET)"; \
+		exit 1; \
+	fi; \
+	rm -rf ${HOME}/.config/nvim; \
+	ln -s ${DOTFILES}/config/nvim ${HOME}/.config/nvim; \
 	ln -s -f ${DOTFILES}/vimrc ${HOME}/.vimrc; \
-	echo "$(GREEN)NeoVIM configured$(RESET)"
+	echo "$(GREEN)NeoVIM Lua configured$(RESET)"; \
+	echo "$(YELLOW)Run 'nvim' to auto-install plugins via lazy.nvim (first launch may take a moment)$(RESET)"
 
 tmux: ## Install TMUX profile
 	@echo "$(BOLD)Setting up TMUX$(RESET)"
@@ -96,7 +121,7 @@ tmux: ## Install TMUX profile
 	if ! command -v tmux >/dev/null 2>&1; then \
 		echo "$(YELLOW)Warning: tmux is not installed$(RESET)"; \
 	fi; \
-	ln -s -f ${DOTFILES}/tmux.conf ${HOME}/.tmux.conf; \
+	ln -s -f ${DOTFILES}/config/tmux.conf ${HOME}/.tmux.conf; \
 	echo "$(GREEN)TMUX configured (unified configuration)$(RESET)"
 
 kitty: ## Install Kitty terminal profile
@@ -106,7 +131,7 @@ kitty: ## Install Kitty terminal profile
 		echo "$(YELLOW)Warning: kitty is not installed$(RESET)"; \
 	fi; \
 	mkdir -p ${HOME}/.config/kitty/themes; \
-	ln -s -f ${DOTFILES}/kitty.conf ${HOME}/.config/kitty/kitty.conf; \
+	ln -s -f ${DOTFILES}/config/kitty.conf ${HOME}/.config/kitty/kitty.conf; \
 	if [ ! -f ${HOME}/.config/kitty/themes/Royal.conf ]; then \
 		echo "$(YELLOW)Downloading Royal theme...$(RESET)"; \
 		curl -s https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/Royal.conf \
