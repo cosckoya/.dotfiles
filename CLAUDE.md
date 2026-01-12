@@ -52,9 +52,11 @@ The repository uses a modular approach for maintainability:
   - `autocomplete.zsh` - Lazy-loaded completions for kubectl/helm/kind
   - `tmux.zsh` - Tmux helper functions
   - `toolbox.zsh` - Utility functions
-- **config/tmux.conf** - Unified tmux 3.4+ configuration (238 lines, optimized from 1889-line original)
-- **vimrc** - Neovim/Vim configuration with vim-plug auto-installation
-- **config/kitty.conf** - Kitty terminal emulator settings
+- **config/** - Centralized configuration directory:
+  - `tmux.conf` - Unified tmux 3.4+ configuration (238 lines, optimized from 1889-line original)
+  - `kitty.conf` - Kitty terminal emulator settings
+  - `nvim/` - Complete Neovim Lua configuration (see Neovim Configuration Architecture section)
+- **vimrc** - Legacy Vim configuration (kept for backwards compatibility)
 - **Makefile** - Main installation orchestrator with color-coded output
 
 ### Performance Optimizations
@@ -169,6 +171,65 @@ tmux source ~/.tmux.conf
 zsh -c 'source ~/.zshrc'
 ```
 
-## Notes on Current Branch
+## Neovim Configuration Architecture
 
-The repository is currently on branch `feature/nvim2lua`. Several files have been deleted according to git status, including old config files from the root directory (tmux.conf, kitty.conf) which have been moved to the `config/` directory. The tools/ directory Makefile and cheat sheets have also been removed.
+The Neovim setup uses a modern Lua-based architecture:
+
+**Entry Point**: `config/nvim/init.lua`
+- Auto-bootstraps lazy.nvim plugin manager on first launch
+- Loads core configuration modules in sequence
+- Configures lazy.nvim with performance optimizations (disabled plugins: gzip, matchit, netrw, etc.)
+
+**Core Modules** (`config/nvim/lua/core/`):
+- `options.lua` - Editor settings (line numbers, indentation, clipboard, etc.)
+- `keymaps.lua` - Custom keybindings
+- `autocmds.lua` - Autocommands for behavior automation
+
+**Plugin Modules** (`config/nvim/lua/plugins/`):
+- `init.lua` - Plugin manager configuration
+- `lsp.lua` - LSP configuration with Mason for language servers (Lua, Python, Bash)
+- `completion.lua` - nvim-cmp + LuaSnip for autocompletion and snippets
+- `ui.lua` - UI enhancements (which-key, tokyonight theme)
+- `editor.lua` - Editor plugins (Telescope fuzzy finder, etc.)
+
+**Key Features**:
+- Native LSP integration (no CoC or other external servers)
+- Lazy loading for optimal startup performance
+- Self-contained (no npm/cargo/go dependencies)
+- Automatic plugin installation on first launch
+
+## Pre-commit Hooks
+
+The repository uses pre-commit hooks (`.pre-commit-config.yaml`) for code quality:
+
+**Enabled Hooks**:
+- `check-merge-conflict` - Prevents committing merge conflicts
+- `end-of-file-fixer` - Ensures files end with newline
+- `trailing-whitespace` - Removes trailing whitespace
+- `check-yaml` - Validates YAML syntax
+- `check-added-large-files` - Prevents large files (except `img/`)
+- `check-case-conflict` - Detects case-sensitive filename conflicts
+- `detect-private-key` - Prevents committing private keys
+- `mixed-line-ending` - Enforces LF line endings
+- `makefile-syntax` - Validates Makefile syntax
+- `checkmake` - Lints Makefiles (optional, skips if not installed)
+
+**Installation**: Run `pre-commit install` after cloning to enable hooks.
+
+## Important File Locations
+
+**Current Structure** (post-migration):
+- Configuration files moved from root to `config/` directory
+- `config/tmux.conf` - Previously at root as `tmux.conf`
+- `config/kitty.conf` - Previously at root as `kitty.conf`
+- `config/nvim/` - New Lua-based Neovim configuration
+- Old `vimrc` still exists at root for backwards compatibility
+
+**Active Files**:
+- `zshrc` - Main ZSH entry point
+- `zsh.d/*.zsh` - Modular ZSH configuration
+- `config/tmux.conf` - Tmux 3.4+ configuration
+- `config/kitty.conf` - Kitty terminal settings
+- `config/nvim/` - Complete Neovim Lua setup
+- `Makefile` - Installation orchestrator
+- `.pre-commit-config.yaml` - Git hook configuration
