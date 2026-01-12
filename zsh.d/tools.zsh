@@ -30,7 +30,6 @@ typeset -U path
 [[ -d "$HOME/bin" ]] && path+=("$HOME/bin")
 [[ -d "$GOPATH/bin" ]] && path+=("$GOPATH/bin")
 [[ -d "$HOME/.asdf/shims" ]] && path=("$HOME/.asdf/shims" $path)
-[[ -d "$HOME/bin" ]] && path+=("$HOME/bin")
 
 # NPM lazy-load only when needed (if npm exists)
 if command -v npm >/dev/null 2>&1; then

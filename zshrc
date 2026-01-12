@@ -87,14 +87,10 @@ autoload -Uz promptinit && promptinit
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd vcs_info
 
-# Reset vcs_info when not in a git repo
-zstyle ':vcs_info:git:*' formats '%F{87}(%b)%f'
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' nvcsformats ''
-
 # Ultra-fast git info - bright cyan (87)
 zstyle ':vcs_info:git:*' formats '%F{87}(%b)%f'
 zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' nvcsformats ''
 
 PROMPT=$'%F{032}┌──(%F{120}%m%F{226}の%F{196}%n%F{032})\n└─#%{$reset_color%} '
 

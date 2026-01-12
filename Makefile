@@ -107,8 +107,8 @@ neovim: ## Install Neovim Lua profile
 	fi; \
 	NVIM_MAJOR=$$(nvim --version | head -1 | sed 's/NVIM v//' | cut -d'.' -f1); \
 	NVIM_MINOR=$$(nvim --version | head -1 | sed 's/NVIM v//' | cut -d'.' -f2); \
-	if [ "$$NVIM_MAJOR" -eq 0 ] && [ "$$NVIM_MINOR" -lt 10 ]; then \
-		echo "$(RED)Error: Neovim 0.10+ required (found $$(nvim --version | head -1))$(RESET)"; \
+	if [ "$$NVIM_MAJOR" -eq 0 ] && [ "$$NVIM_MINOR" -lt 11 ]; then \
+		echo "$(RED)Error: Neovim 0.11+ required (found $$(nvim --version | head -1))$(RESET)"; \
 		echo "$(YELLOW)Update with: make install-nvim$(RESET)"; \
 		exit 1; \
 	fi; \

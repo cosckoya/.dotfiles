@@ -21,7 +21,7 @@ make install-nvim # Install Neovim via snap (requires sudo)
 make neovim       # Configure Neovim with Lua setup
 ```
 
-**Note**: Neovim 0.10+ is required. Install with `make install-nvim` which uses:
+**Note**: Neovim 0.11+ is required. Install with `make install-nvim` which uses:
 ```bash
 sudo snap install nvim --classic
 ```
@@ -31,7 +31,7 @@ sudo snap install nvim --classic
 make zsh          # Install ZSH configuration and set as default shell
 make tmux         # Install Tmux configuration
 make kitty        # Install Kitty terminal configuration
-make neovim       # Install Neovim Lua configuration (requires nvim 0.10+)
+make neovim       # Install Neovim Lua configuration (requires nvim 0.11+)
 ```
 
 ### Utilities
@@ -113,7 +113,7 @@ compdef _load_tool_completion tool
 
 ### Platform Compatibility
 - **Target OS:** Ubuntu/Debian Linux
-- **Required:** zsh 5.9+, git 2.40+, tmux 3.2+, neovim 0.10+
+- **Required:** zsh 5.9+, git 2.40+, tmux 3.2+, neovim 0.11+
 - **Optional with fallbacks:** kubectl, helm, docker, npm, asdf, bat, fzf
 - **Clipboard:** Supports xsel, xclip, wl-copy, pbcopy
 - **Neovim Installation:** Via snap (`sudo snap install nvim --classic`) provides latest stable version
