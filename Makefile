@@ -133,11 +133,6 @@ kitty: ## Install Kitty terminal profile
 	if ! command -v kitty >/dev/null 2>&1; then \
 		echo "$(YELLOW)Warning: kitty is not installed$(RESET)"; \
 	fi; \
-	mkdir -p ${HOME}/.config/kitty/themes; \
+	mkdir -p ${HOME}/.config/kitty; \
 	ln -s -f ${DOTFILES}/config/kitty.conf ${HOME}/.config/kitty/kitty.conf; \
-	if [ ! -f ${HOME}/.config/kitty/themes/Royal.conf ]; then \
-		echo "$(YELLOW)Downloading Royal theme...$(RESET)"; \
-		curl -s https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/Royal.conf \
-			-o ${HOME}/.config/kitty/themes/Royal.conf || echo "$(YELLOW)Theme download optional$(RESET)"; \
-	fi; \
-	echo "$(GREEN)Kitty configured with Royal theme$(RESET)"
+	echo "$(GREEN)Kitty configured with Tokyo Night theme$(RESET)"

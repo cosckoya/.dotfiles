@@ -70,6 +70,7 @@ The repository uses a modular approach for maintainability:
 
 **Tmux Configuration:**
 - Native tmux 3.4+ syntax (no external dependencies)
+- Tokyo Night color scheme matching ZSH and Kitty
 - Mouse support enabled with kitty-specific optimizations
 - Vi-style copy mode with system clipboard integration
 - Aggressive resize for multi-client scenarios
@@ -82,13 +83,13 @@ The repository uses a modular approach for maintainability:
 
 ### Key Implementation Details
 
-**Prompt System (RPROMPT):**
+**Prompt System (RPROMPT) - Tokyo Night:**
 - Dynamic right prompt built via `_build_rprompt()` function
-- Git branch (cyan #87) via vcs_info - only shows in git repos
-- Python virtualenv (magenta #213) - shows when activated
-- Kubernetes context (lime green #154) - shows if kubectl context exists
-- Fallback message "Klaatu Barada Nitko!" (yellow #226) when no context
-- Left prompt: `┌──(hostname の username)\n└─#` with color-coded components
+- Git branch (Tokyo Night cyan #7dcfff / 117) via vcs_info - only shows in git repos
+- Python virtualenv (Tokyo Night magenta #bb9af7 / 141) - shows when activated
+- Kubernetes context (Tokyo Night green #9ece6a / 149) - shows if kubectl context exists
+- Fallback message "Klaatu Barada Nitko!" (Tokyo Night yellow #e0af68 / 215) when no context
+- Left prompt: `┌──(hostname の username)\n└─#` with Tokyo Night color-coded components (blue, cyan, yellow, red)
 
 **Tmux Integration:**
 - Smart auto-start that respects IDE, SSH, and desktop environment contexts
@@ -97,9 +98,11 @@ The repository uses a modular approach for maintainability:
 - Vi-style keybindings with optimized scrolling (C-u/C-d for half-page)
 - Multi-platform clipboard support (xsel, wl-copy, pbcopy)
 
-**Color Scheme:**
-- Tmux uses purple-green palette (#442E59, #79658C, #917CA6, #27403B, #5D736D)
-- ZSH uses bright 256-color codes (32, 120, 226, 196, 87, 213, 154)
+**Color Scheme (Tokyo Night with Dark Purple):**
+- Unified theme across ZSH, Tmux, Kitty, and Neovim
+- Background: #100814 (dark purple from Royal theme), Foreground: #c0caf5
+- Primary colors: Blue #7aa2f7, Cyan #7dcfff, Green #9ece6a, Magenta #bb9af7
+- ZSH uses 256-color codes: 111=blue, 117=cyan, 149=green, 141=magenta, 215=yellow, 210=red
 - Dircolors configured in ~/.dircolors for consistent ls output
 
 ### Lazy Loading Mechanism

@@ -78,7 +78,7 @@ source ~/.zsh.d/alias.zsh
 # Tmux helpers
 source ~/.zsh.d/tmux.zsh
 
-# Prompt Customizations - Consistent bright color scheme
+# Prompt Customizations - Tokyo Night color scheme
 autoload -Uz vcs_info
 autoload -Uz colors && colors
 autoload -Uz promptinit && promptinit
@@ -87,40 +87,45 @@ autoload -Uz promptinit && promptinit
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd vcs_info
 
-# Ultra-fast git info - bright cyan (87)
-zstyle ':vcs_info:git:*' formats '%F{87}(%b)%f'
+# Tokyo Night colors using RGB codes:
+# Blue: #7aa2f7, Cyan: #7dcfff, Green: #9ece6a, Magenta: #bb9af7, Yellow: #e0af68, Red: #f7768e
+# Using closest 256-color codes: 111=blue, 117=cyan, 149=green, 141=magenta, 215=yellow, 210=red
+
+# Git info - Tokyo Night cyan (#7dcfff)
+zstyle ':vcs_info:git:*' formats '%F{117}(%b)%f'
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' nvcsformats ''
 
-PROMPT=$'%F{032}┌──(%F{120}%m%F{226}の%F{196}%n%F{032})\n└─#%{$reset_color%} '
+# Prompt with Tokyo Night colors: blue border, cyan hostname, yellow separator, red username
+PROMPT=$'%F{111}┌──(%F{117}%m%F{215}の%F{210}%n%F{111})\n└─#%{$reset_color%} '
 
-# RPROMPT with git branch + venv + kubectl - bright color scheme
-# Colors: 87=bright cyan (git), 213=magenta/rosa (venv), 154=verde lima (k8s), 226=amarillo (fallback)
+# RPROMPT with git branch + venv + kubectl - Tokyo Night color scheme
+# Colors: 117=cyan (git), 141=magenta (venv), 149=green (k8s), 215=yellow (fallback)
 _build_rprompt() {
   local -a parts
 
-  # Git branch (bright cyan #87) - only show if vcs_info found a repo
+  # Git branch (Tokyo Night cyan #7dcfff / 117) - only show if vcs_info found a repo
   # Check for both vcs_info_msg_0_ being set AND not empty
   if [[ -n "${vcs_info_msg_0_}" ]]; then
     parts+=("${vcs_info_msg_0_}")
   fi
 
-  # Virtual environment (magenta/rosa #213)
+  # Virtual environment (Tokyo Night magenta #bb9af7 / 141)
   if [[ -n "$VIRTUAL_ENV" ]]; then
-    parts+=("%F{213}($(basename $VIRTUAL_ENV))%f")
+    parts+=("%F{141}($(basename $VIRTUAL_ENV))%f")
   fi
 
-  # Kubernetes (verde lima #154)
+  # Kubernetes (Tokyo Night green #9ece6a / 149)
   if [[ -n "$ZSH_KUBECTL_PROMPT" ]]; then
-    parts+=("%F{154}($ZSH_KUBECTL_PROMPT)%f")
+    parts+=("%F{149}($ZSH_KUBECTL_PROMPT)%f")
   fi
 
   # If we have git/venv or k8s, show them
   if (( ${#parts} > 0 )); then
     echo "${(j: :)parts}"
   else
-    # Fallback message when none of the above exist
-    echo "%F{226}Klaatu Barada Nitko!%f"
+    # Fallback message when none of the above exist (Tokyo Night yellow #e0af68 / 215)
+    echo "%F{215}Klaatu Barada Nitko!%f"
   fi
 }
 
