@@ -70,7 +70,8 @@ The repository uses a modular approach for maintainability:
 
 **Tmux Configuration:**
 - Native tmux 3.4+ syntax (no external dependencies)
-- Tokyo Night color scheme matching ZSH and Kitty
+- Drizzt Do'Urden color scheme matching ZSH and Kitty
+- Lavender borders for active panes, cavern stone for inactive
 - Mouse support enabled with kitty-specific optimizations
 - Vi-style copy mode with system clipboard integration
 - Aggressive resize for multi-client scenarios
@@ -83,13 +84,13 @@ The repository uses a modular approach for maintainability:
 
 ### Key Implementation Details
 
-**Prompt System (RPROMPT) - Tokyo Night:**
+**Prompt System (RPROMPT) - Drizzt Do'Urden:**
 - Dynamic right prompt built via `_build_rprompt()` function
-- Git branch (Tokyo Night cyan #7dcfff / 117) via vcs_info - only shows in git repos
-- Python virtualenv (Tokyo Night magenta #bb9af7 / 141) - shows when activated
-- Kubernetes context (Tokyo Night green #9ece6a / 149) - shows if kubectl context exists
-- Fallback message "Klaatu Barada Nitko!" (Tokyo Night yellow #e0af68 / 215) when no context
-- Left prompt: `┌──(hostname の username)\n└─#` with Tokyo Night color-coded components (blue, cyan, yellow, red)
+- Git branch (Icy blue from Twinkle #7ec8e3 / 117) via vcs_info - only shows in git repos
+- Python virtualenv (Lavender eyes #b19cd9 / 141) - shows when activated
+- Kubernetes context (Drow magic green #5ab897 / 78) - shows if kubectl context exists
+- Fallback message "Klaatu Barada Nitko!" (Magical yellow #f0c987 / 222) when no context
+- Left prompt: `┌──(hostname の username)\n└─#` with Drizzt color-coded components (lavender, icy blue, yellow, red)
 
 **Tmux Integration:**
 - Smart auto-start that respects IDE, SSH, and desktop environment contexts
@@ -98,12 +99,17 @@ The repository uses a modular approach for maintainability:
 - Vi-style keybindings with optimized scrolling (C-u/C-d for half-page)
 - Multi-platform clipboard support (xsel, wl-copy, pbcopy)
 
-**Color Scheme (Tokyo Night with Dark Purple):**
-- Unified theme across ZSH, Tmux, Kitty, and Neovim
-- Background: #100814 (dark purple from Royal theme), Foreground: #c0caf5
-- Primary colors: Blue #7aa2f7, Cyan #7dcfff, Green #9ece6a, Magenta #bb9af7
-- ZSH uses 256-color codes: 111=blue, 117=cyan, 149=green, 141=magenta, 215=yellow, 210=red
+**Color Scheme (Drizzt Do'Urden) - Complete Coherence:**
+- **Fully unified theme** across ZSH, Tmux, Kitty, and Neovim with matching powerline styles
+- Inspired by the legendary drow ranger from the Forgotten Realms
+- Background: #100814 (deep drow cavern - darker purple, superior contrast), Foreground: #e0dfe8
+- Primary colors: Lavender #b19cd9 (violet eyes), Icy Blue #7ec8e3 (Twinkle), Green #5ab897 (drow magic)
+- Inactive borders: #4a5273 (improved contrast over previous #3d4466)
+- ZSH uses 256-color codes: 141=lavender, 117=icy blue, 78=green, 222=yellow, 167=red
 - Dircolors configured in ~/.dircolors for consistent ls output
+- WCAG AAA contrast ratios: 15:1 (text), 9:1 (lavender), 10.5:1 (icy blue)
+- **Tmux status bar**: Simplified powerline with essential info (pane count, time, root warning with blink)
+- **Neovim statusline**: Matching powerline with mode-specific colors (Normal=lavender, Insert=green, Visual=cyan)
 
 ### Lazy Loading Mechanism
 Completions and heavy tools use a self-removing wrapper pattern:

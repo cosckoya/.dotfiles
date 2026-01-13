@@ -48,10 +48,10 @@ exec zsh
 
 | Component | Description |
 |-----------|-------------|
-| **ZSH** | ~110ms startup with Zinit turbo mode, lazy-loaded completions, Tokyo Night colors |
-| **Tmux** | Vi-mode, clipboard integration, Tokyo Night theme (238 lines, optimized from 1889) |
-| **Neovim** | Lua-based with lazy.nvim, native LSP (Mason), nvim-cmp, Telescope, Tokyo Night |
-| **Kitty** | GPU-accelerated terminal with Tokyo Night theme |
+| **ZSH** | ~110ms startup with Zinit turbo mode, lazy-loaded completions, Drizzt Do'Urden colors |
+| **Tmux** | Vi-mode, clipboard integration, Drizzt Do'Urden theme (238 lines, optimized from 1889) |
+| **Neovim** | Lua-based with lazy.nvim, native LSP (Mason), nvim-cmp, Telescope |
+| **Kitty** | GPU-accelerated terminal with Drizzt Do'Urden theme (drow cavern palette) |
 | **ASDF** | Universal version manager |
 
 ---
@@ -107,12 +107,12 @@ export TMUX_SKIP_IDE="true"
 export TMUX_SKIP_DESKTOP="true"
 ```
 
-### Dynamic Prompt (RPROMPT) - Tokyo Night
+### Dynamic Prompt (RPROMPT) - Drizzt Do'Urden
 Context-aware right prompt showing:
-- Git branch (Tokyo Night cyan) - only in git repos
-- Python virtualenv (Tokyo Night magenta)
-- Kubernetes context (Tokyo Night green)
-- Fallback message when no context (Tokyo Night yellow)
+- Git branch (icy blue from Twinkle) - only in git repos
+- Python virtualenv (lavender violet eyes)
+- Kubernetes context (drow magic green)
+- Fallback message when no context (magical yellow)
 
 ### Offline Capable
 All plugins cached locally. ASDF uses binary installation (no compilation). Works without internet after initial setup.
@@ -121,7 +121,7 @@ All plugins cached locally. ASDF uses binary installation (no compilation). Work
 
 ## Configuration
 
-**Theme:** Tokyo Night colors with dark purple background (#100814) for visual consistency across all components
+**Theme:** Drizzt Do'Urden - Complete visual coherence across all components with matching powerline styles. Deep purple cavern (#100814), lavender eyes (#b19cd9), and icy blue accents (#7ec8e3). WCAG AAA contrast ratios.
 **ZSH modules:** Edit files in `zsh.d/` for aliases, completions, or tools
 **Tmux:** Modify `config/tmux.conf` for keybindings and appearance
 **Neovim:** Lua modules in `config/nvim/lua/` (core settings, plugins, LSP)
