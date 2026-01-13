@@ -21,7 +21,7 @@ make install-nvim # Install Neovim via snap (requires sudo)
 make neovim       # Configure Neovim with Lua setup
 ```
 
-**Note**: Neovim 0.10+ is required. Install with `make install-nvim` which uses:
+**Note**: Neovim 0.11+ is required. Install with `make install-nvim` which uses:
 ```bash
 sudo snap install nvim --classic
 ```
@@ -31,7 +31,7 @@ sudo snap install nvim --classic
 make zsh          # Install ZSH configuration and set as default shell
 make tmux         # Install Tmux configuration
 make kitty        # Install Kitty terminal configuration
-make neovim       # Install Neovim Lua configuration (requires nvim 0.10+)
+make neovim       # Install Neovim Lua configuration (requires nvim 0.11+)
 ```
 
 ### Utilities
@@ -52,9 +52,11 @@ The repository uses a modular approach for maintainability:
   - `autocomplete.zsh` - Lazy-loaded completions for kubectl/helm/kind
   - `tmux.zsh` - Tmux helper functions
   - `toolbox.zsh` - Utility functions
-- **config/tmux.conf** - Unified tmux 3.4+ configuration (238 lines, optimized from 1889-line original)
-- **vimrc** - Neovim/Vim configuration with vim-plug auto-installation
-- **config/kitty.conf** - Kitty terminal emulator settings
+- **config/** - Centralized configuration directory:
+  - `tmux.conf` - Unified tmux 3.4+ configuration (238 lines, optimized from 1889-line original)
+  - `kitty.conf` - Kitty terminal emulator settings
+  - `nvim/` - Complete Neovim Lua configuration (see Neovim Configuration Architecture section)
+- **vimrc** - Legacy Vim configuration (kept for backwards compatibility)
 - **Makefile** - Main installation orchestrator with color-coded output
 
 ### Performance Optimizations
@@ -68,6 +70,8 @@ The repository uses a modular approach for maintainability:
 
 **Tmux Configuration:**
 - Native tmux 3.4+ syntax (no external dependencies)
+- Drizzt Do'Urden color scheme matching ZSH and Kitty
+- Lavender borders for active panes, cavern stone for inactive
 - Mouse support enabled with kitty-specific optimizations
 - Vi-style copy mode with system clipboard integration
 - Aggressive resize for multi-client scenarios
@@ -80,13 +84,13 @@ The repository uses a modular approach for maintainability:
 
 ### Key Implementation Details
 
-**Prompt System (RPROMPT):**
+**Prompt System (RPROMPT) - Drizzt Do'Urden:**
 - Dynamic right prompt built via `_build_rprompt()` function
-- Git branch (cyan #87) via vcs_info - only shows in git repos
-- Python virtualenv (magenta #213) - shows when activated
-- Kubernetes context (lime green #154) - shows if kubectl context exists
-- Fallback message "Klaatu Barada Nitko!" (yellow #226) when no context
-- Left prompt: `┌──(hostname の username)\n└─#` with color-coded components
+- Git branch (Icy blue from Twinkle #7ec8e3 / 117) via vcs_info - only shows in git repos
+- Python virtualenv (Lavender eyes #b19cd9 / 141) - shows when activated
+- Kubernetes context (Drow magic green #5ab897 / 78) - shows if kubectl context exists
+- Fallback message "Klaatu Barada Nitko!" (Magical yellow #f0c987 / 222) when no context
+- Left prompt: `┌──(hostname の username)\n└─#` with Drizzt color-coded components (lavender, icy blue, yellow, red)
 
 **Tmux Integration:**
 - Smart auto-start that respects IDE, SSH, and desktop environment contexts
@@ -95,10 +99,17 @@ The repository uses a modular approach for maintainability:
 - Vi-style keybindings with optimized scrolling (C-u/C-d for half-page)
 - Multi-platform clipboard support (xsel, wl-copy, pbcopy)
 
-**Color Scheme:**
-- Tmux uses purple-green palette (#442E59, #79658C, #917CA6, #27403B, #5D736D)
-- ZSH uses bright 256-color codes (32, 120, 226, 196, 87, 213, 154)
+**Color Scheme (Drizzt Do'Urden) - Complete Coherence:**
+- **Fully unified theme** across ZSH, Tmux, Kitty, and Neovim with matching powerline styles
+- Inspired by the legendary drow ranger from the Forgotten Realms
+- Background: #100814 (deep drow cavern - darker purple, superior contrast), Foreground: #e0dfe8
+- Primary colors: Lavender #b19cd9 (violet eyes), Icy Blue #7ec8e3 (Twinkle), Green #5ab897 (drow magic)
+- Inactive borders: #4a5273 (improved contrast over previous #3d4466)
+- ZSH uses 256-color codes: 141=lavender, 117=icy blue, 78=green, 222=yellow, 167=red
 - Dircolors configured in ~/.dircolors for consistent ls output
+- WCAG AAA contrast ratios: 15:1 (text), 9:1 (lavender), 10.5:1 (icy blue)
+- **Tmux status bar**: Simplified powerline with essential info (pane count, time, root warning with blink)
+- **Neovim statusline**: Matching powerline with mode-specific colors (Normal=lavender, Insert=green, Visual=cyan)
 
 ### Lazy Loading Mechanism
 Completions and heavy tools use a self-removing wrapper pattern:
@@ -113,7 +124,7 @@ compdef _load_tool_completion tool
 
 ### Platform Compatibility
 - **Target OS:** Ubuntu/Debian Linux
-- **Required:** zsh 5.9+, git 2.40+, tmux 3.2+, neovim 0.10+
+- **Required:** zsh 5.9+, git 2.40+, tmux 3.2+, neovim 0.11+
 - **Optional with fallbacks:** kubectl, helm, docker, npm, asdf, bat, fzf
 - **Clipboard:** Supports xsel, xclip, wl-copy, pbcopy
 - **Neovim Installation:** Via snap (`sudo snap install nvim --classic`) provides latest stable version
@@ -169,6 +180,65 @@ tmux source ~/.tmux.conf
 zsh -c 'source ~/.zshrc'
 ```
 
-## Notes on Current Branch
+## Neovim Configuration Architecture
 
-The repository is currently on branch `feature/nvim2lua`. Several files have been deleted according to git status, including old config files from the root directory (tmux.conf, kitty.conf) which have been moved to the `config/` directory. The tools/ directory Makefile and cheat sheets have also been removed.
+The Neovim setup uses a modern Lua-based architecture:
+
+**Entry Point**: `config/nvim/init.lua`
+- Auto-bootstraps lazy.nvim plugin manager on first launch
+- Loads core configuration modules in sequence
+- Configures lazy.nvim with performance optimizations (disabled plugins: gzip, matchit, netrw, etc.)
+
+**Core Modules** (`config/nvim/lua/core/`):
+- `options.lua` - Editor settings (line numbers, indentation, clipboard, etc.)
+- `keymaps.lua` - Custom keybindings
+- `autocmds.lua` - Autocommands for behavior automation
+
+**Plugin Modules** (`config/nvim/lua/plugins/`):
+- `init.lua` - Plugin manager configuration
+- `lsp.lua` - LSP configuration with Mason for language servers (Lua, Python, Bash)
+- `completion.lua` - nvim-cmp + LuaSnip for autocompletion and snippets
+- `ui.lua` - UI enhancements (which-key, tokyonight theme)
+- `editor.lua` - Editor plugins (Telescope fuzzy finder, etc.)
+
+**Key Features**:
+- Native LSP integration (no CoC or other external servers)
+- Lazy loading for optimal startup performance
+- Self-contained (no npm/cargo/go dependencies)
+- Automatic plugin installation on first launch
+
+## Pre-commit Hooks
+
+The repository uses pre-commit hooks (`.pre-commit-config.yaml`) for code quality:
+
+**Enabled Hooks**:
+- `check-merge-conflict` - Prevents committing merge conflicts
+- `end-of-file-fixer` - Ensures files end with newline
+- `trailing-whitespace` - Removes trailing whitespace
+- `check-yaml` - Validates YAML syntax
+- `check-added-large-files` - Prevents large files (except `img/`)
+- `check-case-conflict` - Detects case-sensitive filename conflicts
+- `detect-private-key` - Prevents committing private keys
+- `mixed-line-ending` - Enforces LF line endings
+- `makefile-syntax` - Validates Makefile syntax
+- `checkmake` - Lints Makefiles (optional, skips if not installed)
+
+**Installation**: Run `pre-commit install` after cloning to enable hooks.
+
+## Important File Locations
+
+**Current Structure** (post-migration):
+- Configuration files moved from root to `config/` directory
+- `config/tmux.conf` - Previously at root as `tmux.conf`
+- `config/kitty.conf` - Previously at root as `kitty.conf`
+- `config/nvim/` - New Lua-based Neovim configuration
+- Old `vimrc` still exists at root for backwards compatibility
+
+**Active Files**:
+- `zshrc` - Main ZSH entry point
+- `zsh.d/*.zsh` - Modular ZSH configuration
+- `config/tmux.conf` - Tmux 3.4+ configuration
+- `config/kitty.conf` - Kitty terminal settings
+- `config/nvim/` - Complete Neovim Lua setup
+- `Makefile` - Installation orchestrator
+- `.pre-commit-config.yaml` - Git hook configuration

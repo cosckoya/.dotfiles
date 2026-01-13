@@ -78,7 +78,7 @@ source ~/.zsh.d/alias.zsh
 # Tmux helpers
 source ~/.zsh.d/tmux.zsh
 
-# Prompt Customizations - Consistent bright color scheme
+# Prompt Customizations - Drizzt Do'Urden color scheme
 autoload -Uz vcs_info
 autoload -Uz colors && colors
 autoload -Uz promptinit && promptinit
@@ -87,44 +87,45 @@ autoload -Uz promptinit && promptinit
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd vcs_info
 
-# Reset vcs_info when not in a git repo
-zstyle ':vcs_info:git:*' formats '%F{87}(%b)%f'
+# Drizzt Do'Urden colors using RGB codes:
+# Lavender: #b19cd9, Icy Blue: #7ec8e3, Green: #5ab897, Yellow: #f0c987, Red: #d35d6e
+# Using closest 256-color codes: 141=lavender, 117=icy blue, 78=green, 222=yellow, 167=red
+
+# Git info - Icy blue from Twinkle (#7ec8e3)
+zstyle ':vcs_info:git:*' formats '%F{117}(%b)%f'
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' nvcsformats ''
 
-# Ultra-fast git info - bright cyan (87)
-zstyle ':vcs_info:git:*' formats '%F{87}(%b)%f'
-zstyle ':vcs_info:*' enable git
+# Prompt with Drizzt colors: lavender border, icy blue hostname, yellow separator, red username
+PROMPT=$'%F{141}┌──(%F{117}%m%F{222}の%F{167}%n%F{141})\n└─#%{$reset_color%} '
 
-PROMPT=$'%F{032}┌──(%F{120}%m%F{226}の%F{196}%n%F{032})\n└─#%{$reset_color%} '
-
-# RPROMPT with git branch + venv + kubectl - bright color scheme
-# Colors: 87=bright cyan (git), 213=magenta/rosa (venv), 154=verde lima (k8s), 226=amarillo (fallback)
+# RPROMPT with git branch + venv + kubectl - Drizzt Do'Urden color scheme
+# Colors: 117=icy blue (git), 141=lavender (venv), 78=green (k8s), 222=yellow (fallback)
 _build_rprompt() {
   local -a parts
 
-  # Git branch (bright cyan #87) - only show if vcs_info found a repo
+  # Git branch (Icy blue from Twinkle #7ec8e3 / 117) - only show if vcs_info found a repo
   # Check for both vcs_info_msg_0_ being set AND not empty
   if [[ -n "${vcs_info_msg_0_}" ]]; then
     parts+=("${vcs_info_msg_0_}")
   fi
 
-  # Virtual environment (magenta/rosa #213)
+  # Virtual environment (Lavender eyes #b19cd9 / 141)
   if [[ -n "$VIRTUAL_ENV" ]]; then
-    parts+=("%F{213}($(basename $VIRTUAL_ENV))%f")
+    parts+=("%F{141}($(basename $VIRTUAL_ENV))%f")
   fi
 
-  # Kubernetes (verde lima #154)
+  # Kubernetes (Drow magic green #5ab897 / 78)
   if [[ -n "$ZSH_KUBECTL_PROMPT" ]]; then
-    parts+=("%F{154}($ZSH_KUBECTL_PROMPT)%f")
+    parts+=("%F{78}($ZSH_KUBECTL_PROMPT)%f")
   fi
 
   # If we have git/venv or k8s, show them
   if (( ${#parts} > 0 )); then
     echo "${(j: :)parts}"
   else
-    # Fallback message when none of the above exist
-    echo "%F{226}Klaatu Barada Nitko!%f"
+    # Fallback message when none of the above exist (Magical yellow #f0c987 / 222)
+    echo "%F{222}Klaatu Barada Nitko!%f"
   fi
 }
 

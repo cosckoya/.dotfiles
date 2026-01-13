@@ -51,7 +51,7 @@ CLAUDE.md
 .cursor/
 
 # Claude Code CLI files
-.claude/
+#.claude/
 .claude-plugin/
 .claude_history
 claude.log
