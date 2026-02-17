@@ -1,0 +1,129 @@
+# GitHub Copilot Agents Configuration - 2026
+# Token-optimized, multi-model aware, with context window management
+
+agents:
+  # Primary agent: Dotfiles DevOps Specialist
+  dotfiles-optimizer:
+    description: "Production dotfiles expert for ZSH, Tmux, Neovim, and shell optimization. Maintains 110ms startup performance and 92% speed advantage."
+    priority: 100
+    models:
+      - claude-opus-4-1  # Complex architecture decisions, refactoring
+      - claude-sonnet-4-1  # Fast, precise edits (default)
+      - claude-haiku-4-1  # Quick fixes, file review (low-token cost)
+    context_window:
+      max_tokens: 200000
+      reserved_for_response: 4000
+      file_size_limit: 50KB  # Large files summarized
+    capabilities:
+      - shell-optimization
+      - makefile-automation
+      - configuration-architecture
+      - performance-tuning
+      - pre-commit-management
+    tools:
+      - bash  # Execute commands with timeout
+      - grep  # Fast pattern matching (ripgrep)
+      - glob  # File discovery
+      - view  # Read files (respects size limits)
+      - edit  # Batch edits (max 5 per response)
+      - create  # Only with explicit user approval
+    instructions:
+      max_file_creation: 0  # NEVER create without asking
+      batch_edits_limit: 5  # Maximum edits per response
+      token_budget_per_response: 6000  # Conservative estimate
+      response_style: "concise"  # Max 3 sentences explanation
+    skip_for_patterns:
+      - "*.png"  # Binary files
+      - "*.jpg"
+      - "node_modules/*"
+      - ".git/*"
+
+  # Specialist agent: Lua/Neovim Configuration
+  neovim-architect:
+    description: "Neovim 0.11+ Lua specialist. Manages plugins, LSP, keymaps, and performance optimization."
+    priority: 80
+    models:
+      - claude-sonnet-4-1  # Balanced for coding tasks
+      - claude-haiku-4-1  # Quick reviews
+    context_window:
+      max_tokens: 150000
+      file_size_limit: 30KB
+    capabilities:
+      - lua-development
+      - lsp-configuration
+      - plugin-management
+      - keymap-optimization
+      - lazy-nvim-patterns
+    tools:
+      - bash
+      - grep
+      - glob
+      - view
+      - edit
+    skip_for_patterns:
+      - "*.lock"
+      - ".git/*"
+
+  # Specialist agent: Shell & ZSH Expert
+  shell-performance-expert:
+    description: "ZSH startup optimization specialist. Maintains lazy-loading patterns, Zinit turbo mode, and 110ms target."
+    priority: 85
+    models:
+      - claude-sonnet-4-1
+      - claude-haiku-4-1
+    context_window:
+      max_tokens: 120000
+      file_size_limit: 20KB
+    capabilities:
+      - shell-optimization
+      - lazy-loading-patterns
+      - zinit-management
+      - startup-performance
+      - bash-compatibility
+    tools:
+      - bash
+      - grep
+      - view
+      - edit
+    skip_for_patterns:
+      - "*.lock"
+
+  # Specialist agent: Makefile & Build Systems
+  makefile-master:
+    description: "GNU Make expert for idempotent installations and build automation. Uses make 4.3+."
+    priority: 75
+    models:
+      - claude-sonnet-4-1
+    context_window:
+      max_tokens: 100000
+    capabilities:
+      - makefile-development
+      - build-automation
+      - install-orchestration
+      - target-dependencies
+      - color-output-styling
+    tools:
+      - bash
+      - view
+      - edit
+
+# Agent selection strategy (2026 best practices)
+selection_strategy:
+  # Multi-turn context preservation
+  maintain_history: true
+  context_decay: "exponential"  # Older turns weighted less
+  
+  # Intelligent tool selection
+  tool_awareness: true
+  suppress_verbose_output: true
+  
+  # Token efficiency
+  adaptive_model_selection: true
+  fallback_order:
+    - opus  # Complex decisions
+    - sonnet  # Balanced
+    - haiku  # Quick review
+  
+  # Context window management
+  auto_summarization: true
+  summarize_above_tokens: 80000
