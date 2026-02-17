@@ -133,9 +133,9 @@ RPROMPT='$(_build_rprompt)'
 
 # Autocompletion - Ultra-fast initialization with error handling
 autoload -Uz compinit
-# Use -C flag only if dump file exists and is recent
-if [[ -f ${HOME}/.zcompdump && ${HOME}/.zcompdump -nt /etc/passwd ]]; then
-  compinit -C -i 2>/dev/null || compinit -i 2>/dev/null
+# Use -C flag only if dump file exists and is recent (< 20 hours old)
+if [[ -f ~/.zcompdump && $(find ~/.zcompdump -mtime -1 2>/dev/null) ]]; then
+  compinit -C -i 2>/dev/null
 else
   compinit -i 2>/dev/null
 fi
