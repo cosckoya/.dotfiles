@@ -30,4 +30,5 @@ Complete technical specifications for deep dives.
 
 - [Architecture Overview](./architecture.dotfiles.md) — Design decisions, performance targets, module interactions
 - [Color Scheme](./color-scheme.dotfiles.md) — Full palette, contrast ratios, lore
-- [Makefile](./makefile.dotfiles.md) — Build targets, symlink mechanics, pre-commit hooks
+- [Makefile](./makefile.dotfiles.md) — Build targets, symlink mechanics
+- [Pre-commit Hooks](./pre-commit.dotfiles.md) — Automated validation, hook configuration, troubleshooting

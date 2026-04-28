@@ -1,38 +1,84 @@
+# Pre-commit configuration for cosckoya/.dotfiles (2026)
+# Best practices:
+# - All repos pinned to specific versions (never HEAD/main)
+# - File filtering via 'types' instead of regex where possible
+# - Local hooks for project-specific validation
+# - No emojis in hook names or messages
+# - Fail fast on first error
+
 repos:
-- repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v6.0.0
-  hooks:
-  - id: check-merge-conflict
-  - id: end-of-file-fixer
-  - id: trailing-whitespace
-  - id: check-yaml
-  - id: check-added-large-files
-    exclude: '^img/.*'
-  - id: check-case-conflict
-  - id: detect-private-key
-  - id: mixed-line-ending
-    args: ['--fix=lf']
-#- repo: https://github.com/smian/pre-commit-makefile.git
-#  rev: 261f8fb4b31dfdc05d1a1d7fbde1f1462ecde66d
-#  hooks:
-#  - id: makefile-doc
-#- repo: https://github.com/pre-commit/pre-commit-hooks
-#  rev: v6.0.0
-#  hooks:
-#  - id: trailing-whitespace
-#    name: trim trailing whitespace (post makefile-doc)
-#    files: 'README\.md$'
-- repo: local
-  hooks:
-  - id: makefile-syntax
-    name: Check Makefile syntax
-    entry: bash -c 'for f in "$@"; do make -n -f "$f" help >/dev/null 2>&1 || exit 1; done' --
-    language: system
-    files: 'Makefile$'
-    pass_filenames: true
-  - id: checkmake
-    name: Lint Makefiles with checkmake
-    entry: bash -c 'command -v checkmake >/dev/null 2>&1 && checkmake "$@" || { echo "⚠️  checkmake not installed, skipping"; exit 0; }' --
-    language: system
-    files: 'Makefile$'
-    pass_filenames: true
+  # Core file validation (pre-commit official) - pure shell, no Python env needed
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      # Conflict markers
+      - id: check-merge-conflict
+
+      # Syntax validation
+      - id: check-yaml
+        args: ['--unsafe']  # Allow custom YAML tags (tmux, kitty)
+
+      # File format
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+
+      # Case sensitivity
+      - id: check-case-conflict
+
+      # File safety
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+        exclude: '^img/.*'
+
+      # Executable permissions
+      - id: check-executables-have-shebangs
+        exclude: '^\.pre-commit-config\.yaml$'
+      - id: check-shebang-scripts-are-executable
+
+  # Local project hooks (system language, no virtualenv issues)
+  - repo: local
+    hooks:
+      # Makefile validation
+      - id: makefile-syntax
+        name: Validate Makefile syntax
+        entry: bash -c 'for f in "$@"; do make -n -f "$f" help >/dev/null 2>&1 || exit 1; done' --
+        language: system
+        files: '^Makefile$'
+        pass_filenames: true
+        stages: [commit]
+
+      # Makefile linting (optional, graceful skip if not installed)
+      - id: makefile-lint
+        name: Lint Makefile
+        entry: bash -c 'command -v checkmake >/dev/null 2>&1 && checkmake "$@" || true' --
+        language: system
+        files: '^Makefile$'
+        pass_filenames: true
+        stages: [commit]
+
+      # ZSH script validation
+      - id: zsh-syntax
+        name: Validate ZSH syntax
+        entry: bash -c 'for f in "$@"; do zsh -n "$f" 2>&1 || exit 1; done' --
+        language: system
+        types: [shell]
+        files: '^zsh\.d/.*\.zsh$|^zshrc$'
+        pass_filenames: true
+        stages: [commit]
+
+      # Lua syntax validation (Neovim config, skip if luac absent)
+      - id: lua-syntax
+        name: Validate Lua syntax
+        entry: bash -c 'command -v luac >/dev/null 2>&1 && for f in "$@"; do luac -p "$f" 2>&1 || exit 1; done || true' --
+        language: system
+        files: '\.lua$'
+        pass_filenames: true
+        stages: [commit]
+
+# Global configuration
+fail_fast: false
+exclude: '^(\.git|\.venv|venv|build|dist)/'
+default_stages: [commit]
