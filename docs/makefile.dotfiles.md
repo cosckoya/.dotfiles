@@ -7,14 +7,14 @@ Symlink-based installer. All targets are idempotent — safe to run multiple tim
 | Target | Description |
 |--------|-------------|
 | `make help` | Print all targets (auto-generated from `##` comments) |
-| `make all` | Install ASDF + full profile (ZSH + Tmux + Kitty + Neovim) |
-| `make profile` | Install ZSH + Tmux + Kitty + Neovim (no ASDF) |
+| `make all` | Install MISE + full profile (ZSH + Tmux + Kitty + Neovim) |
+| `make profile` | Install ZSH + Tmux + Kitty + Neovim (no MISE) |
 | `make zsh` | Symlink `zshrc` → `~/.zshrc`, `zsh.d/` → `~/.zsh.d/` |
 | `make tmux` | Symlink `config/tmux.conf` → `~/.tmux.conf` |
 | `make kitty` | Symlink `config/kitty.conf` → `~/.config/kitty/kitty.conf` |
 | `make neovim` | Symlink `config/nvim/` → `~/.config/nvim/` |
 | `make install-nvim` | Install Neovim 0.11+ via `sudo snap install nvim --classic` |
-| `make asdf` | Download latest ASDF binary to `~/bin/asdf` |
+| `make mise` | Install MISE (runtime version manager for Python, Node, Go, Rust, etc.) |
 
 ## Installation Mechanics
 
@@ -33,21 +33,19 @@ vimrc                  → ~/.vimrc
 
 Running `make` again replaces existing symlinks (idempotent).
 
-## ASDF Installation
+## MISE Installation
 
-Downloads the latest release binary directly from GitHub — no package manager needed.
+Installs MISE (Rust-based version manager, faster than ASDF) via official installer.
 
-**Location:** `~/bin/asdf` (also on `$PATH`)
-**Data directory:** `~/.asdf`
+**Location:** `~/.local/bin/mise` (added to `$PATH` automatically)
+**Config:** `mise.toml` (ASDF `.tool-versions` compatible)
 
-Architecture detection:
-
-```
-uname -m   → GitHub release name
-x86_64     → amd64
-aarch64    → arm64
-arm64      → arm64
-```
+MISE features:
+- 10–100x faster than ASDF (compiled Rust vs shell)
+- Drop-in ASDF replacement (reads `.tool-versions`)
+- Better UX with modern error messages
+- Built-in support for Python, Node, Go, Rust, Ruby, Java, PHP, and 200+ tools
+- Async installation for large environments
 
 ## Neovim Installation
 
@@ -120,13 +118,16 @@ ls -l ~/.zshrc      # verify new symlink
 sudo make install-nvim   # require sudo for snap
 ```
 
-**ASDF installation fails?**
+**MISE installation fails?**
 ```bash
 # Check internet connectivity
-curl -s https://api.github.com/repos/asdf-vm/asdf/releases/latest | head -5
+curl -s https://mise.jdx.dev/install.sh | head -5
 
-# Check disk space
-df -h ~/
+# Verify installation
+mise --version
+
+# Install specific tool version
+mise install python@3.13
 ```
 
 **Pre-commit hooks not running?**

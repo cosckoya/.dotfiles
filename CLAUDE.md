@@ -11,8 +11,9 @@ Platform: Ubuntu 20.04+, Debian 11+. Required: `zsh 5.9+`, `git 2.40+`, `tmux 3.
 ## Installation
 
 ```bash
-make all          # Everything (ASDF + profile)
+make all          # Everything (MISE + profile)
 make profile      # ZSH + Tmux + Kitty + Neovim
+make mise         # MISE (runtime version manager)
 make zsh          # ZSH only
 make install-nvim # Neovim 0.11+ via snap
 ```

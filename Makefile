@@ -1,6 +1,6 @@
 .ONESHELL:
 SHELL := /bin/bash
-.PHONY: help all profile zsh tmux kitty neovim install-nvim asdf clean pre-commit-setup
+.PHONY: help all profile zsh tmux kitty neovim install-nvim mise clean pre-commit-setup
 .DEFAULT_GOAL := help
 
 OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
@@ -13,22 +13,16 @@ help: ## Shows this makefile help
 	@echo "Targets:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-all: asdf profile ## Install everything
+all: mise profile ## Install everything
 
 profile: zsh tmux kitty neovim ## Install ZSH, Tmux, Kitty, and Neovim profiles
 
-asdf: ## Install asdf (always latest version)
-	@set -e; \
-	ASDF_VERSION=$$(curl -s https://api.github.com/repos/asdf-vm/asdf/releases/latest | grep '"tag_name"' | sed -E 's/.*"v([^"]+)".*/\1/'); \
-	ARCH=$$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$$/arm64/'); \
-	test -n "$$ASDF_VERSION" || { echo "Error: Failed to fetch ASDF version"; exit 1; }; \
-	mkdir -p ${HOME}/bin ${HOME}/.asdf; \
-	wget -q "https://github.com/asdf-vm/asdf/releases/download/v$$ASDF_VERSION/asdf-v$$ASDF_VERSION-linux-$$ARCH.tar.gz" -O /tmp/asdf.tar.gz; \
-	tar -xzf /tmp/asdf.tar.gz -C /tmp; \
-	mv /tmp/asdf ${HOME}/bin/asdf; \
-	chmod +x ${HOME}/bin/asdf; \
-	rm -f /tmp/asdf.tar.gz; \
-	echo "ASDF v$$ASDF_VERSION installed"
+mise: ## Install mise (runtime version manager, faster than ASDF)
+	@command -v mise >/dev/null || { \
+		echo "Installing mise..."; \
+		curl -L https://mise.jdx.dev/install.sh | sh; \
+		echo "Mise installed"; \
+	} || echo "Mise already installed"
 
 zsh: ## Install ZSH profile
 	@set -e; \

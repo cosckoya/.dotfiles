@@ -20,7 +20,7 @@ exec zsh
 ```
 
 **What happened:**
-- ASDF installed to `~/bin/asdf` with `~/.asdf` as data directory
+- MISE installed (runtime version manager: Python, Node, Go, Rust, 200+ tools)
 - `zshrc` symlinked to `~/.zshrc`
 - `config/tmux.conf` symlinked to `~/.tmux.conf`
 - `config/kitty.conf` symlinked to `~/.config/kitty/kitty.conf`
@@ -31,7 +31,8 @@ exec zsh
 
 ```bash
 make help                # List all available targets
-make profile             # ZSH + Tmux + Kitty + Neovim (no ASDF)
+make mise                # Install MISE (runtime version manager)
+make profile             # ZSH + Tmux + Kitty + Neovim (no MISE required)
 make zsh                 # ZSH configuration only
 make install-nvim       # Install Neovim via snap (requires sudo)
 ```
