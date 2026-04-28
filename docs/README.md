@@ -13,10 +13,16 @@ New to these dotfiles? Start here.
 
 How to personalize each component without breaking the system.
 
-- [ZSH Configuration](./zsh.dotfiles.md) — Modules, environment variables, prompt customization
+- [ZSH Configuration](./zsh.dotfiles.md) — Modules, environment variables, prompt customization, performance tuning
 - [Tmux Configuration](./tmux.dotfiles.md) — Keybindings, colors, pane behavior
 - [Kitty Configuration](./kitty.dotfiles.md) — Font, window size, mouse settings
 - [Neovim Configuration](./neovim.dotfiles.md) — LSP servers, plugins, keymaps
+
+## Visual Reference
+
+Understand the architecture through diagrams and visual explanations.
+
+- [Dream Realm ASCII Diagrams](./dream-realm-ascii.md) — System architecture, startup timeline, performance budget, aesthetic inspiration
 
 ## Troubleshooting
 
