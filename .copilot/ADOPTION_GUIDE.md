@@ -1,7 +1,7 @@
 # GitHub Copilot 2026 Configuration - Adoption Guide
 
-**Commit**: d269ec9  
-**Date**: February 17, 2026  
+**Commit**: d269ec9
+**Date**: February 17, 2026
 **Status**: ✅ Ready for Production Use
 
 ---
@@ -321,18 +321,18 @@ Configuration Metrics:
   Total characters:      72,517
   Estimated tokens:      ~18.1k
   Context usage:         18.9%
-  
+
 Performance Targets:
   ZSH startup:           ~110ms
   Makefile idempotent:   100% (safe to run multiple times)
   Offline capability:    ✅ (no runtime external deps)
-  
+
 Code Standards:
   Shell indentation:     2 spaces
   Lua patterns:          lazy.nvim with lazy-load
   Make targets:          idempotent + color output
   Tools:                 All guarded with command -v
-  
+
 Optimization:
   Per-response budget:   6,000 tokens
   Config overhead:       18.1k tokens (loaded once, cached)
@@ -355,19 +355,19 @@ Optimization:
 
 You now have:
 
-✅ **4 specialized agents** with clear priorities and capabilities  
-✅ **6 domain expertise skills** with best practices & patterns  
-✅ **Master instructions** for absolute rules & guidelines  
-✅ **Token-optimized** configuration (18.9% of context)  
-✅ **2026 best practices** encoded throughout  
-✅ **Backward compatible** with existing configuration  
-✅ **Production ready** for immediate use  
+✅ **4 specialized agents** with clear priorities and capabilities
+✅ **6 domain expertise skills** with best practices & patterns
+✅ **Master instructions** for absolute rules & guidelines
+✅ **Token-optimized** configuration (18.9% of context)
+✅ **2026 best practices** encoded throughout
+✅ **Backward compatible** with existing configuration
+✅ **Production ready** for immediate use
 
 **Recommendation**: Start with `.copilot/instructions.md` for the complete picture.
 
 ---
 
-**Configuration Status**: ✅ Production Ready  
-**Date**: February 17, 2026  
-**Commit**: d269ec9  
+**Configuration Status**: ✅ Production Ready
+**Date**: February 17, 2026
+**Commit**: d269ec9
 **Ready to use with**: `gh copilot` CLI tool

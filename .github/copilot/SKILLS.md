@@ -168,6 +168,6 @@ Copilot will automatically suggest relevant skills based on your question or cod
 
 ---
 
-**Last Updated:** 2026-02-17  
-**Status:** ✅ Auto-enabled for all sessions  
+**Last Updated:** 2026-02-17
+**Status:** ✅ Auto-enabled for all sessions
 **Standard:** GitHub Copilot 2026 Best Practices

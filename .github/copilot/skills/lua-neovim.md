@@ -115,13 +115,13 @@ return {
   -- Load immediately (core tools)
   { "neovim/nvim-lspconfig", lazy = false },
   { "nvim-telescope/telescope.nvim", lazy = false },
-  
+
   -- Load on command
   { "nvim-neotest/neotest", lazy = true, cmd = "Neotest" },
-  
+
   -- Load on filetype
   { "vim-test/vim-test", lazy = true, ft = { "go", "rust", "python" } },
-  
+
   -- Load on keybind
   { "lewis6991/gitsigns.nvim", lazy = true, keys = { "<leader>g" } },
 }
