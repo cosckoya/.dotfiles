@@ -59,10 +59,10 @@ repos:
         pass_filenames: true
         stages: [commit]
 
-      # ZSH script validation
+      # ZSH script validation (skip if zsh absent, e.g. CI/CD without zsh installed)
       - id: zsh-syntax
         name: Validate ZSH syntax
-        entry: bash -c 'for f in "$@"; do zsh -n "$f" 2>&1 || exit 1; done' --
+        entry: bash -c 'command -v zsh >/dev/null 2>&1 && for f in "$@"; do zsh -n "$f" 2>&1 || exit 1; done || true' --
         language: system
         types: [shell]
         files: '^zsh\.d/.*\.zsh$|^zshrc$'
