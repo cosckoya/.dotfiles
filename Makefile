@@ -1,6 +1,6 @@
 .ONESHELL:
 SHELL := /bin/bash
-.PHONY: help all profile zsh tmux kitty neovim install-nvim asdf
+.PHONY: help all profile zsh tmux kitty neovim install-nvim asdf clean pre-commit-setup
 .DEFAULT_GOAL := help
 
 OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
@@ -68,3 +68,16 @@ kitty: ## Install Kitty terminal profile
 	@mkdir -p ${HOME}/.config/kitty
 	@ln -sf ${DOTFILES}/config/kitty.conf ${HOME}/.config/kitty/kitty.conf
 	@echo "Kitty configured"
+
+pre-commit-setup: ## Install pre-commit hooks
+	@command -v pre-commit >/dev/null || { echo "Error: Install pre-commit first (pip install pre-commit)"; exit 1; }
+	@pre-commit install
+	@echo "Pre-commit hooks installed"
+
+clean: ## Remove all symlinks and restore defaults
+	@rm -f ${HOME}/.zshrc ${HOME}/.zsh.d
+	@rm -f ${HOME}/.tmux.conf
+	@rm -f ${HOME}/.config/kitty/kitty.conf
+	@rm -rf ${HOME}/.config/nvim
+	@rm -f ${HOME}/.vimrc
+	@echo "Symlinks removed"

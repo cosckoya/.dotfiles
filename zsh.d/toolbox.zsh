@@ -40,23 +40,23 @@ EOF
 
     # Check if image exists
     if docker image inspect "$image_name" >/dev/null 2>&1 && [[ "$force_rebuild" == false ]]; then
-        echo "🚀 Using existing toolbox image (use --force to rebuild)"
+        echo "[INFO] Using existing toolbox image (use --force to rebuild)"
     else
-        echo "🔧 Downloading latest Dockerfile..."
+        echo "[BUILD] Downloading latest Dockerfile..."
         curl -fsSL "$repo_url" -o "$dockerfile_path" || {
-            echo "❌ Failed to download Dockerfile"
+            echo "[ERROR] Failed to download Dockerfile"
             return 1
         }
 
-        echo "🔨 Building toolbox image..."
+        echo "[BUILD] Building toolbox image..."
         local build_args=($([[ "$no_cache" == true ]] && echo "--no-cache"))
         docker build ${build_args[@]} -f "$dockerfile_path" -t "$image_name" /tmp || {
-            echo "❌ Build failed!"
+            echo "[ERROR] Build failed!"
             rm -f "$dockerfile_path"
             return 1
         }
         rm -f "$dockerfile_path"
-        echo "✅ Build completed successfully"
+        echo "[OK] Build completed successfully"
     fi
 
     # Run container

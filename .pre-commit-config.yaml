@@ -33,9 +33,9 @@ repos:
         args: ['--maxkb=1000']
         exclude: '^img/.*'
 
-      # Executable permissions
+      # Executable permissions (exclude non-scripts with no shebang)
       - id: check-executables-have-shebangs
-        exclude: '^\.pre-commit-config\.yaml$'
+        exclude: '(^\.pre-commit-config\.yaml$|^Makefile$|^zshrc$)'
       - id: check-shebang-scripts-are-executable
 
   # Local project hooks (system language, no virtualenv issues)

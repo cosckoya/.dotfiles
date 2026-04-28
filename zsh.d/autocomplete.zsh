@@ -1,7 +1,7 @@
 # Shell completions for tools
 # Best practice: Lazy-load completions to avoid startup delay
 
-if (( $+commands[kubectl] )); then
+if command -v kubectl >/dev/null 2>&1; then
   # Lazy-load kubectl completions
   _load_kubectl_completion() {
     source <(kubectl completion zsh)
@@ -10,7 +10,7 @@ if (( $+commands[kubectl] )); then
   compdef _load_kubectl_completion kubectl
 fi
 
-if (( $+commands[helm] )); then
+if command -v helm >/dev/null 2>&1; then
   # Lazy-load helm completions
   _load_helm_completion() {
     source <(helm completion zsh)
@@ -19,7 +19,7 @@ if (( $+commands[helm] )); then
   compdef _load_helm_completion helm
 fi
 
-if (( $+commands[kind] )); then
+if command -v kind >/dev/null 2>&1; then
   # Lazy-load kind completions
   _load_kind_completion() {
     source <(kind completion zsh)
@@ -29,7 +29,7 @@ if (( $+commands[kind] )); then
 fi
 
 # asdf (completion built-in since v0.16+)
-if (( $+commands[asdf] )); then
+if command -v asdf >/dev/null 2>&1; then
   # Rosetta 2 workaround for Apple Silicon
   [[ $(uname -m) != "x86_64" ]] && alias asdf='arch -x86_64 asdf'
 fi

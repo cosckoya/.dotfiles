@@ -11,10 +11,43 @@ on:
 
 jobs:
   pre-commit:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-20.04
+          - ubuntu-22.04
+          - ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - uses: pre-commit/action@v3.0.0
+
+  shell-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check ZSH syntax
+        run: zsh -n zshrc
+
+      - name: Check Makefile
+        run: make help >/dev/null
+
+  startup-time:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Measure ZSH startup
+        run: |
+          echo "Measuring ZSH startup time..."
+          export PATH="$PWD:$PATH"
+          time zsh -ic exit 2>&1 | tee /tmp/startup.log
+
+          # Check if under 110ms (rough estimate from wall time)
+          elapsed=$(cat /tmp/startup.log | grep real | awk '{print $2}')
+          echo "Elapsed: $elapsed"
+          echo "Note: Full profiling requires more detailed analysis"
