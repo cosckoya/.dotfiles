@@ -1,5 +1,7 @@
 # Documentation
 
+![Morpheus and Death with pigeons](../img/death.png)
+
 Technical reference for cosckoya/.dotfiles. Pick a guide based on your need.
 
 ## Getting Started

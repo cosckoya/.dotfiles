@@ -1,8 +1,10 @@
 # The Dream Realm — Visual Architecture
 
+![Morpheus and Death sitting on a bench feeding pigeons](../img/death.png)
+
 > *"Some people think the physical world is the only true reality. But actually, as any neuroscientist will tell you, the world we experience is nothing more than a perceptual model created by the brain."* — Morpheus, The Matrix
 
-This document provides visual ASCII diagrams of the ZSH shell architecture, inspired by the Dream realm from Neil Gaiman's *Sandman*.
+This document provides visual ASCII diagrams of the ZSH shell architecture, inspired by the Dream realm from Neil Gaiman's *Sandman*. The image above depicts the iconic scene of Morpheus (Dream of the Endless) and his sister Death sitting on a bench, feeding pigeons — a perfect metaphor for the balance between structure and acceptance in system design.
 
 ---
 
