@@ -1,140 +1,141 @@
 # Neovim Configuration
 
-Lua-based Neovim configuration using lazy.nvim for plugin management and Mason for LSP server installation. No external runtime dependencies (no npm/cargo/go required at startup).
+Lua-based configuration using lazy.nvim plugin manager and Mason for LSP server installation. Requires Neovim 0.11+. Symlinked from `config/nvim/` to `~/.config/nvim/`.
 
-**Entry point:** `config/nvim/init.lua` → symlinked to `~/.config/nvim/`
-
-**Requires:** Neovim 0.11+
-
----
+No external runtime dependencies (no npm/cargo/go required at startup).
 
 ## Bootstrap
 
-`init.lua` auto-installs lazy.nvim on first launch by cloning from GitHub into `~/.local/share/nvim/lazy/lazy.nvim`. Subsequent launches use the cached copy.
+`init.lua` auto-installs lazy.nvim from GitHub on first launch. Lazy.nvim then installs plugins on-demand.
 
-Load order:
-
+Loading order:
 ```
 init.lua
-├── core/options.lua     editor settings
-├── core/keymaps.lua     keybindings
-├── core/autocmds.lua    autocommands
-└── lazy.setup("plugins")
-    ├── plugins/lsp.lua
-    ├── plugins/completion.lua
-    ├── plugins/ui.lua
-    └── plugins/editor.lua
+  ├── core/options.lua
+  ├── core/keymaps.lua
+  ├── core/autocmds.lua
+  └── lazy.setup(plugins)
+      ├── lsp.lua (Mason + LSP setup)
+      ├── completion.lua (nvim-cmp + LuaSnip)
+      ├── ui.lua (theme + which-key)
+      └── editor.lua (Telescope + other editors)
 ```
 
----
+First launch: plugins may take 10–20 seconds to install and compile.
 
-## Core Options (`lua/core/options.lua`)
+## Core Settings
 
-| Category | Key settings |
-|----------|-------------|
-| Leader | `<Space>` (both `mapleader` and `maplocalleader`) |
-| Display | Line numbers, color column at 90, cursor line, always-visible sign column |
-| Indentation | 2 spaces, `expandtab`, `smartindent` |
-| Search | `hlsearch`, `incsearch`, `ignorecase`, `smartcase` |
-| Splits | Vertical → right, horizontal → below |
-| Clipboard | `unnamedplus` (system clipboard) |
-| Completion | `menu,menuone,noselect` |
-| Performance | `updatetime=300ms`, `timeoutlen=400ms` |
-| Files | UTF-8, unix line endings, no backup files |
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| Leader key | `<Space>` | Prefix for custom keybindings |
+| Line numbers | On | Show line numbers |
+| Color column | 90 | Vertical guide at column 90 |
+| Indentation | 2 spaces | Tab width and indent |
+| Clipboard | `unnamedplus` | Use system clipboard |
+| Search | Case insensitive, but smart-case | Search behavior |
 
----
+## Language Servers
 
-## LSP (`lua/plugins/lsp.lua`)
+Mason auto-installs servers. Currently configured:
 
-Uses Mason for server installation and Neovim 0.11 native LSP API (`vim.lsp.config` + `vim.lsp.enable`).
+| Server | Filetypes |
+|--------|-----------|
+| lua-language-server | Lua |
+| pyright | Python |
+| bash-language-server | Bash, sh |
 
-### Installed servers
+Servers are enabled only when a matching file is opened (lazy activation).
 
-| Server | Mason package | Filetypes |
-|--------|--------------|-----------|
-| lua-language-server | `lua-language-server` | `lua` |
-| Pyright | `pyright` | `python` |
-| bash-language-server | `bash-language-server` | `sh`, `bash` |
-
-Servers are installed automatically on first launch if not present. Enabled via `FileType` autocommands — only activated when a relevant file is opened.
-
-### LSP keymaps (set in `on_attach`)
+### LSP Keybindings
 
 | Binding | Action |
 |---------|--------|
 | `gd` | Go to definition |
 | `gD` | Go to declaration |
 | `gi` | Go to implementation |
-| `gr` | References |
+| `gr` | List references |
 | `K` | Hover documentation |
 | `C-k` | Signature help |
 | `<leader>rn` | Rename symbol |
 | `<leader>ca` | Code action |
 | `[d` / `]d` | Previous/next diagnostic |
-| `<leader>d` | Open diagnostic float |
 
-### Diagnostics
+## Adding a Language Server
 
-Virtual text enabled. Signs:
-
-| Severity | Symbol |
-|----------|--------|
-| Error | `✘` |
-| Warning | `▲` |
-| Hint | `⚑` |
-| Info | `»` |
-
----
-
-## Completion (`lua/plugins/completion.lua`)
-
-nvim-cmp with LuaSnip as the snippet engine.
-
----
-
-## UI (`lua/plugins/ui.lua`)
-
-- **Theme:** tokyonight (set as default install colorscheme in lazy.nvim)
-- **which-key:** Displays available keybindings after timeout
-
----
-
-## Editor (`lua/plugins/editor.lua`)
-
-- **Telescope:** Fuzzy finder for files, buffers, and live grep
-
----
-
-## lazy.nvim settings
-
-| Setting | Value |
-|---------|-------|
-| Default lazy | `false` (plugins eager unless marked lazy) |
-| Missing plugins | Auto-installed on startup |
-| Update checker | Enabled, silent (no notification popup) |
-| Cache | Enabled |
-| Disabled built-ins | `gzip`, `matchit`, `matchparen`, `netrwPlugin`, `tarPlugin`, `tohtml`, `tutor`, `zipPlugin` |
-| UI border | Rounded |
-
----
-
-## Adding a language server
-
-Edit `config/nvim/lua/plugins/lsp.lua`, add the Mason package name to the `servers` table:
+Edit `config/nvim/lua/plugins/lsp.lua`:
 
 ```lua
 local servers = { "lua-language-server", "pyright", "bash-language-server", "tsserver" }
 ```
 
-Add the `vim.lsp.config` block and a `FileType` autocommand. Mason installs the binary on next Neovim launch.
+Add the Mason package name to the list. Mason installs it on next Neovim launch.
 
----
+Then add configuration block:
 
-## Installation
+```lua
+vim.lsp.config("tsserver", {
+  cmd = { mason_bin .. "/typescript-language-server", "--stdio" },
+  root_markers = { "package.json", "tsconfig.json", ".git" },
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
 
-```bash
-make install-nvim   # install Neovim 0.11+ via snap (requires sudo)
-make neovim         # symlink config/nvim → ~/.config/nvim
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "typescript",
+  callback = function() vim.lsp.enable("tsserver") end,
+})
 ```
 
-First launch clones lazy.nvim and triggers `:MasonInstall` for configured servers automatically.
+## Completion
+
+nvim-cmp with LuaSnip. Triggered automatically while typing.
+
+| Binding | Action |
+|---------|--------|
+| `C-Space` | Trigger completion |
+| `<Tab>` / `<S-Tab>` | Select next/previous |
+| `<CR>` | Accept selection |
+| `<C-e>` | Cancel completion |
+
+## Theme
+
+Default: tokyonight (dark). Set in `lazy.nvim` install config in `init.lua`.
+
+To change theme, edit `init.lua`:
+
+```lua
+install = {
+  missing = true,
+  colorscheme = { "dracula" },  -- change theme name
+}
+```
+
+## Troubleshooting
+
+**LSP not working?**
+```bash
+nvim --version                          # verify 0.11+
+:MasonInstall <server-name>             # manually install server
+:LspInfo                                # check LSP status
+```
+
+**Completion not triggering?**
+```bash
+:checkhealth cmp                        # check completion health
+```
+
+**Plugins not installing?**
+Delete cache and try again:
+```bash
+rm -rf ~/.local/share/nvim/lazy
+nvim
+```
+
+**Slow startup?**
+```bash
+:profile start /tmp/nvim.log
+:profile func *
+# edit a file to trigger operations
+:profile stop
+# examine /tmp/nvim.log
+```

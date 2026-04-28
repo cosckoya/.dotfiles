@@ -1,135 +1,121 @@
 # Tmux Configuration
 
-Native tmux 3.4+ configuration. No external plugins or TPM. 238 lines. Unified Drizzt Do'Urden color scheme.
+Native tmux 3.4+ syntax. No external plugins or TPM. 238 lines. Symlinked from `config/tmux.conf` to `~/.tmux.conf`.
 
-**File:** `config/tmux.conf` → symlinked to `~/.tmux.conf`
+Reload config live without restarting:
 
----
+```bash
+tmux source ~/.tmux.conf
+```
+
+Or from inside tmux: `prefix + r`
 
 ## General Settings
 
-| Setting | Value | Effect |
-|---------|-------|--------|
+| Setting | Value | Purpose |
+|---------|-------|---------|
 | `default-terminal` | `tmux-256color` | 256-color base |
-| `terminal-features` | `xterm-256color:RGB`, `kitty*:RGB:hyperlinks` | True color + Kitty hyperlinks |
-| `extended-keys` | `on` | Modifier keys (C-Up, M-PageUp, etc.) |
-| `set-clipboard` | `on` | OSC 52 clipboard in SSH sessions |
-| `allow-passthrough` | `on` | Kitty protocols and OSC 8 hyperlinks |
-| `escape-time` | `10ms` | Faster key sequence resolution |
-| `repeat-time` | `600ms` | Repeat timeout for `-r` bindings |
+| `escape-time` | `10ms` | Faster key sequences |
+| `base-index` | `1` | Windows start at 1, not 0 |
 | `aggressive-resize` | `on` | Resize to smallest active client |
-
----
-
-## Window and Pane Display
-
-| Setting | Value |
-|---------|-------|
-| `base-index` | 1 (windows start at 1, not 0) |
-| `pane-base-index` | 1 |
-| `automatic-rename` | on (uses `#{b:pane_current_path}`) |
-| `renumber-windows` | on |
-| `pane-border-status` | top (pane title visible) |
-| `pane-border-indicators` | both |
-| `status-interval` | 10 seconds |
-
----
-
-## Color Scheme
-
-| Element | Hex | Role |
-|---------|-----|------|
-| Background / status bar bg | `#100814` | Deep drow cavern |
-| Active pane border | `#b19cd9` | Lavender (violet eyes) |
-| Inactive pane border | `#4a5273` | Cavern stone |
-| Active window tab | `#b19cd9` bg, `#100814` fg | Lavender glow |
-| Inactive window tab | `#100814` bg, `#8b8c99` fg | Shadow |
-| Message bar | `#b19cd9` bg, `#100814` fg | Bold lavender |
-| Copy mode highlight | `#b19cd9` bg, `#100814` fg | |
-| Clock | `#7ec8e3` | Icy blue |
-| Activity indicator | `#7ec8e3` underline | |
-| Bell indicator | `#d35d6e` blink bold | |
-
----
-
-## Status Bar
-
-**Left:** Session name (fox indicator). Hidden if session is named `default`.
-
-**Right:** `PREFIX` indicator (yellow when prefix active) + time (`%H:%M`) + `whoami` (yellow) + hostname (lavender).
-
-```
-#{?client_prefix,PREFIX ,}HH:MM | user @ host
-```
-
----
+| `status-interval` | `10s` | Status bar refresh rate |
+| `mouse` | `on` | Full mouse support (click, select, scroll) |
 
 ## Key Bindings
 
-### Prefix: `Ctrl+b` (default)
+Prefix is `Ctrl+b` (default).
 
 | Binding | Action |
 |---------|--------|
-| `prefix + r` | Reload `~/.tmux.conf` |
-| `prefix + e` | Edit `~/.tmux.conf` in `$EDITOR` |
-| `prefix + C-c` | New session |
-| `prefix + C-f` | Find session by name |
-| `prefix + BTab` | Switch to last session |
+| `prefix + r` | Reload config |
+| `prefix + e` | Edit config in `$EDITOR` |
 | `prefix + -` | Split horizontal (retain path) |
 | `prefix + _` | Split vertical (retain path) |
-| `prefix + h/j/k/l` | Navigate panes (vim-style, repeatable) |
-| `prefix + H/J/K/L` | Resize panes (repeatable) |
-| `prefix + >` / `<` | Swap pane down/up |
-| `prefix + C-h` / `C-l` | Previous/next window |
+| `prefix + h/j/k/l` | Navigate panes (vim-style) |
+| `prefix + H/J/K/L` | Resize panes |
+| `prefix + >` / `<` | Swap panes down/up |
+| `prefix + C-h/l` | Previous/next window |
 | `prefix + Tab` | Last window |
-| `prefix + m` | Toggle mouse on/off |
+| `prefix + m` | Toggle mouse |
 | `prefix + Enter` | Enter copy mode |
-| `prefix + b` | List buffers |
-| `prefix + p` | Paste buffer |
-| `prefix + P` | Choose buffer |
 
 ### No-prefix pane navigation
 
-| Binding | Action |
-|---------|--------|
-| `C-h` | Select pane left |
-| `C-j` | Select pane down |
-| `C-k` | Select pane up |
-| `C-l` | Select pane right |
+Quick pane switching without pressing prefix:
 
----
+```
+Ctrl+h   left pane
+Ctrl+j   down pane
+Ctrl+k   up pane
+Ctrl+l   right pane
+```
 
-## Copy Mode (vi)
+## Copy Mode (Vi-style)
 
-`mode-keys vi` — all bindings follow vim conventions.
+Enter copy mode: `prefix + Enter`
 
 | Binding | Action |
 |---------|--------|
 | `v` | Begin selection |
-| `C-v` | Rectangle toggle |
-| `y` | Copy selection and cancel |
+| `y` | Copy and exit copy mode |
 | `Escape` | Cancel |
-| `H` | Start of line |
-| `L` | End of line |
 | `C-u` / `C-d` | Half-page up/down |
 | `/` / `?` | Search forward/backward |
 
-### Clipboard integration
+Copied text goes to system clipboard automatically (detected: `xclip`, `xsel`, `wl-copy`, `pbcopy`).
 
-Detected at runtime in order of preference:
+## Color Scheme
 
-1. `xclip` — X11 clipboard
-2. `xsel` — X11 clipboard (alternative)
-3. `wl-copy` — Wayland clipboard
-4. `pbcopy` — macOS (fallback)
+Base colors map to Drizzt Do'Urden palette. See [Color Scheme](./color-scheme.dotfiles.md) for hex values and lore.
 
-`y` and `MouseDragEnd1Pane` both pipe to whichever is found.
+| Element | Color | Use |
+|---------|-------|-----|
+| Active pane border | Lavender | Current pane |
+| Inactive pane border | Cavern stone | Other panes |
+| Active window | Lavender background | Current window in status bar |
+| Status bar | Deep cavern background | Bottom bar |
 
----
+## Status Bar
 
-## Reload
+Left: Fox icon + session name (hidden if named `default`)
+
+Right: `PREFIX` indicator (yellow when active) + time (`HH:MM`) + user (yellow) + hostname (lavender)
+
+## Session Management
 
 ```bash
-tmux source ~/.tmux.conf        # live reload without restart
-# or use prefix + r inside tmux
+tmux list-sessions              # list all sessions
+tmux new-session -s dev         # create new session
+tmux attach-session -t dev      # attach to session
+tmux kill-session -t dev        # kill session
+
+# From inside tmux:
+prefix + C-c                    # new session
+prefix + C-f                    # find session
+prefix + BTab                   # switch to last session
+```
+
+## Buffer Management
+
+```bash
+prefix + b          list buffers
+prefix + p          paste buffer
+prefix + P          choose buffer
+```
+
+## Troubleshooting
+
+**Clipboard not working?**
+Install one of: `xclip`, `xsel` (X11), `wl-copy` (Wayland), `pbcopy` (macOS).
+
+**Colors look wrong?**
+Ensure `$TERM` is set correctly:
+```bash
+echo $TERM                      # should output tmux-256color
+```
+
+**Keys not working?**
+Enable extended keys (tmux 3.2+):
+```
+set -g extended-keys on
 ```

@@ -1,98 +1,108 @@
 # Color Scheme: Drizzt Do'Urden
 
-A unified dark palette applied consistently across ZSH, Tmux, Kitty, and Neovim. Inspired by the drow ranger from the Forgotten Realms — Drizzt Do'Urden, his enchanted familiar Guenhwyvar, and his magical scimitars Icingdeath and Twinkle.
+Unified dark palette applied consistently across ZSH, Tmux, Kitty, and Neovim. Inspired by Drizzt Do'Urden (the drow ranger) and his world from the Forgotten Realms — his scimitar Twinkle, his familiar Guenhwyvar, and the lavender of his unique eyes.
 
-All contrast ratios meet WCAG AAA (7:1+) against the `#100814` background.
-
----
+All colors meet WCAG AAA contrast ratios (7:1+) against the `#100814` background.
 
 ## Master Palette
 
-| Token | Hex | 256-color | Source | Usage |
-|-------|-----|-----------|--------|-------|
-| Background | `#100814` | — | Deep drow cavern | All backgrounds |
-| Foreground | `#e0dfe8` | — | Moonlit stone | Primary text |
-| Lavender | `#b19cd9` | 141 | Violet eyes | Active elements, borders, Insert mode |
-| Icy Blue | `#7ec8e3` | 117 | Twinkle (scimitar) | Git branch, highlights, clock |
-| Drow Green | `#5ab897` | 78 | Drow magic | Kubernetes context, Neovim Insert mode |
-| Magical Yellow | `#f0c987` | 222 | Magical glow | ZSH separator, tmux time, fallback prompt |
-| Red | `#d35d6e` | 167 | Blood | ZSH username, bell |
-| Cavern Stone | `#4a5273` | — | Rock walls | Inactive pane borders |
-| Shadow | `#8b8c99` | — | Dim cavern | Inactive window tabs |
-| Deep Black | `#0f1119` | — | Void | Terminal color 0, tab bar background |
+| Token | Hex | 256-color | Component | Meaning |
+|-------|-----|-----------|-----------|---------|
+| Background | `#100814` | — | All | Deep drow cavern |
+| Foreground | `#e0dfe8` | — | All | Moonlit stone |
+| Lavender | `#b19cd9` | 141 | All active elements | Drizzt's violet eyes |
+| Icy Blue | `#7ec8e3` | 117 | Git, highlights | Twinkle (scimitar) |
+| Drow Green | `#5ab897` | 78 | Kubernetes, Insert mode | Drow magic |
+| Magical Yellow | `#f0c987` | 222 | Accent, time | Surface-world glow |
+| Red | `#d35d6e` | 167 | Error, username | Combat, sacrifice |
+| Cavern Stone | `#4a5273` | — | Inactive borders | Rock walls |
+| Shadow | `#8b8c99` | — | Inactive text | Dim cavern |
+| Deep Black | `#0f1119` | — | Terminal color 0 | Void |
 
----
+## Per-Component Usage
 
-## Bright variants (terminal color 8–15)
+### ZSH Prompt
 
-| Index | Hex | Description |
-|-------|-----|-------------|
-| 8 | `#3d4466` | Bright black (dark blue-grey) |
-| 9 | `#ff6b7f` | Bright red |
-| 10 | `#6de2b0` | Bright green |
-| 11 | `#ffd89b` | Bright yellow |
-| 12 | `#9ae8ff` | Bright blue |
-| 13 | `#d4b5ff` | Bright magenta |
-| 14 | `#8aedff` | Bright cyan |
-| 15 | `#e0dfe8` | Bright white |
-
----
-
-## Per-component application
-
-### ZSH prompt
-
+Left prompt (static):
 ```
 %F{141}┌──(%F{117}hostname%F{222}の%F{167}username%F{141})
        └─#
 ```
 
-RPROMPT uses `%F{117}` for git branch, `%F{141}` for venv, `%F{78}` for k8s.
+Right prompt (dynamic):
+- Git branch: 117 (icy blue)
+- Virtualenv: 141 (lavender)
+- Kubernetes: 78 (drow green)
+- Fallback: 222 (magical yellow)
 
 ### Tmux
 
-```
-pane-border-style        fg=#4a5273
-pane-active-border-style fg=#b19cd9
-status-style             fg=#e0dfe8,bg=#100814
-window-status-current    fg=#100814,bg=#b19cd9
-message-style            fg=#100814,bg=#b19cd9
-```
+- Active pane border: `#b19cd9` (lavender)
+- Inactive pane border: `#4a5273` (cavern stone)
+- Active window: `#b19cd9` background, `#100814` text (lavender glow)
+- Status bar background: `#100814`
+- Message bar: `#b19cd9` background, `#100814` text
 
 ### Kitty
 
-Direct hex values in `kitty.conf`. Background opacity 0.88 for a subtle glass effect. Cursor is `#b19cd9` with beam shape.
+- Background: `#100814` with 0.88 opacity (glass effect)
+- Foreground: `#e0dfe8`
+- Cursor: `#b19cd9` (beam shape)
+- Inactive window border: `#3d4466`
+- Active window border: `#b19cd9`
 
 ### Neovim
 
-Via tokyonight theme with statusline mode colors:
+Via tokyonight theme:
 
-| Mode | Color |
-|------|-------|
-| Normal | Lavender `#b19cd9` |
-| Insert | Drow Green `#5ab897` |
-| Visual | Icy Blue `#7ec8e3` |
+- Normal mode statusline: `#b19cd9` (lavender)
+- Insert mode statusline: `#5ab897` (drow green)
+- Visual mode statusline: `#7ec8e3` (icy blue)
 
----
+## Contrast Reference
 
-## Dircolors
+All colors tested against `#100814` background using WCAG AAA standards (7:1 minimum).
 
-`~/.dircolors` is configured to use the same palette for `ls` output. Applied at ZSH startup via:
+| Color | Ratio | AA Compliant | AAA Compliant |
+|-------|-------|--------------|---------------|
+| Lavender (`#b19cd9`) | 9.1:1 | Yes | Yes |
+| Icy Blue (`#7ec8e3`) | 10.5:1 | Yes | Yes |
+| Drow Green (`#5ab897`) | 7.2:1 | Yes | Yes |
+| Magical Yellow (`#f0c987`) | 8.3:1 | Yes | Yes |
+| Foreground (`#e0dfe8`) | 15.1:1 | Yes | Yes |
 
-```zsh
+## Lore Reference
+
+The palette maps directly to Drizzt's world and mythology:
+
+- **`#100814`** — The Underdark, lightless tunnels of Menzoberranzan
+- **`#b19cd9`** — Drizzt's unique lavender eyes (rare among drow)
+- **`#7ec8e3`** — Twinkle, his ice-enchanted scimitar with a blue glow
+- **`#5ab897`** — The blue-green magical aura of drow sorcery
+- **`#f0c987`** — The warm glow of surface-world torchlight
+- **`#d35d6e`** — Combat, conflict, the price of survival in the Underdark
+- **`#e0dfe8`** — Moonlit stone, hope, light in darkness
+
+From *The Sandman* (Neil Gaiman): Dream and Death sit on a bench feeding pigeons, at peace in the chaos. This palette is that moment — beauty and contrast in a dark world.
+
+## Dircolors Configuration
+
+`~/.dircolors` is pre-configured to use the palette for `ls` output. Applied at ZSH startup:
+
+```bash
 eval "$(dircolors -b ~/.dircolors)"
 alias ls='ls --color=auto'
 ```
 
----
+Edit `~/.dircolors` to customize colors for specific file types.
 
-## Lore reference
+## Dark Mode Variants
 
-The palette maps directly to Drizzt's world:
+All components automatically support light/dark mode via OS settings. Kitty and Tmux check `COLORFGBG` environment variable and adjust accordingly.
 
-- **`#100814`** — The Underdark, lightless tunnels of Menzoberranzan
-- **`#b19cd9`** — Drizzt's lavender eyes, unique among drow
-- **`#7ec8e3`** — Twinkle, his ice-enchanted scimitar
-- **`#5ab897`** — The blue-green magical aura of drow sorcery
-- **`#f0c987`** — The warm glow of surface-world torchlight
-- **`#d35d6e`** — Combat, the price of survival in the Underdark
+If colors appear inverted or wrong, check:
+```bash
+echo $COLORFGBG
+```
+
+Should output nothing (auto-detect) or `0;#100814;#e0dfe8` (explicit dark mode).

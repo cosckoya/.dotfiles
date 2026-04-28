@@ -1,95 +1,136 @@
 # Makefile Reference
 
-Symlink-based installer. Idempotent: safe to run multiple times. All targets use `set -e` so they fail fast on errors.
-
-**File:** `Makefile`
-
----
+Symlink-based installer. All targets are idempotent — safe to run multiple times.
 
 ## Targets
 
 | Target | Description |
 |--------|-------------|
-| `make help` | Print all available targets (auto-generated from `##` comments) |
-| `make all` | Install ASDF + full profile |
+| `make help` | Print all targets (auto-generated from `##` comments) |
+| `make all` | Install ASDF + full profile (ZSH + Tmux + Kitty + Neovim) |
 | `make profile` | Install ZSH + Tmux + Kitty + Neovim (no ASDF) |
-| `make zsh` | Symlink `zshrc` → `~/.zshrc` and `zsh.d/` → `~/.zsh.d/`; sets ZSH as default shell on Linux |
+| `make zsh` | Symlink `zshrc` → `~/.zshrc`, `zsh.d/` → `~/.zsh.d/` |
 | `make tmux` | Symlink `config/tmux.conf` → `~/.tmux.conf` |
 | `make kitty` | Symlink `config/kitty.conf` → `~/.config/kitty/kitty.conf` |
-| `make neovim` | Symlink `config/nvim/` → `~/.config/nvim/`; symlink `vimrc` → `~/.vimrc` |
-| `make install-nvim` | Install Neovim via `sudo snap install nvim --classic` |
-| `make asdf` | Download and install latest ASDF binary to `~/bin/asdf` |
+| `make neovim` | Symlink `config/nvim/` → `~/.config/nvim/` |
+| `make install-nvim` | Install Neovim 0.11+ via `sudo snap install nvim --classic` |
+| `make asdf` | Download latest ASDF binary to `~/bin/asdf` |
 
----
+## Installation Mechanics
 
-## Installation mechanics
-
-All targets use symbolic links, not file copies. Changes to dotfiles repository files take effect immediately without re-running `make`.
+All targets use symbolic links, not file copies. Changes to repository files take effect immediately without re-running `make`.
 
 ```
-Repo file              →  Symlink target
+Repo file              → Symlink target
 ────────────────────────────────────────
-zshrc                  →  ~/.zshrc
-zsh.d/                 →  ~/.zsh.d
-config/tmux.conf       →  ~/.tmux.conf
-config/kitty.conf      →  ~/.config/kitty/kitty.conf
-config/nvim/           →  ~/.config/nvim
-vimrc                  →  ~/.vimrc
+zshrc                  → ~/.zshrc
+zsh.d/                 → ~/.zsh.d
+config/tmux.conf       → ~/.tmux.conf
+config/kitty.conf      → ~/.config/kitty/kitty.conf
+config/nvim/           → ~/.config/nvim
+vimrc                  → ~/.vimrc
 ```
 
----
+Running `make` again replaces existing symlinks (idempotent).
 
-## ASDF installation
+## ASDF Installation
 
-Downloads the latest release binary directly from GitHub — no package manager required:
+Downloads the latest release binary directly from GitHub — no package manager needed.
+
+**Location:** `~/bin/asdf` (also on `$PATH`)
+**Data directory:** `~/.asdf`
+
+Architecture detection:
 
 ```
-https://github.com/asdf-vm/asdf/releases → ~/bin/asdf
+uname -m   → GitHub release name
+x86_64     → amd64
+aarch64    → arm64
+arm64      → arm64
 ```
 
-Architecture is detected from `uname -m` and mapped to the GitHub release naming convention (`x86_64 → amd64`, `aarch64 → arm64`).
+## Neovim Installation
 
----
-
-## Neovim installation requirement
-
-`make neovim` validates that Neovim 0.11+ is installed before creating symlinks. If the version check fails:
+Two-step process:
 
 ```bash
-make install-nvim   # install via snap first
-make neovim         # then configure
+make install-nvim      # install Neovim 0.11+ via snap (requires sudo)
+make neovim            # symlink config
 ```
 
----
+The `make neovim` target validates that Neovim 0.11+ is installed before creating symlinks.
+
+## Pre-commit Hooks
+
+Configured in `.pre-commit-config.yaml`. Run on every commit to validate:
+
+| Hook | Checks |
+|------|--------|
+| `check-merge-conflict` | No unresolved conflict markers |
+| `end-of-file-fixer` | Files end with newline |
+| `trailing-whitespace` | No trailing spaces |
+| `check-yaml` | Valid YAML syntax |
+| `check-added-large-files` | No large files (except `img/`) |
+| `check-case-conflict` | No case-sensitive filename conflicts |
+| `detect-private-key` | No private keys committed |
+| `mixed-line-ending` | LF line endings enforced |
+| `makefile-syntax` | Valid Makefile syntax |
+| `checkmake` | Makefile lint (skipped if not installed) |
+
+### Install hooks
+
+```bash
+pre-commit install          # one-time setup
+pre-commit run --all-files  # run manually on all files
+```
+
+Hooks run automatically on `git commit`. To bypass (not recommended):
+
+```bash
+git commit --no-verify
+```
+
+## Idempotency
+
+All `make` targets are safe to re-run. They:
+
+- Check if symlink exists before creating
+- Replace broken symlinks
+- Skip operations if prerequisites are missing
+- Never modify repository files
+- Never delete user files
 
 ## Variables
 
 | Variable | Value | Use |
 |----------|-------|-----|
-| `OS` | `$(uname -s)` lowercased | Conditional shell changes (Linux only) |
-| `DOTFILES` | `$(pwd)` | Absolute path to repo root |
+| `OS` | `$(uname -s)` lowercased | Conditional logic (Linux-specific setup) |
+| `DOTFILES` | `$(pwd)` | Absolute path to repo (used in symlinks) |
 
----
+## Troubleshooting
 
-## Pre-commit hooks
-
-Validated on every commit via `.pre-commit-config.yaml`:
-
-| Hook | What it checks |
-|------|---------------|
-| `check-merge-conflict` | No unresolved conflict markers |
-| `end-of-file-fixer` | Files end with a newline |
-| `trailing-whitespace` | No trailing spaces |
-| `check-yaml` | Valid YAML syntax |
-| `check-added-large-files` | No large binaries (except `img/`) |
-| `check-case-conflict` | No case-sensitive filename conflicts |
-| `detect-private-key` | No private keys committed |
-| `mixed-line-ending` | LF endings enforced |
-| `makefile-syntax` | Valid Makefile syntax |
-| `checkmake` | Makefile lint (skipped if not installed) |
-
-Install hooks after cloning:
-
+**Symlink already exists?**
 ```bash
-pre-commit install
+make zsh            # replaces existing symlink
+ls -l ~/.zshrc      # verify new symlink
+```
+
+**Permission denied on make install-nvim?**
+```bash
+sudo make install-nvim   # require sudo for snap
+```
+
+**ASDF installation fails?**
+```bash
+# Check internet connectivity
+curl -s https://api.github.com/repos/asdf-vm/asdf/releases/latest | head -5
+
+# Check disk space
+df -h ~/
+```
+
+**Pre-commit hooks not running?**
+```bash
+pre-commit install                  # install hooks
+git commit --allow-empty -m "test"  # test with empty commit
 ```

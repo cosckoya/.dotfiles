@@ -1,12 +1,33 @@
-# Documentation Index
+# Documentation
 
-Technical reference for the cosckoya/.dotfiles configuration.
+Technical reference for cosckoya/.dotfiles. Pick a guide based on your need.
 
-| Document | Contents |
-|----------|----------|
-| [zsh.dotfiles.md](zsh.dotfiles.md) | Entry point, module breakdown, prompt, Zinit plugins, compinit caching |
-| [tmux.dotfiles.md](tmux.dotfiles.md) | Settings, color scheme, key bindings, copy mode, clipboard |
-| [kitty.dotfiles.md](kitty.dotfiles.md) | Font, colors, cursor, window, layouts, key bindings |
-| [neovim.dotfiles.md](neovim.dotfiles.md) | Bootstrap, LSP, completion, key bindings, adding servers |
-| [makefile.dotfiles.md](makefile.dotfiles.md) | Targets, symlink mechanics, pre-commit hooks |
-| [color-scheme.dotfiles.md](color-scheme.dotfiles.md) | Full palette, per-component application, lore reference |
+## Getting Started
+
+New to these dotfiles? Start here.
+
+- [Installation & Quick Start](./getting-started.dotfiles.md) — Install, reload shell, verify startup time
+- [First Run Checklist](./getting-started.dotfiles.md#first-run-checklist) — Customize before committing
+
+## Configuration
+
+How to personalize each component without breaking the system.
+
+- [ZSH Configuration](./zsh.dotfiles.md) — Modules, environment variables, prompt customization
+- [Tmux Configuration](./tmux.dotfiles.md) — Keybindings, colors, pane behavior
+- [Kitty Configuration](./kitty.dotfiles.md) — Font, window size, mouse settings
+- [Neovim Configuration](./neovim.dotfiles.md) — LSP servers, plugins, keymaps
+
+## Troubleshooting
+
+Common issues and solutions.
+
+- [Troubleshooting Guide](./troubleshooting.dotfiles.md) — Slow startup, missing tools, broken configs
+
+## Reference
+
+Complete technical specifications for deep dives.
+
+- [Architecture Overview](./architecture.dotfiles.md) — Design decisions, performance targets, module interactions
+- [Color Scheme](./color-scheme.dotfiles.md) — Full palette, contrast ratios, lore
+- [Makefile](./makefile.dotfiles.md) — Build targets, symlink mechanics, pre-commit hooks

@@ -1,100 +1,76 @@
 # ZSH Configuration
 
-ZSH interactive shell configuration split across a main entry point and six single-purpose modules. Startup target: under 110ms.
+Entry point: `zshrc` → modules in `zsh.d/` → Zinit plugins (async) → prompt.
 
----
-
-## Entry Point: `zshrc`
-
-Loading order:
-
-1. `zsh.d/config.zsh` — environment variables
-2. Tmux auto-start logic
-3. Zinit bootstrap
-4. History and shell options
-5. `zsh.d/tools.zsh`, `toolbox.zsh`, `alias.zsh`, `tmux.zsh`
-6. Prompt + vcs_info setup
-7. `compinit` with daily cache invalidation
-8. Zinit plugins (async, turbo mode)
-9. `zsh.d/autocomplete.zsh`
-10. `mise` activation
-
----
+Target startup: under 110ms.
 
 ## Modules
 
-### `zsh.d/config.zsh` — Tmux variables
+| Module | Purpose |
+|--------|---------|
+| `config.zsh` | Environment variables: Tmux auto-start behavior |
+| `tools.zsh` | PATH, editor selection, npm lazy-loading |
+| `alias.zsh` | Command aliases and Docker wrappers |
+| `autocomplete.zsh` | Lazy-loaded completions for kubectl/helm/kind |
+| `tmux.zsh` | Tmux helper functions and aliases |
+| `toolbox.zsh` | Download and run Docker-based development environment |
 
-All Tmux auto-start behavior is controlled here. Override any variable in the environment before launching a shell.
+## Environment Variables
 
-| Variable | Default | Effect |
-|----------|---------|--------|
-| `TMUX_AUTOSTART_ENABLED` | `true` | Master switch |
+All variables are defined in `zsh.d/config.zsh` and can be overridden in your shell environment.
+
+| Variable | Default | Behavior |
+|----------|---------|----------|
+| `TMUX_AUTOSTART_ENABLED` | `true` | Start tmux on shell login |
 | `TMUX_AUTOSTART_SESSION` | `default` | Session name to attach or create |
 | `TMUX_SKIP_SSH` | `false` | Skip auto-start in SSH sessions |
-| `TMUX_SKIP_IDE` | `true` | Skip inside VSCode (`$VSCODE_PID`) and Emacs (`$INSIDE_EMACS`) |
+| `TMUX_SKIP_IDE` | `true` | Skip in VSCode (`$VSCODE_PID`) and Emacs (`$INSIDE_EMACS`) |
 | `TMUX_SKIP_DESKTOP` | `true` | Skip in graphical desktop sessions |
-| `TMUX_SKIP_DESKTOP_SESSIONS` | `bspwm,i3,gnome,kde,xfce` | Comma-separated list of `$DESKTOP_SESSION` values to skip |
+| `TMUX_SKIP_DESKTOP_SESSIONS` | `bspwm,i3,gnome,kde,xfce` | Desktop environments to skip |
 
----
+Override example:
 
-### `zsh.d/tools.zsh` — PATH and editor chain
-
-Editor selection (in order of availability):
-
-```zsh
-nvim → vim → nano
+```bash
+# Start a new shell without tmux
+export TMUX_AUTOSTART_ENABLED="false"
+zsh
 ```
 
-Exported as `$VISUAL` and `$EDITOR`. `vi` is aliased to whichever is found.
+## Prompt
 
-PATH additions (only if directory exists, using `typeset -U path` to deduplicate):
+Left prompt shows hostname and username. Right prompt (RPROMPT) is dynamic:
 
-```
-$HOME/.local/bin   → highest priority
-$HOME/.asdf/shims  → ASDF managed runtimes
-$HOME/bin          → local binaries (asdf binary lives here)
-$GOPATH/bin        → Go tools
-```
+- Git branch (from `vcs_info`, only in repos)
+- Python virtualenv (if `$VIRTUAL_ENV` is set)
+- Kubernetes context (if `$ZSH_KUBECTL_PROMPT` is set)
+- Fallback message if none are active
 
-NPM completions use a self-removing wrapper — the function undefines itself after first invocation to avoid repeat overhead:
+Colors use 256-color codes for ZSH compatibility. See [Color Scheme](./color-scheme.dotfiles.md) for hex values.
 
-```zsh
-function npm() {
-  unfunction npm
-  source <(command npm completion zsh 2>/dev/null || true)
-  command npm "$@"
-}
-```
+## Zinit Plugins
 
----
+Loaded asynchronously (turbo mode) with `wait` delays. Startup is not blocked by plugin loading.
 
-### `zsh.d/alias.zsh` — Aliases and Docker wrappers
+| Plugin | Wait | Purpose |
+|--------|------|---------|
+| `superbrothers/zsh-kubectl-prompt` | 1s | Populates `$ZSH_KUBECTL_PROMPT` |
+| `zsh-users/zsh-autosuggestions` | 2s | Fish-style inline suggestions |
+| `zsh-users/zsh-completions` | 2s | Extended completion definitions |
+| `zdharma-continuum/fast-syntax-highlighting` | 3s | Syntax coloring in prompt |
 
-Security tools are Docker-based: no local installation required, containers are ephemeral (`--rm`).
+Plugin loading does not block the prompt from appearing.
 
-| Alias | Image | Notes |
-|-------|-------|-------|
-| `kali` | `kalilinux/kali-rolling` | Interactive Kali shell |
-| `parrot` | `parrotsec/core` | Parrot OS shell |
-| `debian` | `debian:latest` | Clean Debian shell |
-| `archlinux` | `archlinux:latest` | Arch shell |
-| `wpscan` | `wpscanteam/wpscan` | WordPress scanner |
-| `nikto` | `secfigo/nikto` | Web server scanner |
-| `nuclei` | `projectdiscovery/nuclei` | Template-based scanner |
-| `metasploit` | `metasploitframework/metasploit-framework` | Persists `~/.msf4` |
-| `zap` | `zaproxy/zap-stable` | OWASP ZAP GUI (port 8080) |
-| `zap-cli` | `zaproxy/zap-stable` | OWASP ZAP CLI |
+## Completions
 
-`batcat` replaces `cat` if present (`--theme=TwoDark`).
+Compinit cache (`~/.zcompdump`) is regenerated when:
 
----
+- File does not exist
+- File is older than 1 day
+- `~/.local/share/zinit` directory is newer than the cache
 
-### `zsh.d/autocomplete.zsh` — Lazy completions
+Lazy-loaded completions use a self-removing wrapper pattern:
 
-Uses `$+commands[]` (faster than `command -v`) to check for tool presence. Each completion uses the self-removing pattern:
-
-```zsh
+```bash
 _load_kubectl_completion() {
   source <(kubectl completion zsh)
   unfunction _load_kubectl_completion
@@ -102,97 +78,48 @@ _load_kubectl_completion() {
 compdef _load_kubectl_completion kubectl
 ```
 
-Tools covered: `kubectl`, `helm`, `kind`, `asdf`.
+The function undefines itself after first invocation. Subsequent invocations use the cached completion.
 
----
+## Docker Aliases
 
-### `zsh.d/tmux.zsh` — Tmux helpers
-
-Functions and short aliases for session management:
-
-| Command | Action |
-|---------|--------|
-| `tmux-new [name]` | Create session (defaults to current directory name) |
-| `tmux-list` / `tl` | List all sessions |
-| `tmux-attach [name]` / `ta` | Attach to session |
-| `tmux-kill <name>` / `tk` | Kill named session |
-| `tn <name>` | New session shorthand |
-
----
-
-### `zsh.d/toolbox.zsh` — Toolbox function
-
-Downloads the latest Dockerfile from `github.com/cosckoya/toolbox`, builds an image once, and runs an ephemeral container mounting `~/hack` as `/hack`.
+Security tools run in ephemeral containers. No local installation required.
 
 ```bash
-toolbox               # interactive shell, reuses existing image
-toolbox --force       # force rebuild
-toolbox --no-cache    # rebuild without Docker cache
-toolbox ls -la        # run single command
+kali                # Kali Linux container
+parrot              # Parrot OS container
+debian              # Clean Debian container
+archlinux           # Arch Linux container
+wpscan              # WordPress scanner
+nikto               # Web server scanner
+nuclei              # Template-based scanner
+metasploit          # Metasploit Framework (persists ~/.msf4)
+zap                 # OWASP ZAP GUI (port 8080)
+zap-cli             # OWASP ZAP CLI
 ```
 
-The container is removed on exit (`--rm`). The image persists across sessions.
+## Editor Selection
 
----
-
-## Prompt: Drizzt Do'Urden
-
-### Left prompt
+Fallback chain (first available):
 
 ```
-┌──(hostname の username)
-└─#
+nvim → vim → nano
 ```
 
-| Element | Color | 256-code |
-|---------|-------|----------|
-| Border `┌──` `└─#` | Lavender | 141 |
-| Hostname | Icy Blue | 117 |
-| Separator `の` | Magical Yellow | 222 |
-| Username | Red | 167 |
+Exported as `$VISUAL` and `$EDITOR`. `vi` alias points to whichever is selected.
 
-### Right prompt (RPROMPT)
+## Troubleshooting
 
-Built dynamically by `_build_rprompt()` on every `precmd`. Shows only what is active:
-
-| Context | Color | 256-code | Condition |
-|---------|-------|----------|-----------|
-| Git branch | Icy Blue | 117 | Inside a git repo (`vcs_info`) |
-| Python venv | Lavender | 141 | `$VIRTUAL_ENV` is set |
-| Kubernetes context | Drow Green | 78 | `$ZSH_KUBECTL_PROMPT` is set |
-| `Klaatu Barada Nitko!` | Magical Yellow | 222 | None of the above |
-
----
-
-## Zinit Plugins
-
-Loaded with turbo mode (async, non-blocking). Startup is not blocked by plugin load.
-
-| Plugin | Wait | Purpose |
-|--------|------|---------|
-| `superbrothers/zsh-kubectl-prompt` | `wait"1"` | Populates `$ZSH_KUBECTL_PROMPT` |
-| `zsh-users/zsh-autosuggestions` | `wait"2"` | Fish-style inline suggestions |
-| `zsh-users/zsh-completions` | `wait"2"` | Extended completion definitions |
-| `zdharma-continuum/fast-syntax-highlighting` | `wait"3"` | Syntax coloring in the prompt |
-
----
-
-## Compinit caching
-
-Cache at `~/.zcompdump` is regenerated when any of these conditions are true:
-
-- File does not exist
-- File is older than 1 day (`-mtime +1`)
-- `~/.local/share/zinit` directory is newer than the dump
-
-When cache is valid, `compinit -C` skips the slow regeneration step.
-
----
-
-## Startup verification
-
+**Slow startup?**
 ```bash
-time zsh -ic exit                                                    # measure total startup
-zsh --startuptime /tmp/zsh.log -i -c exit && sort -k2 -n /tmp/zsh.log | tail -20   # find slow sources
-exec zsh                                                             # reload current shell
+zsh --startuptime /tmp/zsh.log -i -c exit
+sort -k2 -n /tmp/zsh.log | tail -20
+```
+
+**Missing command?**
+Check `zsh.d/alias.zsh` for Docker wrappers. Check `zsh.d/tools.zsh` for PATH configuration.
+
+**Completions not working?**
+```bash
+rm ~/.zcompdump
+exec zsh
 ```
