@@ -194,12 +194,12 @@ Open a PR against `main`. One approval required. See `.github/SECURITY.md` for v
 
 Full technical reference in [`docs/`](./docs/README.md):
 
-- [ZSH](./docs/zsh.md) — modules, prompt, Zinit, lazy-loading patterns
-- [Tmux](./docs/tmux.md) — bindings, copy mode, clipboard, color scheme
-- [Kitty](./docs/kitty.md) — font, colors, layouts, key bindings
-- [Neovim](./docs/neovim.md) — LSP, completion, lazy.nvim, adding servers
-- [Makefile](./docs/makefile.md) — targets, symlinks, pre-commit hooks
-- [Color Scheme](./docs/color-scheme.md) — full palette, lore, per-component application
+- [ZSH](./docs/zsh.dotfiles.md) — modules, prompt, Zinit, lazy-loading patterns
+- [Tmux](./docs/tmux.dotfiles.md) — bindings, copy mode, clipboard, color scheme
+- [Kitty](./docs/kitty.dotfiles.md) — font, colors, layouts, key bindings
+- [Neovim](./docs/neovim.dotfiles.md) — LSP, completion, lazy.nvim, adding servers
+- [Makefile](./docs/makefile.dotfiles.md) — targets, symlinks, pre-commit hooks
+- [Color Scheme](./docs/color-scheme.dotfiles.md) — full palette, lore, per-component application
 
 ---
 
