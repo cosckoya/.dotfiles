@@ -92,13 +92,49 @@ make help                          # verify Makefile syntax
 pre-commit run --all-files         # run all hooks
 ```
 
-## Agents & Skills
+## Knowledge Architecture
 
-**Agent:** `dotfiles-manager` — project-specific guidance (KISS, file creation policy, performance targets)
+**Single source of truth principle:** All technical detail lives in ONE place only.
 
-**Skills:** `kitty-expert`, `theme-designer`, `precommit-expert` (defer to docs for detail)
+### Rules Layer (`~/.claude/rules/stacks/shell.rule.md`)
 
-Archived skills in `.claude/skills/.archived/` (thin duplicates of agent or docs).
+Project-specific conventions enforced globally:
+- ZSH startup performance target: <110ms
+- Tool checks: always use `command -v`, never `which`
+- PATH additions: use `[[ -d path ]]` checks, not tool lookups
+- Lazy-loading pattern: self-removing completion wrapper functions
+- Indentation: 2-space, no tabs
+- Comments: one-line only for non-obvious logic
+- No commented-out code (delete it)
+- Testing: profile every ZSH change, validate Makefile, run pre-commit
+
+Mandatory for all shell work in this project.
+
+### Documentation Layer (`docs/*.dotfiles.md`)
+
+Technical reference organized by user need:
+- **Getting Started:** Installation, prerequisites, first-run checklist
+- **Configuration:** ZSH modules, Tmux keybindings, Kitty fonts, Neovim LSP
+- **Reference:** Architecture, color scheme, Makefile targets, pre-commit hooks, troubleshooting
+
+Each document is self-contained and deferenced from skills.
+
+### Skills Layer (lightweight navigation)
+
+Thin wrapper around rules + docs, ~50 lines each:
+- `kitty-expert` → defers to `docs/kitty.dotfiles.md`
+- `theme-designer` → defers to `docs/color-scheme.dotfiles.md` + color.rule.md
+- `precommit-expert` → defers to `docs/pre-commit.dotfiles.md`
+
+Archived: `dotfiles_architect`, `shell_optimizer`, `tmux_specialist`, `makefile_expert` (duplicated content)
+
+### CI/CD Layer
+
+`.github/workflows/ci.yml`: Pre-commit validation on all PRs. Catches violations before merge.
+
+### DRY Principle
+
+Never repeat technical content across rules, docs, and skills. If it's in rules or docs, skills reference it. If it's in docs, CLAUDE.md points to it. This prevents drift and makes maintenance trivial.
 
 ## Configuration Variables (ZSH)
 
@@ -122,8 +158,10 @@ TMUX_SKIP_DESKTOP         # skip in graphical desktops
 | `config/kitty.conf` | Kitty terminal settings |
 | `config/nvim/` | Neovim Lua config + lazy.nvim + Mason LSP |
 | `Makefile` | Symlink-based installer (idempotent) |
-| `.pre-commit-config.yaml` | Git hooks (2026 best practices) |
-| `docs/` | Full technical reference (8 documents) |
+| `.pre-commit-config.yaml` | Git hooks (2026 best practices, system-language hooks only) |
+| `docs/` | Full technical reference (9 documents, organized by user need) |
+| `.claude/rules/stacks/shell.rule.md` | Project conventions: ZSH startup, tool checks, lazy-loading, testing |
+| `.github/workflows/ci.yml` | CI/CD: pre-commit validation on all PRs |
 
 ## WCAG AAA Color Compliance
 
