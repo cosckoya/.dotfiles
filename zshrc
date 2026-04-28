@@ -133,14 +133,16 @@ RPROMPT='$(_build_rprompt)'
 
 # Autocompletion - Regenerate dump if plugins changed
 autoload -Uz compinit
-
 # Regenerate completion cache if:
 # 1. No dump file exists
 # 2. Dump is older than 1 day
 # 3. Zinit plugins directory is newer than dump
-if [[ ! -f ${HOME}/.zcompdump ]] || \
-   [[ $(find ${HOME}/.zcompdump -mtime +1 2>/dev/null) ]] || \
-   [[ ${HOME}/.local/share/zinit -nt ${HOME}/.zcompdump ]]; then
+if [[ ! -f ${HOME}/.zcompdump ]] ||    [[ $(find ${HOME}/.zcompdump -mtime +1 2>/dev/null) ]] ||    [[ ${HOME}/.local/share/zinit -nt ${HOME}/.zcompdump ]]; then
+  compinit -i 2>/dev/null
+else
+  compinit -C -i 2>/dev/null
+fi
+
   compinit -i 2>/dev/null
 else
   compinit -C -i 2>/dev/null

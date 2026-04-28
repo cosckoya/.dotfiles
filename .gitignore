@@ -46,9 +46,15 @@ personal/
 # AI Assistant configuration files
 .copilot-instructions.md
 .github/copilot-instructions.md
-CLAUDE.md
 .cursorrules
 .cursor/
+
+# GitHub Copilot configuration (2026 - kept in repo)
+# .copilot/ is tracked - contains authoritative Copilot config
+# .claude/ is tracked - legacy Claude config for reference
+
+# Old Claude Code configuration (legacy, no longer tracked)
+# See .copilot/ for new GitHub Copilot setup
 
 # Claude Code CLI files
 #.claude/

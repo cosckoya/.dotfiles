@@ -1,0 +1,182 @@
+{
+  "version": "1.0",
+  "name": "Modern Linux Dotfiles - Copilot Configuration",
+  "description": "GitHub Copilot configuration for dotfiles project with auto-loaded skills and methodology",
+  
+  "context": {
+    "projectName": "Modern Linux Dotfiles",
+    "projectType": "shell-configuration",
+    "technologies": [
+      "ZSH",
+      "Tmux",
+      "Neovim",
+      "Kitty Terminal",
+      "Makefile",
+      "Lua",
+      "BASH"
+    ]
+  },
+
+  "initialContext": {
+    "mainInstructions": ".github/copilot/README.copilot.md",
+    "quickReference": ".github/copilot-instructions.md",
+    "skills": ".github/copilot/SKILLS.md",
+    "skillsDirectory": ".github/copilot/skills/"
+  },
+
+  "autoLoadFiles": [
+    ".github/copilot/README.copilot.md",
+    ".github/copilot/SKILLS.md",
+    ".github/copilot-instructions.md"
+  ],
+
+  "principles": {
+    "mandatory": [
+      "KISS - Keep It Simple, Stupid",
+      "DRY - Don't Repeat Yourself",
+      "Clean Code - Meaningful names, small functions",
+      "YAGNI - You Ain't Gonna Need It",
+      "SOLID - Single Responsibility and Design Principles"
+    ],
+    "enforceIn": "ALL_SESSIONS"
+  },
+
+  "skills": [
+    {
+      "id": "shell-performance",
+      "name": "Shell Performance Optimization",
+      "file": ".github/copilot/skills/shell-performance.md",
+      "topics": [
+        "ZSH startup time",
+        "Profiling",
+        "Lazy-loading",
+        "Zinit turbo mode"
+      ],
+      "triggers": [
+        "slow startup",
+        "zsh performance",
+        "completion loading",
+        "profiling"
+      ]
+    },
+    {
+      "id": "lua-neovim",
+      "name": "Lua & Neovim Configuration",
+      "file": ".github/copilot/skills/lua-neovim.md",
+      "topics": [
+        "Neovim setup",
+        "Lazy.nvim",
+        "LSP configuration",
+        "Plugin management"
+      ],
+      "triggers": [
+        "neovim",
+        "lua",
+        "lsp",
+        "plugin",
+        "mason"
+      ]
+    },
+    {
+      "id": "tmux-modern",
+      "name": "Tmux Modern Configuration",
+      "file": ".github/copilot/skills/tmux-modern.md",
+      "topics": [
+        "Tmux 3.4+",
+        "Keybindings",
+        "Status bar",
+        "Theming"
+      ],
+      "triggers": [
+        "tmux",
+        "keybinding",
+        "status bar",
+        "window",
+        "pane"
+      ]
+    },
+    {
+      "id": "kitty-terminal",
+      "name": "Kitty Terminal Configuration",
+      "file": ".github/copilot/skills/kitty-terminal.md",
+      "topics": [
+        "Terminal setup",
+        "Colors and fonts",
+        "Clipboard integration",
+        "GPU rendering"
+      ],
+      "triggers": [
+        "kitty",
+        "terminal",
+        "font",
+        "color",
+        "clipboard"
+      ]
+    },
+    {
+      "id": "modern-makefile",
+      "name": "Modern Makefile Patterns",
+      "file": ".github/copilot/skills/modern-makefile.md",
+      "topics": [
+        "Makefile targets",
+        "Idempotency",
+        "Installation logic",
+        "Error handling"
+      ],
+      "triggers": [
+        "makefile",
+        "make",
+        "install",
+        "target",
+        "build"
+      ]
+    },
+    {
+      "id": "git-precommit",
+      "name": "Git & Pre-commit Hooks",
+      "file": ".github/copilot/skills/git-precommit.md",
+      "topics": [
+        "Pre-commit hooks",
+        "Git workflow",
+        "Code quality",
+        "Linters"
+      ],
+      "triggers": [
+        "git",
+        "precommit",
+        "hook",
+        "lint",
+        "validation"
+      ]
+    }
+  ],
+
+  "constraints": {
+    "zshStartup": "~110ms",
+    "offlineCapable": true,
+    "idempotentInstall": true,
+    "linuxFirst": true,
+    "selfContained": true,
+    "minimalDependencies": true
+  },
+
+  "checklist": {
+    "beforeSubmittingCode": [
+      "Follows KISS principle",
+      "Follows DRY principle",
+      "Follows Clean Code standards",
+      "Follows YAGNI principle",
+      "Follows SOLID principles",
+      "Passes pre-commit hooks",
+      "No technical debt introduced"
+    ]
+  },
+
+  "metadata": {
+    "version": "2026-02-17",
+    "standard": "GitHub Copilot 2026 Best Practices",
+    "skillsAutomaticallyLoaded": true,
+    "principlesEnforced": true,
+    "contextualHelpEnabled": true
+  }
+}
