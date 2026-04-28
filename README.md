@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./img/death.png" alt="Dream and Death — The Sandman by Neil Gaiman. Two siblings sit on a park bench feeding pigeons. One is the Lord of Dreams. The other is Death. Neither is in a hurry." width="720">
+![Dream and Death — The Sandman by Neil Gaiman. Two siblings sit on a park bench feeding pigeons. One is the Lord of Dreams. The other is Death. Neither is in a hurry.](https://raw.githubusercontent.com/cosckoya/.dotfiles/develop/img/death.png)
 
 *Dream and Death — The Sandman, Neil Gaiman*
 
