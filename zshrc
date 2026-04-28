@@ -131,14 +131,23 @@ _build_rprompt() {
 
 RPROMPT='$(_build_rprompt)'
 
-# Autocompletion - Ultra-fast initialization with error handling
+# Autocompletion - Regenerate dump if plugins changed
 autoload -Uz compinit
-# Use -C flag only if dump file exists and is recent (< 20 hours old)
-if [[ -f ~/.zcompdump && $(find ~/.zcompdump -mtime -1 2>/dev/null) ]]; then
-  compinit -C -i 2>/dev/null
-else
+# Regenerate completion cache if:
+# 1. No dump file exists
+# 2. Dump is older than 1 day
+# 3. Zinit plugins directory is newer than dump
+if [[ ! -f ${HOME}/.zcompdump ]] ||    [[ $(find ${HOME}/.zcompdump -mtime +1 2>/dev/null) ]] ||    [[ ${HOME}/.local/share/zinit -nt ${HOME}/.zcompdump ]]; then
   compinit -i 2>/dev/null
+else
+  compinit -C -i 2>/dev/null
 fi
+
+  compinit -i 2>/dev/null
+else
+  compinit -C -i 2>/dev/null
+fi
+
 autoload -Uz bashcompinit && bashcompinit
 # Skip _zinit autoload for speed - only load when needed
 (( ${+_comps} )) && _comps[zinit]=_zinit
@@ -207,3 +216,5 @@ export LESS_TERMCAP_so=$'\E[01;33m'
 export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[1;32m'
 export LESS_TERMCAP_ue=$'\E[0m'
+
+eval "$(/home/cosckoya/.local/bin/mise activate zsh)" # added by https://mise.run/zsh

@@ -1,4 +1,4 @@
-# Tool initialization and PATH setup - ULTRA FAST
+# Tool initialization and PATH sep - ULTRA FAST
 # Avoid command checks at startup, use path directly
 
 # Editor configuration - use nvim if available, fallback to vim
@@ -30,6 +30,7 @@ typeset -U path
 [[ -d "$HOME/bin" ]] && path+=("$HOME/bin")
 [[ -d "$GOPATH/bin" ]] && path+=("$GOPATH/bin")
 [[ -d "$HOME/.asdf/shims" ]] && path=("$HOME/.asdf/shims" $path)
+[[ -d "$HOME/.local/bin" ]] && path=("$HOME/.local/bin" $path)
 
 # NPM lazy-load only when needed (if npm exists)
 if command -v npm >/dev/null 2>&1; then
