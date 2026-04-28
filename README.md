@@ -192,14 +192,22 @@ Open a PR against `main`. One approval required. See `.github/SECURITY.md` for v
 
 ## Documentation
 
-Full technical reference in [`docs/`](./docs/README.md):
+Full technical reference organized by user need. Start with [`docs/README.md`](./docs/README.md).
 
-- [ZSH](./docs/zsh.dotfiles.md) — modules, prompt, Zinit, lazy-loading patterns
-- [Tmux](./docs/tmux.dotfiles.md) — bindings, copy mode, clipboard, color scheme
-- [Kitty](./docs/kitty.dotfiles.md) — font, colors, layouts, key bindings
-- [Neovim](./docs/neovim.dotfiles.md) — LSP, completion, lazy.nvim, adding servers
-- [Makefile](./docs/makefile.dotfiles.md) — targets, symlinks, pre-commit hooks
-- [Color Scheme](./docs/color-scheme.dotfiles.md) — full palette, lore, per-component application
+**Getting Started**
+- [Installation & Quick Start](./docs/getting-started.dotfiles.md) — Prerequisites, installation steps, first-run checklist
+
+**Configuration**
+- [ZSH](./docs/zsh.dotfiles.md) — Modules, environment variables, prompt, Zinit plugins
+- [Tmux](./docs/tmux.dotfiles.md) — Keybindings, copy mode, clipboard, color scheme
+- [Kitty](./docs/kitty.dotfiles.md) — Font, display settings, layouts, key bindings
+- [Neovim](./docs/neovim.dotfiles.md) — Bootstrap, LSP servers, completion, keymaps
+
+**Reference**
+- [Architecture Overview](./docs/architecture.dotfiles.md) — Design decisions, performance targets, interactions
+- [Color Scheme](./docs/color-scheme.dotfiles.md) — Full palette, WCAG AAA contrast, lore
+- [Makefile](./docs/makefile.dotfiles.md) — Targets, symlink mechanics, pre-commit hooks
+- [Troubleshooting](./docs/troubleshooting.dotfiles.md) — Common issues and solutions
 
 ---
 
