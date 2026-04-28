@@ -1,16 +1,19 @@
 name: CI
 
 on:
-  pull_request:
-    branches:
-      - main
-      - develop
   push:
-    branches:
-      - main
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: write
 
 jobs:
   pre-commit:
+    name: pre-commit checks
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -25,6 +28,7 @@ jobs:
       - uses: pre-commit/action@v3.0.0
 
   shell-syntax:
+    name: Shell syntax validation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,6 +40,7 @@ jobs:
         run: make help >/dev/null
 
   startup-time:
+    name: ZSH startup performance
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -50,3 +55,38 @@ jobs:
           elapsed=$(cat /tmp/startup.log | grep real | awk '{print $2}')
           echo "Elapsed: $elapsed"
           echo "Note: Full profiling requires more detailed analysis"
+
+  security-scan:
+    name: Security scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Trivy filesystem scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  dependency-check:
+    name: Dependency vulnerability check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for known vulnerabilities
+        run: |
+          echo "Checking for hardcoded secrets and vulnerable patterns..."
+          if grep -r "password\|secret\|api_key\|token" . --include="*.sh" --include="*.zsh" --include="*.conf" --exclude-dir=.git 2>/dev/null | grep -v "# " | grep -v ".pre-commit"; then
+            echo "WARNING: Potential hardcoded secrets detected in configuration files"
+            exit 1
+          fi
+          echo "OK: No obvious hardcoded secrets found"
