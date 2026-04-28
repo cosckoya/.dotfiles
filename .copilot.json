@@ -2,7 +2,7 @@
   "version": "1.0",
   "name": "Modern Linux Dotfiles - Copilot Configuration",
   "description": "GitHub Copilot configuration for dotfiles project with auto-loaded skills and methodology",
-  
+
   "context": {
     "projectName": "Modern Linux Dotfiles",
     "projectType": "shell-configuration",
