@@ -230,7 +230,7 @@ After any change, verify:
    ```bash
    # Good: quiet output
    command --quiet
-   
+
    # Bad: verbose default
    command  # outputs many lines
    ```
@@ -239,7 +239,7 @@ After any change, verify:
    ```bash
    # Good: ripgrep (faster, smaller output)
    grep pattern file
-   
+
    # Bad: shell globbing (slow, verbose)
    for file in *; do grep pattern "$file"; done
    ```
@@ -248,7 +248,7 @@ After any change, verify:
    ```bash
    # Good: chain with &&
    cmd1 && cmd2 && cmd3
-   
+
    # Bad: separate calls
    cmd1; cmd2; cmd3
    ```
@@ -257,7 +257,7 @@ After any change, verify:
    ```
    # Good: 1-3 sentence explanation + code
    "Added lazy-loading to kubectl completion using self-removing wrapper pattern."
-   
+
    # Bad: verbose explanation with examples
    "I've analyzed the ZSH configuration and I think we should..."
    ```

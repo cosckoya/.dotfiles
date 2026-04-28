@@ -1,0 +1,13 @@
+# https://mise.jdx.dev/
+# Runtime version manager for Python, Node, Go, Rust, and 200+ other tools
+# Mise replaces ASDF with better performance, UX, and ecosystem
+
+[env]
+# Optional: Pin specific Python for dotfiles development
+# python = "3.13"
+# node = "22"
+# go = "1.23"
+
+[tasks]
+# Optional: Add custom tasks
+# Example: mise run install-deps

@@ -1,8 +1,8 @@
 # GitHub Copilot - Project Guidelines
 
-**Status:** ✅ COMPLETE & MANDATORY  
-**Updated:** 2026-02-17  
-**Scope:** All Copilot sessions and code changes  
+**Status:** ✅ COMPLETE & MANDATORY
+**Updated:** 2026-02-17
+**Scope:** All Copilot sessions and code changes
 **Standard:** 2026 Best Practices
 
 ---
@@ -386,12 +386,12 @@ exec zsh
 
 ### What Copilot Will Do
 
-✅ **Apply all principles** to every suggestion  
-✅ **Suggest refactorings** if code violates principles  
-✅ **Provide examples** for Shell, ZSH, Lua, Makefile  
-✅ **Explain WHY** each change follows methodology  
-✅ **Prevent over-engineering** (YAGNI enforcement)  
-✅ **Maintain standards** across all components  
+✅ **Apply all principles** to every suggestion
+✅ **Suggest refactorings** if code violates principles
+✅ **Provide examples** for Shell, ZSH, Lua, Makefile
+✅ **Explain WHY** each change follows methodology
+✅ **Prevent over-engineering** (YAGNI enforcement)
+✅ **Maintain standards** across all components
 
 ### Expected Response Style
 
@@ -479,7 +479,7 @@ if [[ $TMUX_SKIP_IDE == "true" ]]; then ...
 ```
 
 ### ZSH startup slow?
-**Check:** Run `time zsh -ic exit`, profile with zprof  
+**Check:** Run `time zsh -ic exit`, profile with zprof
 **Solutions:**
 - Verify Zinit turbo mode enabled
 - Check completions are lazy-loaded
@@ -487,14 +487,14 @@ if [[ $TMUX_SKIP_IDE == "true" ]]; then ...
 - Profile: Add `zmodload zsh/zprof` at top, `zprof` at bottom
 
 ### Makefile target fails?
-**Check:** Run `make -n target` to see commands  
+**Check:** Run `make -n target` to see commands
 **Solutions:**
 - Verify conditional guards (`command -v`) work
 - Test idempotence: `make target && make target`
 - Check all required tools installed
 
 ### Plugin not loading in Neovim?
-**Check:** Run `nvim +Lazy` to inspect state  
+**Check:** Run `nvim +Lazy` to inspect state
 **Solutions:**
 - Verify lazy.nvim spec syntax
 - Check plugin name is exactly `owner/repo`
@@ -502,7 +502,7 @@ if [[ $TMUX_SKIP_IDE == "true" ]]; then ...
 - Enable lazy = false if startup plugin
 
 ### Color theme inconsistent?
-**Check:** Apply Drizzt palette consistently  
+**Check:** Apply Drizzt palette consistently
 **Solutions:**
 - Verify all 16 colors defined in Kitty
 - Use matching hex/xterm-256 codes in Tmux
@@ -549,9 +549,9 @@ if [[ $TMUX_SKIP_IDE == "true" ]]; then ...
 
 ---
 
-**Status:** ✅ READY FOR PRODUCTION  
-**Updated:** 2026-02-17  
-**Standard:** GitHub Copilot 2026 Best Practices  
+**Status:** ✅ READY FOR PRODUCTION
+**Updated:** 2026-02-17
+**Standard:** GitHub Copilot 2026 Best Practices
 **Enforcement:** MANDATORY (NO EXCEPTIONS)
 
 All code in this repository follows these principles. There are no exceptions.

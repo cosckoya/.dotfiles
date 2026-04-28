@@ -112,18 +112,18 @@ selection_strategy:
   # Multi-turn context preservation
   maintain_history: true
   context_decay: "exponential"  # Older turns weighted less
-  
+
   # Intelligent tool selection
   tool_awareness: true
   suppress_verbose_output: true
-  
+
   # Token efficiency
   adaptive_model_selection: true
   fallback_order:
     - opus  # Complex decisions
     - sonnet  # Balanced
     - haiku  # Quick review
-  
+
   # Context window management
   auto_summarization: true
   summarize_above_tokens: 80000

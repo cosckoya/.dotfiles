@@ -140,7 +140,7 @@ repos:
       - check-case-conflict
       - detect-private-key
       - mixed-line-ending
-  
+
   - repo: https://github.com/adrienverge/checkmake
     hooks:
       - checkmake (optional, graceful skip)

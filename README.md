@@ -1,15 +1,19 @@
 <div align="center">
 
-![Drizzt Do'Urden Terminal Setup](./img/death.png)
+![Dream and Death — The Sandman by Neil Gaiman. Two siblings sit on a park bench feeding pigeons. One is the Lord of Dreams. The other is Death. Neither is in a hurry.](https://raw.githubusercontent.com/cosckoya/.dotfiles/develop/img/death.png)
 
-# Modern Linux Dotfiles
+*Dream and Death — The Sandman, Neil Gaiman*
 
-**Terminal environment crafted for performance and aesthetics.** Production-ready ZSH, Tmux, Neovim, and Kitty configurations optimized for Ubuntu/Debian.
+# cosckoya/.dotfiles
+
+**A self-contained, offline-capable Linux terminal environment built for speed.**
+ZSH, Tmux, Neovim, and Kitty — unified under a single Makefile and a coherent visual identity.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-Linux-blue.svg)](https://www.linux.org/)
 [![Shell](https://img.shields.io/badge/Shell-ZSH%205.9%2B-89e051.svg)](https://www.zsh.org/)
-[![Neovim](https://img.shields.io/badge/Neovim-0.11%2B-green.svg)](https://neovim.io/)
+[![Neovim](https://img.shields.io/badge/Neovim-0.11%2B-57A143.svg)](https://neovim.io/)
+[![Tmux](https://img.shields.io/badge/Tmux-3.2%2B-1BB91F.svg)](https://github.com/tmux/tmux)
 
 </div>
 
@@ -20,40 +24,43 @@
 ```bash
 git clone https://github.com/cosckoya/.dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-make all          # Install everything: ASDF + ZSH + Tmux + Kitty + Neovim
-exec zsh          # Reload shell (~110ms startup)
+make all       # ASDF + ZSH + Tmux + Kitty + Neovim
+exec zsh       # reload shell (~110ms startup)
 ```
 
-**Selective Installation:**
+Selective installation:
+
 ```bash
-make help         # List all available targets
-make profile      # ZSH + Tmux + Kitty + Neovim only
-make zsh          # ZSH configuration only
+make help      # list all targets
+make profile   # ZSH + Tmux + Kitty + Neovim (no ASDF)
+make zsh       # ZSH only
 ```
 
 ---
 
 ## Key Features
 
-- **~110ms ZSH startup** — 92% faster than typical configs via Zinit turbo mode and aggressive lazy-loading
-- **Unified visual theme** — Drizzt Do'Urden color scheme (WCAG AAA contrast) across ZSH, Tmux, Kitty, and Neovim with coherent powerline styling
-- **Offline-capable** — Works completely offline after installation; all plugins and binaries cached locally
-- **Modular architecture** — Install only components you need; split configurations enable granular customization
-- **Production-ready security** — Pre-commit hooks, secret scanning, Dependabot, branch protection, CI/CD validation
+- **~110ms ZSH startup** — Zinit turbo mode with staggered async loading (`wait"1"`, `wait"2"`, `wait"3"`); compinit cached and invalidated daily
+- **Coherent visual theme** — Drizzt Do'Urden color scheme at WCAG AAA contrast ratios across ZSH prompt, Tmux statusbar, Kitty, and Neovim statusline
+- **Contextual right-prompt** — Git branch (vcs_info), Python venv, and Kubernetes context rendered dynamically; falls back to `Klaatu Barada Nitko!` when none are active
+- **Modular ZSH** — Six single-purpose modules under `zsh.d/`; every tool check guarded with `command -v` for zero-penalty fallbacks
+- **Native LSP in Neovim** — Mason-managed language servers (Lua, Python, Bash) via lazy.nvim with lazy loading; no CoC, no npm/cargo/go runtime dependencies
 
 ---
 
 ## Tech Stack
 
-| Component | Technology | Version | Details |
-|-----------|------------|---------|---------|
-| Shell | ZSH | 5.9+ | Interactive shell with Zinit async plugin manager |
-| Terminal | Kitty | Latest | GPU-accelerated terminal emulator |
-| Multiplexer | Tmux | 3.2+ | Session/window management with Vi keybindings |
-| Editor | Neovim | 0.11+ | Lua-based config with native LSP, lazy.nvim |
-| Version Manager | ASDF | Latest | Universal tool version manager (optional) |
-| Hooks | pre-commit | 2.x | Git hooks for code quality and security |
-| Prompt | vcs_info + custom | N/A | Dynamic right-prompt with git/venv/k8s context |
+| Component | Technology | Version |
+|-----------|------------|---------|
+| Shell | ZSH + Zinit | 5.9+ |
+| Terminal | Kitty | Latest stable |
+| Multiplexer | Tmux | 3.2+ |
+| Editor | Neovim (Lua) | 0.11+ |
+| Runtime manager | mise | Latest |
+| Version manager | ASDF | Latest (optional) |
+| Plugin manager (nvim) | lazy.nvim | Auto-bootstrapped |
+| LSP installer | Mason | Auto-managed |
+| Git hooks | pre-commit | 2.x |
 
 ---
 
@@ -61,109 +68,70 @@ make zsh          # ZSH configuration only
 
 ```
 ~/.dotfiles/
-├── .github/                          # GitHub configuration
-│   ├── workflows/ci.yml              # CI/CD: pre-commit + Trivy scanning
-│   ├── SECURITY.md                   # Vulnerability disclosure policy
-│   ├── CODEOWNERS                    # Code ownership & review routing
-│   ├── dependabot.yml                # Dependency management
-│   └── ISSUE_TEMPLATE/               # Issue templates
+├── Makefile                    # Symlink-based installer with color output
+├── zshrc                       # Entry point: module loader + Zinit bootstrap
+├── zsh.d/
+│   ├── config.zsh              # TMUX_AUTOSTART_* variables (user-editable)
+│   ├── tools.zsh               # PATH management, editor chain, npm lazy-load
+│   ├── alias.zsh               # Aliases and shell functions
+│   ├── autocomplete.zsh        # Lazy-loaded kubectl/helm/kind completions
+│   ├── tmux.zsh                # Tmux helper functions
+│   └── toolbox.zsh             # Utility functions
 ├── config/
-│   ├── nvim/                         # Neovim Lua configuration
-│   │   ├── lua/core/                 # Editor options, keymaps, autocmds
-│   │   └── lua/plugins/              # LSP, completion, UI, editor plugins
-│   ├── tmux.conf                     # Tmux 3.4+ configuration (238 lines)
-│   └── kitty.conf                    # Kitty terminal settings
-├── zsh.d/                            # Modular ZSH configuration
-│   ├── config.zsh                    # User-configurable variables
-│   ├── tools.zsh                     # PATH, editor selection, npm lazy-load
-│   ├── alias.zsh                     # Command aliases and functions
-│   ├── autocomplete.zsh              # Lazy-loaded completions
-│   ├── tmux.zsh                      # Tmux helper functions
-│   └── toolbox.zsh                   # Utility functions
-├── zshrc                             # Main ZSH entry point
-├── vimrc                             # Legacy Vim config (backwards compat)
-├── Makefile                          # Installation orchestrator
-├── CLAUDE.md                         # Claude Code AI guidance
-├── .pre-commit-config.yaml           # Pre-commit hooks
-├── .copilot-instructions.md          # GitHub Copilot CLI instructions
-└── img/                              # Visual assets
+│   ├── tmux.conf               # Tmux 3.4+ native config, 238 lines
+│   ├── kitty.conf              # GPU-accelerated terminal settings
+│   └── nvim/
+│       ├── init.lua            # Entry point: lazy.nvim bootstrap
+│       └── lua/
+│           ├── core/           # options.lua, keymaps.lua, autocmds.lua
+│           └── plugins/        # lsp.lua, completion.lua, ui.lua, editor.lua
+├── vimrc                       # Legacy Vim config (compatibility only)
+├── .pre-commit-config.yaml     # Hooks: secret scan, YAML/Makefile lint, LF enforcement
+├── .github/
+│   ├── workflows/              # CI: pre-commit + Trivy filesystem scan
+│   ├── SECURITY.md             # Vulnerability disclosure policy
+│   ├── dependabot.yml          # Automated dependency updates
+│   └── CODEOWNERS              # Review routing
+└── img/
+    └── death.png               # Drizzt Do'Urden visual asset
 ```
 
 ---
 
 ## Usage
 
-### Configure ZSH
+### ZSH: Tmux auto-start
 
-Edit variables in `~/.zsh.d/config.zsh`:
-
-```bash
-# Disable Tmux auto-start in SSH sessions
-export TMUX_SKIP_SSH="true"
-
-# Set default Tmux session name
-export TMUX_AUTOSTART_SESSION="dev"
-
-# Skip Tmux in IDE terminals (VSCode, Emacs)
-export TMUX_SKIP_IDE="true"
-```
-
-Add aliases in `~/.zsh.d/alias.zsh`:
+All variables live in `zsh.d/config.zsh` and can be overridden in the environment:
 
 ```bash
-# Function syntax for better performance
-alias ll='ls -lh'
-alias grep='grep --color=auto'
+export TMUX_AUTOSTART_ENABLED="true"    # master switch
+export TMUX_AUTOSTART_SESSION="dev"     # session name
+export TMUX_SKIP_SSH="false"            # attach in SSH sessions
+export TMUX_SKIP_IDE="true"             # skip inside VSCode / Emacs
+export TMUX_SKIP_DESKTOP="true"         # skip in bspwm, i3, gnome, kde, xfce
 ```
 
-### Configure Neovim
-
-Edit Lua files in `~/.config/nvim/lua/`:
+### Neovim: adding a language server
 
 ```lua
--- core/options.lua: Editor settings
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.clipboard = 'unnamedplus'
-
--- plugins/lsp.lua: Add/remove language servers
-local servers = { 'lua_ls', 'pyright', 'bashls' }
-
--- plugins/completion.lua: nvim-cmp settings
--- plugins/ui.lua: Theme and UI enhancements
+-- config/nvim/lua/plugins/lsp.lua
+local servers = { 'lua_ls', 'pyright', 'bashls', 'tsserver' }
 ```
 
-Lazy.nvim bootstraps automatically; plugins install on first use.
+Mason installs the server on next launch. No manual binary management required.
 
-### Configure Tmux
+### ZSH: lazy-loading pattern
 
-Vi-style keybindings and Drizzt theme colors:
+Heavy completions use a self-removing wrapper to avoid blocking startup:
 
-```bash
-# Split window vertically
-tmux split-window -h
-
-# Copy mode (Ctrl+b [) with system clipboard
-# Paste (Ctrl+b ])
-
-# Edit ~/.tmux.conf for keybindings and colors
-# Uses xsel/wl-copy/pbcopy for clipboard integration
-```
-
-### Git Hooks
-
-Pre-commit hooks automatically validate on commit:
-
-```bash
-# Stops commits if:
-# - Merge conflicts present
-# - Private keys found
-# - YAML/Makefile syntax invalid
-# - Trailing whitespace detected
-# - Line endings mixed
-
-# Bypass (not recommended):
-git commit --no-verify
+```zsh
+_load_kubectl_completion() {
+  source <(kubectl completion zsh)
+  unfunction _load_kubectl_completion
+  _load_kubectl_completion
+}
+compdef _load_kubectl_completion kubectl
 ```
 
 ---
@@ -171,97 +139,77 @@ git commit --no-verify
 ## Testing & Verification
 
 ```bash
-# Measure ZSH startup performance
-time zsh -ic exit
-
-# Validate configuration loading
-zsh -c 'source ~/.zshrc'
-
-# Test Tmux configuration
-tmux source ~/.tmux.conf
-
-# Reload shell (interactive)
-exec zsh
-
-# Run pre-commit hooks manually
-pre-commit run --all-files
+time zsh -ic exit                     # measure startup time (target: <110ms)
+zsh --startuptime /tmp/zsh.log -i -c exit && sort -k2 -n /tmp/zsh.log | tail -20
+zsh -c 'source ~/.zshrc'              # validate without replacing current shell
+tmux source ~/.tmux.conf              # reload tmux config live
+pre-commit run --all-files            # run all hooks manually
 ```
+
+---
+
+## Color Reference
+
+All components share a single palette. Override values are in hex for Kitty/Tmux and 256-color codes for ZSH ANSI sequences.
+
+| Role | Hex | 256-color | Used in |
+|------|-----|-----------|---------|
+| Background | `#100814` | — | Kitty, Tmux, Neovim |
+| Lavender (violet eyes) | `#b19cd9` | 141 | ZSH border, Neovim Normal mode |
+| Icy Blue (Twinkle) | `#7ec8e3` | 117 | ZSH hostname, git branch |
+| Drow Green | `#5ab897` | 78 | Kubernetes context, Neovim Insert mode |
+| Magical Yellow | `#f0c987` | 222 | ZSH separator, fallback RPROMPT |
+| Red | `#d35d6e` | 167 | ZSH username |
+| Inactive border | `#4a5273` | — | Tmux inactive panes |
 
 ---
 
 ## Platform Requirements
 
-**Tested on:** Ubuntu 20.04+, Debian 11+
+**Tested:** Ubuntu 20.04+, Debian 11+
 
-**Required:**
-- ZSH 5.9+
-- Git 2.40+
-- Tmux 3.2+
-- Make 4.3+
+**Required:** `zsh 5.9+`, `git 2.40+`, `tmux 3.2+`, `make 4.3+`
 
-**Optional (with fallbacks):**
-- Neovim 0.11+ (`make install-nvim` via snap)
-- kubectl, helm, docker, npm, asdf, bat, fzf, ripgrep
-- xsel, wl-copy, pbcopy (clipboard managers)
+**Optional (graceful fallback if absent):** `kubectl`, `helm`, `docker`, `npm`, `bat`, `fzf`, `ripgrep`, `xsel`, `wl-copy`, `pbcopy`
 
----
-
-## Security
-
-Repository configured with GitHub security best practices (2026):
-
-- Secret scanning + push protection enabled
-- Dependabot alerts and automatic security updates
-- Pre-commit hooks: private key detection, syntax validation
-- Branch protection: 1 required review, pre-commit checks
-- CI/CD: Trivy filesystem scanning, dependency verification
-- Read `.github/SECURITY.md` for vulnerability reporting
-
-**Check security status:**
-```bash
-gh api /repos/cosckoya/.dotfiles/security_and_analysis | jq '.secret_scanning'
-```
+Neovim installation: `make install-nvim` (uses `sudo snap install nvim --classic`)
 
 ---
 
 ## Contributing
 
-1. Fork the repository
-2. Create feature branch: `git checkout -b feature/improvement`
-3. Commit changes (pre-commit validates)
-4. Push to branch and open PR against `main`
-5. Require 1 approval before merge
+```bash
+git checkout -b feature/my-change
+# pre-commit validates on commit: syntax, secrets, whitespace, LF endings
+git commit -m "feat: description"
+```
 
-See `.github/SECURITY.md` for security vulnerability reporting.
-
----
-
-## License
-
-MIT License — see LICENSE file
+Open a PR against `main`. One approval required. See `.github/SECURITY.md` for vulnerability reporting.
 
 ---
 
-## Design Highlights
+---
 
-**Drizzt Do'Urden Theme** — Unified color scheme across all components:
-- Background: `#100814` (deep drow cavern, WCAG AAA contrast)
-- Primary: Lavender `#b19cd9` (violet eyes), Icy Blue `#7ec8e3` (Twinkle)
-- Accent: Drow magic green `#5ab897`, Magical yellow `#f0c987`
+## Documentation
 
-**Performance Optimizations:**
-- Zinit turbo mode with staggered plugin loading (wait"1", wait"2", wait"3")
-- Compinit caching invalidates daily
-- Self-removing lazy-loader pattern for heavy completions
-- All tool checks guarded by `command -v` for zero-penalty fallbacks
-- History size: 5000 (vs 10000 default)
+Full technical reference organized by user need. Start with [`docs/README.md`](./docs/README.md).
 
-**Modular Architecture:**
-- Split ZSH configs by function (config, tools, alias, autocomplete, tmux, toolbox)
-- Neovim: core settings + plugin separation (LSP, completion, UI, editor)
-- Makefile: symlink installation with color-coded output
-- Pre-commit: code quality without breaking workflows
+**Getting Started**
+- [Installation & Quick Start](./docs/getting-started.dotfiles.md) — Prerequisites, installation steps, first-run checklist
+
+**Configuration**
+- [ZSH](./docs/zsh.dotfiles.md) — Modules, environment variables, prompt, Zinit plugins
+- [Tmux](./docs/tmux.dotfiles.md) — Keybindings, copy mode, clipboard, color scheme
+- [Kitty](./docs/kitty.dotfiles.md) — Font, display settings, layouts, key bindings
+- [Neovim](./docs/neovim.dotfiles.md) — Bootstrap, LSP servers, completion, keymaps
+
+**Reference**
+- [Architecture Overview](./docs/architecture.dotfiles.md) — Design decisions, performance targets, interactions
+- [Color Scheme](./docs/color-scheme.dotfiles.md) — Full palette, WCAG AAA contrast, lore
+- [Makefile](./docs/makefile.dotfiles.md) — Targets, symlink mechanics, pre-commit hooks
+- [Troubleshooting](./docs/troubleshooting.dotfiles.md) — Common issues and solutions
 
 ---
 
-**Updated:** April 28, 2026 | **Maintained By:** Cosckoya | **Repository:** https://github.com/cosckoya/.dotfiles
+**License:** MIT — see LICENSE
+**Maintained by:** Cosckoya | **Repository:** https://github.com/cosckoya/.dotfiles
