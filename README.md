@@ -1,68 +1,59 @@
 <div align="center">
 
-<img src="./img/death.png" alt="Dotfiles"/>
+![Drizzt Do'Urden Terminal Setup](./img/death.png)
 
 # Modern Linux Dotfiles
 
-### *Your terminal. Supercharged.*
+**Terminal environment crafted for performance and aesthetics.** Production-ready ZSH, Tmux, Neovim, and Kitty configurations optimized for Ubuntu/Debian.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-Linux-blue.svg)](https://www.linux.org/)
-[![Shell](https://img.shields.io/badge/Shell-ZSH-89e051.svg)](https://www.zsh.org/)
+[![Shell](https://img.shields.io/badge/Shell-ZSH%205.9%2B-89e051.svg)](https://www.zsh.org/)
+[![Neovim](https://img.shields.io/badge/Neovim-0.11%2B-green.svg)](https://neovim.io/)
 
 </div>
-
----
-
-## About
-
-Production-ready dotfiles for Linux development environments. Self-contained, offline-capable, and optimized for performance.
-
-**Why these dotfiles?**
-
-- **One Command Setup** - `make all` and you're done
-- **Lightning Fast** - ~110ms ZSH startup (92% faster than typical configs)
-- **Zero Dependencies** - Works completely offline after installation
-- **Linux First** - Optimized for Ubuntu/Debian systems
-- **Modular** - Install only what you need
 
 ---
 
 ## Quick Start
 
 ```bash
-# Clone and install
-git clone https://github.com/yourusername/dotfiles.git ~/.dotfiles
+git clone https://github.com/cosckoya/.dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-make all
-
-# Restart your shell
-exec zsh
+make all          # Install everything: ASDF + ZSH + Tmux + Kitty + Neovim
+exec zsh          # Reload shell (~110ms startup)
 ```
 
-**Selective installation:** Use `make help` to see all available targets.
+**Selective Installation:**
+```bash
+make help         # List all available targets
+make profile      # ZSH + Tmux + Kitty + Neovim only
+make zsh          # ZSH configuration only
+```
 
 ---
 
-## What's Inside
+## Key Features
 
-| Component | Description |
-|-----------|-------------|
-| **ZSH** | ~110ms startup with Zinit turbo mode, lazy-loaded completions, Drizzt Do'Urden colors |
-| **Tmux** | Vi-mode, clipboard integration, Drizzt Do'Urden theme (238 lines, optimized from 1889) |
-| **Neovim** | Lua-based with lazy.nvim, native LSP (Mason), nvim-cmp, Telescope |
-| **Kitty** | GPU-accelerated terminal with Drizzt Do'Urden theme (drow cavern palette) |
-| **ASDF** | Universal version manager |
+- **~110ms ZSH startup** — 92% faster than typical configs via Zinit turbo mode and aggressive lazy-loading
+- **Unified visual theme** — Drizzt Do'Urden color scheme (WCAG AAA contrast) across ZSH, Tmux, Kitty, and Neovim with coherent powerline styling
+- **Offline-capable** — Works completely offline after installation; all plugins and binaries cached locally
+- **Modular architecture** — Install only components you need; split configurations enable granular customization
+- **Production-ready security** — Pre-commit hooks, secret scanning, Dependabot, branch protection, CI/CD validation
 
 ---
 
-## Requirements
+## Tech Stack
 
-**Tested on:** Ubuntu 20.04+, Debian 11+
-
-**Minimum versions:** ZSH 5.9+, Git 2.40+, Tmux 3.2+, Neovim 0.10+, Make 4.3+
-
-**Optional:** kubectl, helm, docker, xclip, ripgrep, fzf
+| Component | Technology | Version | Details |
+|-----------|------------|---------|---------|
+| Shell | ZSH | 5.9+ | Interactive shell with Zinit async plugin manager |
+| Terminal | Kitty | Latest | GPU-accelerated terminal emulator |
+| Multiplexer | Tmux | 3.2+ | Session/window management with Vi keybindings |
+| Editor | Neovim | 0.11+ | Lua-based config with native LSP, lazy.nvim |
+| Version Manager | ASDF | Latest | Universal tool version manager (optional) |
+| Hooks | pre-commit | 2.x | Git hooks for code quality and security |
+| Prompt | vcs_info + custom | N/A | Dynamic right-prompt with git/venv/k8s context |
 
 ---
 
@@ -70,87 +61,207 @@ exec zsh
 
 ```
 ~/.dotfiles/
-├── Makefile                    # Installation orchestrator
-├── zshrc                       # ZSH entry point
-├── zsh.d/                      # Modular ZSH config (6 files)
-│   ├── config.zsh             # User variables (tmux auto-start, etc.)
-│   ├── tools.zsh              # PATH, editor, npm lazy-loading
-│   ├── alias.zsh              # Command aliases
-│   ├── autocomplete.zsh       # Lazy-loaded completions
-│   ├── tmux.zsh               # Tmux helpers
-│   └── toolbox.zsh            # Utilities
-└── config/
-    ├── nvim/                  # Neovim Lua config (lazy.nvim, LSP, cmp)
-    ├── tmux.conf              # Tmux 3.4+ native syntax
-    └── kitty.conf             # Kitty terminal settings
+├── .github/                          # GitHub configuration
+│   ├── workflows/ci.yml              # CI/CD: pre-commit + Trivy scanning
+│   ├── SECURITY.md                   # Vulnerability disclosure policy
+│   ├── CODEOWNERS                    # Code ownership & review routing
+│   ├── dependabot.yml                # Dependency management
+│   └── ISSUE_TEMPLATE/               # Issue templates
+├── config/
+│   ├── nvim/                         # Neovim Lua configuration
+│   │   ├── lua/core/                 # Editor options, keymaps, autocmds
+│   │   └── lua/plugins/              # LSP, completion, UI, editor plugins
+│   ├── tmux.conf                     # Tmux 3.4+ configuration (238 lines)
+│   └── kitty.conf                    # Kitty terminal settings
+├── zsh.d/                            # Modular ZSH configuration
+│   ├── config.zsh                    # User-configurable variables
+│   ├── tools.zsh                     # PATH, editor selection, npm lazy-load
+│   ├── alias.zsh                     # Command aliases and functions
+│   ├── autocomplete.zsh              # Lazy-loaded completions
+│   ├── tmux.zsh                      # Tmux helper functions
+│   └── toolbox.zsh                   # Utility functions
+├── zshrc                             # Main ZSH entry point
+├── vimrc                             # Legacy Vim config (backwards compat)
+├── Makefile                          # Installation orchestrator
+├── CLAUDE.md                         # Claude Code AI guidance
+├── .pre-commit-config.yaml           # Pre-commit hooks
+├── .copilot-instructions.md          # GitHub Copilot CLI instructions
+└── img/                              # Visual assets
 ```
 
 ---
 
-## Key Features
+## Usage
 
-### Performance Optimizations
-- **ZSH**: Async plugin loading (Zinit turbo mode), compinit caching, lazy completions
-- **Tmux**: Native 3.4+ syntax, minimal status updates, optimized rendering
-- **Neovim**: Lazy plugin loading, native LSP (no external servers)
+### Configure ZSH
 
-### Smart Tmux Auto-Start
-Automatically starts tmux when appropriate, intelligently skips in:
-- IDE/VSCode terminals
-- SSH sessions (configurable)
-- Desktop environments (GNOME, KDE, i3, etc.)
+Edit variables in `~/.zsh.d/config.zsh`:
 
-Configure in `zsh.d/config.zsh`:
 ```bash
-export TMUX_AUTOSTART_ENABLED="true"
+# Disable Tmux auto-start in SSH sessions
+export TMUX_SKIP_SSH="true"
+
+# Set default Tmux session name
+export TMUX_AUTOSTART_SESSION="dev"
+
+# Skip Tmux in IDE terminals (VSCode, Emacs)
 export TMUX_SKIP_IDE="true"
-export TMUX_SKIP_DESKTOP="true"
 ```
 
-### Dynamic Prompt (RPROMPT) - Drizzt Do'Urden
-Context-aware right prompt showing:
-- Git branch (icy blue from Twinkle) - only in git repos
-- Python virtualenv (lavender violet eyes)
-- Kubernetes context (drow magic green)
-- Fallback message when no context (magical yellow)
+Add aliases in `~/.zsh.d/alias.zsh`:
 
-### Offline Capable
-All plugins cached locally. ASDF uses binary installation (no compilation). Works without internet after initial setup.
+```bash
+# Function syntax for better performance
+alias ll='ls -lh'
+alias grep='grep --color=auto'
+```
+
+### Configure Neovim
+
+Edit Lua files in `~/.config/nvim/lua/`:
+
+```lua
+-- core/options.lua: Editor settings
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.clipboard = 'unnamedplus'
+
+-- plugins/lsp.lua: Add/remove language servers
+local servers = { 'lua_ls', 'pyright', 'bashls' }
+
+-- plugins/completion.lua: nvim-cmp settings
+-- plugins/ui.lua: Theme and UI enhancements
+```
+
+Lazy.nvim bootstraps automatically; plugins install on first use.
+
+### Configure Tmux
+
+Vi-style keybindings and Drizzt theme colors:
+
+```bash
+# Split window vertically
+tmux split-window -h
+
+# Copy mode (Ctrl+b [) with system clipboard
+# Paste (Ctrl+b ])
+
+# Edit ~/.tmux.conf for keybindings and colors
+# Uses xsel/wl-copy/pbcopy for clipboard integration
+```
+
+### Git Hooks
+
+Pre-commit hooks automatically validate on commit:
+
+```bash
+# Stops commits if:
+# - Merge conflicts present
+# - Private keys found
+# - YAML/Makefile syntax invalid
+# - Trailing whitespace detected
+# - Line endings mixed
+
+# Bypass (not recommended):
+git commit --no-verify
+```
 
 ---
 
-## Configuration
+## Testing & Verification
 
-**Theme:** Drizzt Do'Urden - Complete visual coherence across all components with matching powerline styles. Deep purple cavern (#100814), lavender eyes (#b19cd9), and icy blue accents (#7ec8e3). WCAG AAA contrast ratios.
-**ZSH modules:** Edit files in `zsh.d/` for aliases, completions, or tools
-**Tmux:** Modify `config/tmux.conf` for keybindings and appearance
-**Neovim:** Lua modules in `config/nvim/lua/` (core settings, plugins, LSP)
-**Kitty:** Terminal settings in `config/kitty.conf`
+```bash
+# Measure ZSH startup performance
+time zsh -ic exit
+
+# Validate configuration loading
+zsh -c 'source ~/.zshrc'
+
+# Test Tmux configuration
+tmux source ~/.tmux.conf
+
+# Reload shell (interactive)
+exec zsh
+
+# Run pre-commit hooks manually
+pre-commit run --all-files
+```
+
+---
+
+## Platform Requirements
+
+**Tested on:** Ubuntu 20.04+, Debian 11+
+
+**Required:**
+- ZSH 5.9+
+- Git 2.40+
+- Tmux 3.2+
+- Make 4.3+
+
+**Optional (with fallbacks):**
+- Neovim 0.11+ (`make install-nvim` via snap)
+- kubectl, helm, docker, npm, asdf, bat, fzf, ripgrep
+- xsel, wl-copy, pbcopy (clipboard managers)
+
+---
+
+## Security
+
+Repository configured with GitHub security best practices (2026):
+
+- Secret scanning + push protection enabled
+- Dependabot alerts and automatic security updates
+- Pre-commit hooks: private key detection, syntax validation
+- Branch protection: 1 required review, pre-commit checks
+- CI/CD: Trivy filesystem scanning, dependency verification
+- Read `.github/SECURITY.md` for vulnerability reporting
+
+**Check security status:**
+```bash
+gh api /repos/cosckoya/.dotfiles/security_and_analysis | jq '.secret_scanning'
+```
 
 ---
 
 ## Contributing
 
-Contributions are welcome! Submit a Pull Request.
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature/improvement`
+3. Commit changes (pre-commit validates)
+4. Push to branch and open PR against `main`
+5. Require 1 approval before merge
+
+See `.github/SECURITY.md` for security vulnerability reporting.
 
 ---
 
 ## License
 
-MIT License - see LICENSE file for details.
+MIT License — see LICENSE file
 
 ---
 
-## Acknowledgments
+## Design Highlights
 
-Built for the Linux community. Special thanks to [Zinit](https://github.com/zdharma-continuum/zinit), [Lazy.nvim](https://github.com/folke/lazy.nvim), [Tokyo Night](https://github.com/folke/tokyonight.nvim), and [Kitty](https://sw.kovidgoyal.net/kitty/).
+**Drizzt Do'Urden Theme** — Unified color scheme across all components:
+- Background: `#100814` (deep drow cavern, WCAG AAA contrast)
+- Primary: Lavender `#b19cd9` (violet eyes), Icy Blue `#7ec8e3` (Twinkle)
+- Accent: Drow magic green `#5ab897`, Magical yellow `#f0c987`
+
+**Performance Optimizations:**
+- Zinit turbo mode with staggered plugin loading (wait"1", wait"2", wait"3")
+- Compinit caching invalidates daily
+- Self-removing lazy-loader pattern for heavy completions
+- All tool checks guarded by `command -v` for zero-penalty fallbacks
+- History size: 5000 (vs 10000 default)
+
+**Modular Architecture:**
+- Split ZSH configs by function (config, tools, alias, autocomplete, tmux, toolbox)
+- Neovim: core settings + plugin separation (LSP, completion, UI, editor)
+- Makefile: symlink installation with color-coded output
+- Pre-commit: code quality without breaking workflows
 
 ---
 
-<div align="center">
-
-**The riddle of steel**
-
-[Report Bug](https://github.com/yourusername/dotfiles/issues) · [Request Feature](https://github.com/yourusername/dotfiles/issues)
-
-</div>
+**Updated:** April 28, 2026 | **Maintained By:** Cosckoya | **Repository:** https://github.com/cosckoya/.dotfiles
