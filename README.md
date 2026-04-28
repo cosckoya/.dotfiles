@@ -1,6 +1,8 @@
 <div align="center">
 
-![Drizzt Do'Urden Terminal Setup](./img/death.png)
+<img src="./img/death.png" alt="Dream and Death — The Sandman by Neil Gaiman. Two siblings sit on a park bench feeding pigeons. One is the Lord of Dreams. The other is Death. Neither is in a hurry." width="720">
+
+*Dream and Death — The Sandman, Neil Gaiman*
 
 # cosckoya/.dotfiles
 
@@ -183,6 +185,21 @@ git commit -m "feat: description"
 ```
 
 Open a PR against `main`. One approval required. See `.github/SECURITY.md` for vulnerability reporting.
+
+---
+
+---
+
+## Documentation
+
+Full technical reference in [`docs/`](./docs/README.md):
+
+- [ZSH](./docs/zsh.md) — modules, prompt, Zinit, lazy-loading patterns
+- [Tmux](./docs/tmux.md) — bindings, copy mode, clipboard, color scheme
+- [Kitty](./docs/kitty.md) — font, colors, layouts, key bindings
+- [Neovim](./docs/neovim.md) — LSP, completion, lazy.nvim, adding servers
+- [Makefile](./docs/makefile.md) — targets, symlinks, pre-commit hooks
+- [Color Scheme](./docs/color-scheme.md) — full palette, lore, per-component application
 
 ---
 
