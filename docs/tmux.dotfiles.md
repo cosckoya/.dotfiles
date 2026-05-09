@@ -62,7 +62,7 @@ Enter copy mode: `prefix + Enter`
 | `C-u` / `C-d` | Half-page up/down |
 | `/` / `?` | Search forward/backward |
 
-Copied text goes to system clipboard automatically (detected: `xclip`, `xsel`, `wl-copy`, `pbcopy`).
+Copied text goes to system clipboard automatically (detected: `xclip`, `xsel`, `wl-copy`).
 
 ## Color Scheme
 
@@ -106,7 +106,7 @@ prefix + P          choose buffer
 ## Troubleshooting
 
 **Clipboard not working?**
-Install one of: `xclip`, `xsel` (X11), `wl-copy` (Wayland), `pbcopy` (macOS).
+Install one of: `xclip`, `xsel` (X11), `wl-copy` (Wayland).
 
 **Colors look wrong?**
 Ensure `$TERM` is set correctly:

@@ -86,12 +86,9 @@ setw -g window-status-format "#I:#W"
 setw -g window-status-current-format "#[bold,fg=#b19cd9]#I:#W#[default]"
 ```
 
-### 5. Platform-Specific Clipboard
+### 5. Clipboard Integration
 ```tmux
-# Auto-detect and use available clipboard
-if-shell "command -v pbcopy" {
-  bind -T copy-mode-vi y send -X copy-pipe-and-cancel "pbcopy"
-}
+# Auto-detect and use available clipboard (Linux: X11 or Wayland)
 if-shell "command -v xclip" {
   bind -T copy-mode-vi y send -X copy-pipe-and-cancel "xclip -selection clipboard"
 }
@@ -194,7 +191,7 @@ set -g status-left "#{?client_prefix,#[bg=red] #[default],} #S "
 ### Compatibility
 - Support multiple clipboard managers
 - Check command availability with if-shell
-- Platform detection (Linux vs macOS)
+- Check command availability with if-shell
 - Fall back gracefully when tools missing
 
 ## Anti-Patterns to Avoid

@@ -3,7 +3,6 @@ SHELL := /bin/bash
 .PHONY: help all profile zsh tmux kitty neovim install-nvim mise clean pre-commit-setup
 .DEFAULT_GOAL := help
 
-OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 DOTFILES := $(shell pwd)
 
 help: ## Shows this makefile help
@@ -29,12 +28,10 @@ mise: ## Install mise (runtime version manager, faster than ASDF)
 zsh: ## Install ZSH profile
 	@set -e; \
 	command -v zsh >/dev/null || { echo "Error: Install zsh first"; exit 1; }
-ifeq ($(OS), linux)
 	@USER=$$(whoami); \
 	if [ "$$(getent passwd $$USER | cut -d: -f7)" != "/bin/zsh" ]; then \
 		sudo usermod -s /bin/zsh $$USER; \
 	fi
-endif
 	@rm -f ${HOME}/.zshrc ${HOME}/.zsh.d
 	@ln -sf ${DOTFILES}/zshrc ${HOME}/.zshrc
 	@ln -sf ${DOTFILES}/zsh.d ${HOME}/.zsh.d

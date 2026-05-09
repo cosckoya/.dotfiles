@@ -170,7 +170,7 @@ All components share a single palette. Override values are in hex for Kitty/Tmux
 
 **Required:** `zsh 5.9+`, `git 2.40+`, `tmux 3.2+`, `make 4.3+`
 
-**Optional (graceful fallback if absent):** `kubectl`, `helm`, `docker`, `npm`, `bat`, `fzf`, `ripgrep`, `xsel`, `wl-copy`, `pbcopy`
+**Optional (graceful fallback if absent):** `kubectl`, `helm`, `docker`, `npm`, `bat`, `fzf`, `ripgrep`, `xsel`, `wl-copy`
 
 Neovim installation: `make install-nvim` (uses `sudo snap install nvim --classic`)
 

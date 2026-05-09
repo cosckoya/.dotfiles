@@ -38,7 +38,6 @@ personal/
 .vscode/
 .idea/
 *.iml
-.DS_Store
 
 # AI Assistant configuration files
 .copilot-instructions.md
@@ -60,13 +59,6 @@ claude-code.log
 **/claude_plan.md
 **/claude_plan_*.md
 .claude-cache/
-
-# OS files
-.DS_Store
-.AppleDouble
-.LSOverride
-Thumbs.db
-Desktop.ini
 
 # Backup files
 *.bak

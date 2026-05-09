@@ -15,7 +15,7 @@ token_cost_estimate: 1800
 - **Ligatures support**: Modern font rendering
 - **Native image protocol**: Display images in terminal
 - **Configurable via config**: No external themes needed
-- **Cross-platform**: macOS, Linux (primary), Windows (WSL)
+- **Linux-native**: Ubuntu 20.04+ / Debian 11+
 
 ### 2. Essential Configuration
 ```ini
