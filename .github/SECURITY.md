@@ -1,49 +1,52 @@
-name: Security Policy
+# Security Policy
 
-If you believe you have found a security vulnerability in this repository, please report it privately.
+If you find a security vulnerability in this repository, report it privately. Do not open a public issue.
 
-## Reporting Security Issues
+## Reporting a Vulnerability
 
-**Do not** open a public issue for security vulnerabilities. Instead:
+Use **GitHub Security Advisories**: Security tab → Advisories → "Report a vulnerability".
 
-1. **Use GitHub Security Advisory**: Go to the "Security" tab → "Advisories" → "Report a vulnerability" to submit a private security report
-2. **Contact maintainers privately**: If you prefer, email the repository maintainers directly
+Include:
 
-Provide:
 - Description of the vulnerability
 - Steps to reproduce
-- Affected versions/components
-- Suggested remediation (if available)
+- Affected versions or components
+- Suggested remediation if available
+
+Reports are acknowledged within 72 hours.
 
 ## Supported Versions
 
-Security updates are provided for:
-- Latest stable version (main branch)
-- Previous minor versions (at maintainer discretion)
+| Version | Security support |
+|---------|-----------------|
+| `main` (latest stable) | Active |
+| Previous minor versions | Maintainer discretion |
 
-## Security Update Timeline
+## Response Timeline
 
-- **Critical**: Fixed and released within 24-48 hours
-- **High**: Fixed and released within 1 week
-- **Medium/Low**: Included in next planned release
+| Severity | Target resolution |
+|----------|------------------|
+| Critical | 24–48 hours |
+| High | 7 days |
+| Medium / Low | Next planned release |
 
-## Security Best Practices for Users
+## Repository Security Posture (May 2026)
 
-This project follows security best practices (2026):
+Controls active on this repository:
 
-✅ **Enabled**:
-- Secret scanning with push protection
-- Dependabot security alerts & updates
-- Branch protection on main (1 required review)
-- Pre-commit hooks for code quality
-- Signed commits recommended
+- Secret scanning with push protection (GitHub GHAS)
+- Dependabot security alerts and automated updates
+- Branch protection on `main` (1 required review, status checks required)
+- Pre-commit hooks: secret detection, syntax validation, LF enforcement
+- CI scanning: Trivy filesystem scan on every push
 
-⚠️ **Recommendations for users**:
-- Keep dependencies updated (run `make all` periodically)
-- Use SSH keys for authentication (configure in `~/.ssh/config`)
-- Rotate any exposed secrets immediately
-- Review `.pre-commit-config.yaml` for installed hooks
+Recommended practices for users of these dotfiles:
+
+- Rotate any credential exposed via shell history or config files immediately
+- Use SSH keys for GitHub authentication (`~/.ssh/config`)
+- Pin tool versions with `mise` to avoid unexpected supply-chain updates
+- Run `pre-commit install` after cloning to activate local commit hooks
 
 ## Acknowledgments
 
-We appreciate security researchers who report vulnerabilities responsibly.
+Responsible disclosure is appreciated. Researchers who report valid vulnerabilities will be credited in the relevant release notes.
