@@ -9,24 +9,23 @@ on:
 permissions:
   contents: read
   security-events: write
-  pull-requests: write
 
 jobs:
   pre-commit:
     name: pre-commit checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
           fetch-depth: 0
 
-      - uses: pre-commit/action@646c83fcd040023954eafda54b4db0192ce70507  # v3.0.0
+      - uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd  # v3.0.1
 
   shell-syntax:
     name: Shell syntax validation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
 
       - name: Install ZSH
         run: sudo apt-get update && sudo apt-get install -y zsh
@@ -41,24 +40,25 @@ jobs:
     name: ZSH startup performance
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+
+      - name: Install ZSH
+        run: sudo apt-get update && sudo apt-get install -y zsh
 
       - name: Measure ZSH startup
         run: |
-          echo "Measuring ZSH startup time..."
           export PATH="$PWD:$PATH"
-          time zsh -ic exit 2>&1 | tee /tmp/startup.log
-
-          # Check if under 110ms (rough estimate from wall time)
-          elapsed=$(cat /tmp/startup.log | grep real | awk '{print $2}')
-          echo "Elapsed: $elapsed"
-          echo "Note: Full profiling requires more detailed analysis"
+          TIMEFORMAT='startup: %Rs'
+          elapsed=$( { time zsh -ic exit >/dev/null 2>&1; } 2>&1 )
+          echo "$elapsed"
+          ms=$(echo "$elapsed" | grep -oP '[\d.]+')
+          awk -v t="$ms" 'BEGIN { if (t+0 > 0.110) { print "FAIL: " t "s exceeds 110ms target"; exit 1 } else { print "OK: " t "s (target <0.110s)" } }'
 
   security-scan:
     name: Security scanning
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
 
       - name: Run Trivy filesystem scan
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25  # v0.36.0
@@ -69,7 +69,7 @@ jobs:
           output: 'trivy-results.sarif'
 
       - name: Upload Trivy results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@7fd177fa680c9881b53cdab4d346d32574c9f7f4  # v3
+        uses: github/codeql-action/upload-sarif@68bde559dea0fdcac2102bfdf6230c5f70eb485e  # v4.35.4
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
@@ -78,13 +78,22 @@ jobs:
     name: Dependency vulnerability check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
 
-      - name: Check for known vulnerabilities
+      - name: Check for hardcoded secrets
         run: |
-          echo "Checking for hardcoded secrets and vulnerable patterns..."
-          if grep -r "password\|secret\|api_key\|token" . --include="*.sh" --include="*.zsh" --include="*.conf" --exclude-dir=.git 2>/dev/null | grep -v "# " | grep -v ".pre-commit"; then
-            echo "WARNING: Potential hardcoded secrets detected in configuration files"
+          if grep -rn \
+            -e 'password\s*=' \
+            -e 'api_key\s*=' \
+            -e 'secret\s*=' \
+            --include="*.zsh" \
+            --include="*.sh" \
+            --include="*.conf" \
+            --include="*.env" \
+            --exclude-dir=.git \
+            --exclude-dir=.pre-commit \
+            . 2>/dev/null | grep -v '^\s*#'; then
+            echo "FAIL: potential hardcoded secrets detected"
             exit 1
           fi
-          echo "OK: No obvious hardcoded secrets found"
+          echo "OK: no hardcoded secrets found"
