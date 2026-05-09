@@ -48,7 +48,7 @@ repos:
         language: system
         files: '^Makefile$'
         pass_filenames: true
-        stages: [commit]
+        stages: [pre-commit]
 
       # Makefile linting (optional, graceful skip if not installed)
       - id: makefile-lint
@@ -57,7 +57,7 @@ repos:
         language: system
         files: '^Makefile$'
         pass_filenames: true
-        stages: [commit]
+        stages: [pre-commit]
 
       # ZSH script validation (skip if zsh absent, e.g. CI/CD without zsh installed)
       - id: zsh-syntax
@@ -67,7 +67,7 @@ repos:
         types: [shell]
         files: '^zsh\.d/.*\.zsh$|^zshrc$'
         pass_filenames: true
-        stages: [commit]
+        stages: [pre-commit]
 
       # Lua syntax validation (Neovim config, skip if luac absent)
       - id: lua-syntax
@@ -76,9 +76,9 @@ repos:
         language: system
         files: '\.lua$'
         pass_filenames: true
-        stages: [commit]
+        stages: [pre-commit]
 
 # Global configuration
 fail_fast: false
 exclude: '^(\.git|\.venv|venv|build|dist|\.copilot)/'
-default_stages: [commit]
+default_stages: [pre-commit]
