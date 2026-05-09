@@ -80,5 +80,5 @@ repos:
 
 # Global configuration
 fail_fast: false
-exclude: '^(\.git|\.venv|venv|build|dist|\.copilot)/'
+exclude: '^(\.git|\.venv|venv|build|dist)/'
 default_stages: [pre-commit]

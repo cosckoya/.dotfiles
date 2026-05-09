@@ -39,11 +39,10 @@ personal/
 .idea/
 *.iml
 
-# AI Assistant configuration files
-.copilot-instructions.md
-.github/copilot-instructions.md
+# Editor and AI assistant files
 .cursorrules
 .cursor/
+.copilot/
 
 # Claude Code — local settings (machine-specific, not for commit)
 .claude/settings.local.json
