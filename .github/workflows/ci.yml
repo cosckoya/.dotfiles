@@ -45,14 +45,24 @@ jobs:
       - name: Install ZSH
         run: sudo apt-get update && sudo apt-get install -y zsh
 
+      - name: Install dotfiles
+        run: |
+          ln -sf "$PWD/zshrc" "$HOME/.zshrc"
+          ln -sf "$PWD/zsh.d" "$HOME/.zsh.d"
+
       - name: Measure ZSH startup
         run: |
-          export PATH="$PWD:$PATH"
-          TIMEFORMAT='startup: %Rs'
-          elapsed=$( { time zsh -ic exit >/dev/null 2>&1; } 2>&1 )
-          echo "$elapsed"
-          ms=$(echo "$elapsed" | grep -oP '[\d.]+')
-          awk -v t="$ms" 'BEGIN { if (t+0 > 0.110) { print "FAIL: " t "s exceeds 110ms target"; exit 1 } else { print "OK: " t "s (target <0.110s)" } }'
+          TIMEFORMAT="%R"
+          elapsed=$( { time zsh -i -c exit 2>/dev/null; } 2>&1 )
+          elapsed_ms=$(echo "$elapsed" | LC_ALL=C awk '{ printf "%.0f", $1 * 1000 }')
+          echo "ZSH startup: ${elapsed_ms}ms"
+          if (( elapsed_ms > 110 )); then
+            echo "FAIL: ${elapsed_ms}ms exceeds 110ms target"
+            exit 1
+          else
+            echo "OK: ${elapsed_ms}ms (target <110ms)"
+          fi
+        shell: bash
 
   security-scan:
     name: Security scanning
@@ -69,7 +79,7 @@ jobs:
           output: 'trivy-results.sarif'
 
       - name: Upload Trivy results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@68bde559dea0fdcac2102bfdf6230c5f70eb485e  # v4.35.4
+        uses: github/codeql-action/upload-sarif@3ce22a6e336a7fcc318bc58ae1986395bdc83ba7  # v4.35.4
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'

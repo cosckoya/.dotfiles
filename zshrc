@@ -211,5 +211,3 @@ export LESS_TERMCAP_so=$'\E[01;33m'
 export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[1;32m'
 export LESS_TERMCAP_ue=$'\E[0m'
-
-eval "$(/home/cosckoya/.local/bin/mise activate zsh)" # added by https://mise.run/zsh
