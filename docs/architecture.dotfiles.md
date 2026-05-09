@@ -41,7 +41,7 @@ Design decisions, performance targets, and module interactions.
 │           └── plugins/     # LSP, completion, UI, editor
 ├── docs/                    # technical documentation
 ├── .github/                 # GitHub config and CI
-├── pre-commit-config.yaml   # git hooks
+├── .pre-commit-config.yaml  # git hooks
 └── img/                     # visual assets
 ```
 
@@ -103,7 +103,7 @@ lazy.nvim lazy-loads plugins on command/filetype/key. Startup sequence:
 
 | Component | Target | Current | Status |
 |-----------|--------|---------|--------|
-| ZSH startup | <110ms | ~110ms | ✓ |
+| ZSH startup | <110ms | ~80ms | ✓ |
 | Tmux startup | <100ms | ~50ms | ✓ |
 | Neovim startup | <500ms | ~300ms | ✓ |
 | Compinit cache | daily | yes | ✓ |
@@ -129,7 +129,7 @@ Pre-commit hooks validate on every commit:
 - LF line endings (no mixed CRLF)
 - Trailing whitespace removed
 
-Hooks are installed automatically via `pre-commit install` (not yet automated in Makefile — manual step).
+Hooks are installed via `make pre-commit-setup` or manually with `pre-commit install`.
 
 ## Extensibility
 

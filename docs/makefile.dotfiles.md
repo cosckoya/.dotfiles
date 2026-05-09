@@ -38,7 +38,7 @@ Running `make` again replaces existing symlinks (idempotent).
 Installs MISE (Rust-based version manager, faster than ASDF) via official installer.
 
 **Location:** `~/.local/bin/mise` (added to `$PATH` automatically)
-**Config:** `mise.toml` (ASDF `.tool-versions` compatible)
+**Config:** `mise.toml` (also reads `.tool-versions` for ASDF migration compatibility)
 
 MISE features:
 - 10–100x faster than ASDF (compiled Rust vs shell)
@@ -102,7 +102,6 @@ All `make` targets are safe to re-run. They:
 
 | Variable | Value | Use |
 |----------|-------|-----|
-| `OS` | `$(uname -s)` lowercased | Conditional logic (Linux-specific setup) |
 | `DOTFILES` | `$(pwd)` | Absolute path to repo (used in symlinks) |
 
 ## Troubleshooting

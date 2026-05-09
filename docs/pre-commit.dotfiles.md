@@ -29,9 +29,7 @@ pre-commit autoupdate           # update all hook versions
 | Hook | Checks |
 |------|--------|
 | `check-merge-conflict` | No unresolved `<<<<<<<` markers |
-| `check-yaml` | Valid YAML syntax |
-| `check-toml` | Valid TOML syntax |
-| `check-json` | Valid JSON syntax |
+| `check-yaml` | Valid YAML syntax (`--unsafe` flag allows custom tags) |
 
 ### File Format
 
@@ -55,18 +53,6 @@ pre-commit autoupdate           # update all hook versions
 |------|--------|
 | `check-executables-have-shebangs` | Shell scripts start with `#!/bin/bash` or `#!/bin/zsh` |
 | `check-shebang-scripts-are-executable` | Scripts with shebangs are executable |
-
-### Shell Linting
-
-| Hook | Tool | Checks |
-|------|------|--------|
-| `shellcheck` | ShellCheck v0.10+ | Bash/ZSH script errors (warnings shown, not fatal) |
-
-### Markdown Linting
-
-| Hook | Tool | Checks |
-|------|------|--------|
-| `markdownlint` | markdownlint-cli | Markdown formatting (auto-fixed) |
 
 ### Project-Specific
 
@@ -128,7 +114,7 @@ git commit -m "chore: update pre-commit hooks"
 If using GitHub Actions, cache pre-commit environment:
 
 ```yaml
-- uses: pre-commit/action@v3.0.0
+- uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd  # v3.0.1
 ```
 
 This runs hooks on all changed files in PR, fails the check if violations found.
