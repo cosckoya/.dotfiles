@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // \"\"' 2>/dev/null); echo \"$f\" | grep -qE '\\.zsh$|zshrc$' && { TIMEFORMAT=\"startup: %Rs (target: <0.110s)\"; { time zsh -ic exit >/dev/null; } 2>&1; } 2>/dev/null || true",
+            "statusMessage": "Profiling ZSH startup..."
+          }
+        ]
+      }
+    ]
+  }
+}
