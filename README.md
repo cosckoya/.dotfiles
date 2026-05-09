@@ -4,6 +4,8 @@
 
 *Dream and Death — The Sandman, Neil Gaiman*
 
+> "You get what anybody gets. You get a lifetime. No more. No less."
+
 # cosckoya/.dotfiles
 
 **A self-contained, offline-capable Linux terminal environment built for speed.**
