@@ -40,3 +40,8 @@ Complete technical specifications for deep dives.
 - [Color Scheme](./color-scheme.dotfiles.md) — Full palette, contrast ratios, lore
 - [Makefile](./makefile.dotfiles.md) — Build targets, symlink mechanics
 - [Pre-commit Hooks](./pre-commit.dotfiles.md) — Automated validation, hook configuration, troubleshooting
+
+## Contributing
+
+- [Contributing Guide](../CONTRIBUTING.md) — Branch naming, commit format, PR checklist, code style
+- [Security Policy](../.github/SECURITY.md) — Vulnerability disclosure process

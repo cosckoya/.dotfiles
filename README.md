@@ -24,7 +24,7 @@ ZSH, Tmux, Neovim, and Kitty — unified under a single Makefile and a coherent 
 ```bash
 git clone https://github.com/cosckoya/.dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-make all       # ASDF + ZSH + Tmux + Kitty + Neovim
+make all       # mise + ZSH + Tmux + Kitty + Neovim
 exec zsh       # reload shell (~110ms startup)
 ```
 
@@ -32,7 +32,7 @@ Selective installation:
 
 ```bash
 make help      # list all targets
-make profile   # ZSH + Tmux + Kitty + Neovim (no ASDF)
+make profile   # ZSH + Tmux + Kitty + Neovim (no mise)
 make zsh       # ZSH only
 ```
 
@@ -57,7 +57,6 @@ make zsh       # ZSH only
 | Multiplexer | Tmux | 3.2+ |
 | Editor | Neovim (Lua) | 0.11+ |
 | Runtime manager | mise | Latest |
-| Version manager | ASDF | Latest (optional) |
 | Plugin manager (nvim) | lazy.nvim | Auto-bootstrapped |
 | LSP installer | Mason | Auto-managed |
 | Git hooks | pre-commit | 2.x |
@@ -184,9 +183,7 @@ git checkout -b feature/my-change
 git commit -m "feat: description"
 ```
 
-Open a PR against `main`. One approval required. See `.github/SECURITY.md` for vulnerability reporting.
-
----
+Open a PR against `main`. One approval required. See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for full guidelines and [`SECURITY.md`](./.github/SECURITY.md) for vulnerability reporting.
 
 ---
 

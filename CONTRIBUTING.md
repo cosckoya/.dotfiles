@@ -10,7 +10,7 @@ This repository follows 2026 best practices for dotfiles. When contributing, ple
 - `chore/description` — Maintenance, refactoring, or infrastructure
 - `perf/description` — Performance optimization
 
-Example: `feat/add-asdf-node-setup`, `fix/compinit-syntax-error`, `docs/wsl-support`
+Example: `feat/add-mise-node-setup`, `fix/compinit-syntax-error`, `docs/linux-prerequisites`
 
 ## Commit Format
 
@@ -168,4 +168,4 @@ Refer to:
 
 ---
 
-Thank you for contributing to better dotfiles! 🙌
+Thank you for contributing to better dotfiles.
