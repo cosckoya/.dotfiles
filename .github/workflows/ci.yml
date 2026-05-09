@@ -50,13 +50,16 @@ jobs:
           ln -sf "$PWD/zshrc" "$HOME/.zshrc"
           ln -sf "$PWD/zsh.d" "$HOME/.zsh.d"
 
+      - name: Pre-warm ZSH (install plugins, build compinit cache)
+        run: |
+          zsh -i -c exit 2>&1 | tail -5 || true
+        shell: bash
+
       - name: Measure ZSH startup
         run: |
           TIMEFORMAT="%R"
           elapsed=$( { time zsh -i -c exit 2>/dev/null; } 2>&1 ) || true
-          echo "DEBUG elapsed=[$elapsed]"
-          elapsed_ms=$(echo "$elapsed" | LC_ALL=C awk '{ printf "%.0f", $1 * 1000 }')
-          echo "DEBUG elapsed_ms=[$elapsed_ms]"
+          elapsed_ms=$(echo "$elapsed" | LC_ALL=C awk 'END { printf "%.0f", $1 * 1000 }')
           echo "ZSH startup: ${elapsed_ms}ms"
           if (( elapsed_ms > 110 )); then
             echo "FAIL: ${elapsed_ms}ms exceeds 110ms target"
