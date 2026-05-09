@@ -18,11 +18,13 @@ all: mise profile ## Install everything
 profile: zsh tmux kitty neovim ## Install ZSH, Tmux, Kitty, and Neovim profiles
 
 mise: ## Install mise (runtime version manager, faster than ASDF)
-	@command -v mise >/dev/null || { \
+	@if command -v mise >/dev/null 2>&1; then \
+		echo "Mise already installed"; \
+	else \
 		echo "Installing mise..."; \
 		curl -L https://mise.jdx.dev/install.sh | sh; \
 		echo "Mise installed"; \
-	} || echo "Mise already installed"
+	fi
 
 zsh: ## Install ZSH profile
 	@set -e; \

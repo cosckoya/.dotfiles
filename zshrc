@@ -32,12 +32,12 @@ fi
 # Zinit: https://github.com/zdharma-continuum/zinit
 # Initialize with error handling for systems without git
 if ! command -v git >/dev/null 2>&1; then
-  echo "⚠️  Warning: git is not installed. Skipping Zinit plugin manager."
+  echo "Warning: git is not installed. Skipping Zinit plugin manager."
   echo "Install git to enable plugins: sudo apt install git"
 elif [[ ! -d ~/.local/share/zinit/zinit.git ]]; then
   mkdir -p ~/.local/share/zinit
   git clone https://github.com/zdharma-continuum/zinit.git ~/.local/share/zinit/zinit.git 2>/dev/null || {
-    echo "⚠️  Warning: Could not clone Zinit. Continuing without plugins."
+    echo "Warning: Could not clone Zinit. Continuing without plugins."
   }
 fi
 
@@ -45,7 +45,7 @@ fi
 if [[ -f ~/.local/share/zinit/zinit.git/zinit.zsh ]]; then
   source ~/.local/share/zinit/zinit.git/zinit.zsh
 else
-  echo "⚠️  Warning: Zinit not found. Install with: git clone https://github.com/zdharma-continuum/zinit.git ~/.local/share/zinit/zinit.git"
+  echo "Warning: Zinit not found. Install with: git clone https://github.com/zdharma-continuum/zinit.git ~/.local/share/zinit/zinit.git"
 fi
 
 # History - Optimized settings

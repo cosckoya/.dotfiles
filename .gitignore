@@ -9,9 +9,6 @@
 .zinit/
 .local/share/zinit/
 
-# ASDF version manager
-.asdf/
-
 # Vim/Neovim
 *.swp
 *.swo
@@ -49,15 +46,10 @@ personal/
 .cursorrules
 .cursor/
 
-# GitHub Copilot configuration (2026 - kept in repo)
-# .copilot/ is tracked - contains authoritative Copilot config
-# .claude/ is tracked - legacy Claude config for reference
-
-# Old Claude Code configuration (legacy, no longer tracked)
-# See .copilot/ for new GitHub Copilot setup
+# Claude Code — local settings (machine-specific, not for commit)
+.claude/settings.local.json
 
 # Claude Code CLI files
-#.claude/
 .claude-plugin/
 .claude_history
 claude.log

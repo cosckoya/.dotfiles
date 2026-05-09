@@ -27,9 +27,3 @@ if command -v kind >/dev/null 2>&1; then
   }
   compdef _load_kind_completion kind
 fi
-
-# asdf (completion built-in since v0.16+)
-if command -v asdf >/dev/null 2>&1; then
-  # Rosetta 2 workaround for Apple Silicon
-  [[ $(uname -m) != "x86_64" ]] && alias asdf='arch -x86_64 asdf'
-fi
