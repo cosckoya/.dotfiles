@@ -2,22 +2,9 @@
 
 Unified dark palette applied consistently across ZSH, Tmux, Kitty, and Neovim. Inspired by Drizzt Do'Urden (the drow ranger) and his world from the Forgotten Realms — his scimitar Twinkle, his familiar Guenhwyvar, and the lavender of his unique eyes.
 
+**Official design tokens and semantic names are in [`design-system.dotfiles.md`](./design-system.dotfiles.md).** This document covers lore, per-component usage, and dircolors configuration.
+
 All colors meet WCAG AAA contrast ratios (7:1+) against the `#100814` background.
-
-## Master Palette
-
-| Token | Hex | 256-color | Component | Meaning |
-|-------|-----|-----------|-----------|---------|
-| Background | `#100814` | — | All | Deep drow cavern |
-| Foreground | `#e0dfe8` | — | All | Moonlit stone |
-| Lavender | `#b19cd9` | 141 | All active elements | Drizzt's violet eyes |
-| Icy Blue | `#7ec8e3` | 117 | Git, highlights | Twinkle (scimitar) |
-| Drow Green | `#5ab897` | 78 | Kubernetes, Insert mode | Drow magic |
-| Magical Yellow | `#f0c987` | 222 | Accent, time | Surface-world glow |
-| Red | `#d35d6e` | 167 | Error, username | Combat, sacrifice |
-| Cavern Stone | `#4a5273` | — | Inactive borders | Rock walls |
-| Shadow | `#8b8c99` | — | Inactive text | Dim cavern |
-| Deep Black | `#0f1119` | — | Terminal color 0 | Void |
 
 ## Per-Component Usage
 
@@ -58,18 +45,6 @@ Via tokyonight theme:
 - Normal mode statusline: `#b19cd9` (lavender)
 - Insert mode statusline: `#5ab897` (drow green)
 - Visual mode statusline: `#7ec8e3` (icy blue)
-
-## Contrast Reference
-
-All colors tested against `#100814` background using WCAG AAA standards (7:1 minimum).
-
-| Color | Ratio | AA Compliant | AAA Compliant |
-|-------|-------|--------------|---------------|
-| Lavender (`#b19cd9`) | 9.1:1 | Yes | Yes |
-| Icy Blue (`#7ec8e3`) | 10.5:1 | Yes | Yes |
-| Drow Green (`#5ab897`) | 7.2:1 | Yes | Yes |
-| Magical Yellow (`#f0c987`) | 8.3:1 | Yes | Yes |
-| Foreground (`#e0dfe8`) | 15.1:1 | Yes | Yes |
 
 ## Lore Reference
 

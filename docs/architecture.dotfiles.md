@@ -2,21 +2,7 @@
 
 Design decisions, performance targets, and module interactions.
 
-## Design Principles
-
-**Offline-first:** All tools and plugins are installed locally. No runtime external dependencies.
-
-**Modular:** Each component (ZSH, Tmux, Kitty, Neovim) can be installed independently via `make [target]`.
-
-**Symlink-based:** Dotfiles are symlinked from the repository, not copied. Changes take effect immediately.
-
-**Startup performance:** Target is under 110ms for ZSH prompt appearance. Achieved through:
-- Async plugin loading (Zinit turbo mode)
-- Lazy-loaded completions (self-removing wrappers)
-- Compinit cache invalidation (daily)
-- Aggressive tool checks (early exit if tool missing)
-
-**Graceful fallbacks:** Every tool check uses `command -v` before use. Missing tools do not block shell startup.
+**Design principles, tokens, and performance budgets are now in [`design-system.dotfiles.md`](./design-system.dotfiles.md).** This document covers installation mechanics and startup flow only.
 
 ## Directory Layout
 
@@ -98,26 +84,6 @@ lazy.nvim lazy-loads plugins on command/filetype/key. Startup sequence:
 4. Plugins remain dormant until triggered (~0ms)
 5. On first Lua file: Mason detects missing servers and installs (~30s first time, then cached)
 6. LSP activates via `FileType` autocommand
-
-## Performance Targets
-
-| Component | Target | Current | Status |
-|-----------|--------|---------|--------|
-| ZSH startup | <110ms | ~80ms | ✓ |
-| Tmux startup | <100ms | ~50ms | ✓ |
-| Neovim startup | <500ms | ~300ms | ✓ |
-| Compinit cache | daily | yes | ✓ |
-| Pre-commit hooks | <5s | <2s avg | ✓ |
-
-## Color Scheme Integration
-
-Single Drizzt Do'Urden palette applied consistently across all components. See [Color Scheme](./color-scheme.dotfiles.md) for full specs and lore.
-
-Tools define colors at startup via:
-- ZSH: 256-color codes (`%F{141}` for lavender)
-- Tmux: Hex codes (`#b19cd9`)
-- Kitty: Hex codes
-- Neovim: Hex codes via tokyonight theme
 
 ## Security
 

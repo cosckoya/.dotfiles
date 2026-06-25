@@ -36,8 +36,9 @@ Common issues and solutions.
 
 Complete technical specifications for deep dives.
 
-- [Architecture Overview](./architecture.dotfiles.md) — Design decisions, performance targets, module interactions
-- [Color Scheme](./color-scheme.dotfiles.md) — Full palette, contrast ratios, lore
+- [Design System](./design-system.dotfiles.md) — Design tokens, architecture layers, interaction patterns, performance contract, extensibility rules
+- [Architecture Overview](./architecture.dotfiles.md) — Installation mechanics, startup flow, extensibility
+- [Color Scheme](./color-scheme.dotfiles.md) — Per-component usage, lore, dircolors configuration
 - [Makefile](./makefile.dotfiles.md) — Build targets, symlink mechanics
 - [Pre-commit Hooks](./pre-commit.dotfiles.md) — Automated validation, hook configuration, troubleshooting
 

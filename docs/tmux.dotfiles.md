@@ -66,14 +66,7 @@ Copied text goes to system clipboard automatically (detected: `xclip`, `xsel`, `
 
 ## Color Scheme
 
-Base colors map to Drizzt Do'Urden palette. See [Color Scheme](./color-scheme.dotfiles.md) for hex values and lore.
-
-| Element | Color | Use |
-|---------|-------|-----|
-| Active pane border | Lavender | Current pane |
-| Inactive pane border | Cavern stone | Other panes |
-| Active window | Lavender background | Current window in status bar |
-| Status bar | Deep cavern background | Bottom bar |
+Design tokens in [`design-system.dotfiles.md`](./design-system.dotfiles.md). Hex values and per-component usage in [`color-scheme.dotfiles.md`](./color-scheme.dotfiles.md).
 
 ## Status Bar
 

@@ -72,21 +72,14 @@ zsh
 
 The prompt is your interface to the Dream realm. It shows your presence (left) and your current bindings (right).
 
-**Left prompt:** Lavender border (realm marker) + icy blue hostname + yellow separator + red username.
+**Left prompt:** Lavender border + icy blue hostname + yellow separator + red username.
 
 ```
 ┌──(hostname の user)
 └─#
 ```
 
-**Right prompt (RPROMPT):** Dynamic context—reveals what dream you inhabit:
-
-| Context | Display | Meaning |
-|---------|---------|---------|
-| Git repository | Branch name (icy blue) | Version control awareness |
-| Python virtualenv | Environment name (lavender) | Active Python realm |
-| Kubernetes context | Cluster/namespace (drow green) | Container orchestration target |
-| None active | "Klaatu Barada Nitko!" (yellow) | Awaiting direction |
+**Right prompt (RPROMPT):** Dynamic context — Git branch, Python venv, Kubernetes context, or fallback.
 
 **Example prompts:**
 
@@ -101,7 +94,7 @@ The prompt is your interface to the Dream realm. It shows your presence (left) a
 └─#
 ```
 
-Colors use 256-color codes for ZSH compatibility. See [Color Scheme](./color-scheme.dotfiles.md) for hex values and WCAG AAA contrast verification.
+Design tokens in [`design-system.dotfiles.md`](./design-system.dotfiles.md). Hex values and WCAG AAA verification in [`color-scheme.dotfiles.md`](./color-scheme.dotfiles.md).
 
 ## Zinit Plugins — Async Summons
 
