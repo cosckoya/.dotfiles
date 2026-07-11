@@ -19,10 +19,7 @@ Reload config live: `Ctrl+Shift+F5`
 
 ## Color Scheme
 
-Drizzt Do'Urden dark palette. See [Color Scheme](./color-scheme.dotfiles.md) for hex values and contrast ratios.
-
-Background: `#100814` (deep drow cavern)
-Foreground: `#e0dfe8` (moonlit stone)
+Drizzt Do'Urden dark palette. Design tokens in [`design-system.dotfiles.md`](./design-system.dotfiles.md). Hex values and contrast ratios in [`color-scheme.dotfiles.md`](./color-scheme.dotfiles.md).
 
 ## Key Bindings
 

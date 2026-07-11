@@ -235,6 +235,7 @@ All components share a single palette derived from the Drizzt Do'Urden lore. Eve
 | Red | `#d35d6e` | 167 | ZSH username |
 | Inactive border | `#4a5273` | — | Tmux inactive panes |
 
+Design tokens and extensibility rules: [`docs/design-system.dotfiles.md`](./docs/design-system.dotfiles.md)
 Full palette, contrast ratios, and lore: [`docs/color-scheme.dotfiles.md`](./docs/color-scheme.dotfiles.md)
 
 ---
@@ -262,8 +263,9 @@ Full technical reference in [`docs/README.md`](./docs/README.md).
 | [Tmux](./docs/tmux.dotfiles.md) | Keybindings, copy mode, clipboard |
 | [Kitty](./docs/kitty.dotfiles.md) | Font, display settings, layouts |
 | [Neovim](./docs/neovim.dotfiles.md) | Bootstrap, LSP servers, completion, keymaps |
-| [Architecture](./docs/architecture.dotfiles.md) | Design decisions, module interactions |
-| [Color Scheme](./docs/color-scheme.dotfiles.md) | Full palette, WCAG AAA contrast, lore |
+| [Design System](./docs/design-system.dotfiles.md) | Design tokens, architecture layers, interaction patterns, extensibility contract |
+| [Architecture](./docs/architecture.dotfiles.md) | Installation mechanics, startup flow |
+| [Color Scheme](./docs/color-scheme.dotfiles.md) | Per-component usage, WCAG AAA contrast, lore |
 | [Makefile](./docs/makefile.dotfiles.md) | Targets, symlink mechanics |
 | [Pre-commit](./docs/pre-commit.dotfiles.md) | Hooks, configuration, CI integration |
 | [Troubleshooting](./docs/troubleshooting.dotfiles.md) | Common issues and solutions |

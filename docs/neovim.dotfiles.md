@@ -99,7 +99,7 @@ nvim-cmp with LuaSnip. Triggered automatically while typing.
 
 ## Theme
 
-Default: tokyonight (dark). Set in `lazy.nvim` install config in `init.lua`.
+Default: tokyonight (dark). Mode indicator colors (Normal=lavender, Insert=green, Visual=icy blue) are defined in [`design-system.dotfiles.md`](./design-system.dotfiles.md).
 
 To change theme, edit `init.lua`:
 

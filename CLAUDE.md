@@ -160,12 +160,13 @@ TMUX_SKIP_DESKTOP         # skip in graphical desktops
 | `config/nvim/` | Neovim Lua config + lazy.nvim + Mason LSP |
 | `Makefile` | Symlink-based installer (idempotent) |
 | `.pre-commit-config.yaml` | Git hooks (2026 best practices, system-language hooks only) |
-| `docs/` | Full technical reference (9 documents, organized by user need) |
+| `docs/design-system.dotfiles.md` | Design tokens, architecture, interaction patterns, extensibility contract |
+| `docs/` | Full technical reference (10 documents, organized by user need) |
 | `.claude/rules/stacks/shell.rule.md` | Project conventions: ZSH startup, tool checks, lazy-loading, testing |
 | `.github/workflows/ci.yml` | CI/CD: pre-commit validation on all PRs |
 
 ## WCAG AAA Color Compliance
 
-All colors meet 7:1 contrast ratio against `#100814` background. See `docs/color-scheme.dotfiles.md` for full palette and per-component usage.
+All colors meet 7:1 contrast ratio against `#100814` background. See [`docs/design-system.dotfiles.md`](docs/design-system.dotfiles.md) for token definitions and [`docs/color-scheme.dotfiles.md`](docs/color-scheme.dotfiles.md) for lore and dircolors.
 
 **Updated:** April 28, 2026
