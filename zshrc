@@ -212,5 +212,3 @@ export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[1;32m'
 export LESS_TERMCAP_ue=$'\E[0m'
 
-# opencode
-export PATH=/home/cosckoya/.opencode/bin:$PATH

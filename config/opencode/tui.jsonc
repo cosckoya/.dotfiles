@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "theme": {
+    "background": "#100814",
+    "foreground": "#e0dfe8",
+    "accent": "#b19cd9",
+    "selection": "#6b4f9e",
+    "border": "#4a5273"
+  }
+}

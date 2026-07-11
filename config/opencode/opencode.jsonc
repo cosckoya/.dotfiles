@@ -1,0 +1,70 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "build",
+  "agent": {
+    "plan": {
+      "description": "Analyses architecture and plans changes without modifying files",
+      "mode": "primary",
+      "permission": {
+        "edit": "deny",
+        "write": "deny",
+        "bash": "deny"
+      }
+    },
+    "build": {
+      "description": "Primary development agent with full tool access",
+      "mode": "primary",
+      "permission": {
+        "edit": {
+          "*": "allow",
+          "**/*.zwc": "deny",
+          "**/.claude/.session": "deny",
+          "**/.claude/.cache": "deny",
+          "**/.opencode/*": "deny",
+          "**/secrets/*": "deny"
+        },
+        "bash": {
+          "*": "ask",
+          "git *": "allow",
+          "git push *": "deny",
+          "git push --force*": "deny",
+          "git push origin main": "deny"
+        },
+        "external_directory": {
+          "~/.config/opencode/**": "allow"
+        }
+      }
+    },
+    "dotfiles-manager": {
+      "description": "Expert in Makefile automation, ZSH configs, tmux, and dotfiles architecture",
+      "mode": "subagent",
+      "prompt": "{file:./config/opencode/agents/dotfiles-manager.md}"
+    }
+  },
+  "permission": {
+    "read": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.env.example": "allow"
+    },
+    "skill": {
+      "*": "allow"
+    }
+  },
+  "hook": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // \"\"' 2>/dev/null); echo \"$f\" | grep -qE '\\.zsh$|zshrc$' && { TIMEFORMAT=\"startup: %Rs (target: <0.110s)\"; { time zsh -ic exit >/dev/null; } 2>&1; } 2>/dev/null || true",
+            "statusMessage": "Profiling ZSH startup..."
+          }
+        ]
+      }
+    ]
+  },
+  "mcp": {}
+}

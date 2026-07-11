@@ -12,9 +12,9 @@ user-invocable: true
 
 ## Global Rules Applied
 
-- Configuration standards → `~/.claude/rules/stacks/shell.rule.md`
-- Color accessibility → `~/.claude/rules/stacks/color.rule.md`
-- Markdown documentation → `~/.claude/rules/stacks/markdown.rule.md`
+- Configuration standards → `config/opencode/rules/shell.rule.md`
+- Color accessibility → `config/opencode/rules/color.rule.md`
+- Markdown documentation → `config/opencode/rules/markdown.rule.md`
 
 ## Core Responsibilities
 
@@ -28,7 +28,7 @@ user-invocable: true
 
 - `docs/kitty.dotfiles.md` — Configuration reference, keybindings table, layouts, troubleshooting
 - `docs/color-scheme.dotfiles.md` — Drizzt palette with hex codes and 256-color mappings
-- `~/.claude/rules/stacks/color.rule.md` — WCAG AA/AAA contrast validation
+- `config/opencode/rules/color.rule.md` — WCAG AA/AAA contrast validation
 
 ## Example Invocations
 

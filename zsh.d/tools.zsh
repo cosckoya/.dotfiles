@@ -20,6 +20,7 @@ typeset -U path
 [[ -d "$HOME/bin" ]] && path+=("$HOME/bin")
 [[ -d "$GOPATH/bin" ]] && path+=("$GOPATH/bin")
 [[ -d "$HOME/.local/bin" ]] && path=("$HOME/.local/bin" $path)
+[[ -d "$HOME/.opencode/bin" ]] && path+=("$HOME/.opencode/bin")
 
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"

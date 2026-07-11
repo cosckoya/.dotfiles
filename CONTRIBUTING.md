@@ -21,7 +21,7 @@ type(scope): short description (under 50 chars)
 
 Longer explanation (if needed). Explain the WHY, not the WHAT — diffs show changes.
 
-Co-Authored-By: Claude <noreply@anthropic.com>
+Co-Authored-By: Roy Batty <roy.batty@cosckoya.bot>
 ```
 
 Types: `feat`, `fix`, `docs`, `test`, `chore`, `perf`, `refactor`, `style`
@@ -35,7 +35,7 @@ Duplicate if/else block with no opening condition deleted.
 
 Verified: zsh -n ~/.zshrc passes.
 
-Co-Authored-By: Claude <noreply@anthropic.com>
+Co-Authored-By: Roy Batty <roy.batty@cosckoya.bot>
 ```
 
 ## Code Review Checklist
@@ -54,7 +54,7 @@ Before submitting a pull request, ensure:
 - [ ] All aliases execute: `alias_name --help` or manual test
 
 ### Code Quality
-- [ ] Follows `~/.claude/rules/stacks/shell.rule.md` conventions:
+- [ ] Follows `config/opencode/rules/shell.rule.md` conventions:
   - Tool checks use `command -v`, never `which`
   - PATH additions use `[[ -d path ]]` checks
   - 2-space indentation, no tabs
@@ -65,7 +65,7 @@ Before submitting a pull request, ensure:
 
 ### Documentation
 - [ ] Applicable `docs/*.dotfiles.md` files updated
-- [ ] CLAUDE.md updated if scope/architecture changed
+- [ ] AGENTS.md updated if scope/architecture changed
 - [ ] New shell functions documented in corresponding module comments
 - [ ] Cross-references added to related documentation
 
@@ -161,10 +161,10 @@ pre-commit run --all-files --hook-stage commit
 ## Questions?
 
 Refer to:
-- `CLAUDE.md` — Project overview and guidance
+- `AGENTS.md` — Project overview and guidance
 - `docs/README.md` — Full technical documentation
-- `~/.claude/rules/stacks/shell.rule.md` — Mandatory shell conventions
-- `~/.claude/rules/universal/communication.rule.md` — English-only, no emojis policy
+- `config/opencode/rules/shell.rule.md` — Mandatory shell conventions
+- `config/opencode/rules/communication.rule.md` — English-only, no emojis policy
 
 ---
 

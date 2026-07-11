@@ -12,9 +12,9 @@ user-invocable: true
 
 ## Global Rules Applied
 
-- Shell conventions & tool checks → `~/.claude/rules/stacks/shell.rule.md`
-- Git workflow & commit standards → `~/.claude/rules/universal/git-workflow.rule.md`
-- Communication: English-only, concise → `~/.claude/rules/universal/communication.rule.md`
+- Shell conventions & tool checks → `config/opencode/rules/shell.rule.md`
+- Git workflow & commit standards → `config/opencode/rules/git-workflow.rule.md`
+- Communication: English-only, concise → `config/opencode/rules/communication.rule.md`
 
 ## Core Responsibilities
 
@@ -42,7 +42,7 @@ user-invocable: true
 
 - `.pre-commit-config.yaml` — Hook definitions (source of truth)
 - `docs/pre-commit.dotfiles.md` — Installation, manual usage, troubleshooting
-- `~/.claude/rules/stacks/shell.rule.md` — Tool guard patterns and graceful fallbacks
+- `config/opencode/rules/shell.rule.md` — Tool guard patterns and graceful fallbacks
 
 ## Example Invocations
 

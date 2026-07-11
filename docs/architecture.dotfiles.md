@@ -43,7 +43,6 @@ zsh.d/                 → ~/.zsh.d
 config/tmux.conf       → ~/.tmux.conf
 config/kitty.conf      → ~/.config/kitty/kitty.conf
 config/nvim/           → ~/.config/nvim
-vimrc                  → ~/.vimrc
 ```
 
 All targets are idempotent — safe to re-run. Symlinks are replaced if they point elsewhere.

@@ -28,7 +28,6 @@ zsh.d/                 → ~/.zsh.d
 config/tmux.conf       → ~/.tmux.conf
 config/kitty.conf      → ~/.config/kitty/kitty.conf
 config/nvim/           → ~/.config/nvim
-vimrc                  → ~/.vimrc
 ```
 
 Running `make` again replaces existing symlinks (idempotent).

@@ -137,7 +137,7 @@ Every addition must justify its existence by providing clear value without compl
 2. **Test all Makefile targets** - Ensure idempotency
 3. **Check offline functionality** - No runtime external dependencies
 4. **Review for simplification** - Can it be simpler?
-5. **Update CLAUDE.md if architecture changes**
+5. **Update AGENTS.md if architecture changes**
 
 ## Anti-Patterns to Avoid
 

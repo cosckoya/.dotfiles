@@ -1,6 +1,6 @@
 .ONESHELL:
 SHELL := /bin/bash
-.PHONY: help all profile zsh tmux kitty neovim install-nvim mise clean pre-commit-setup
+.PHONY: help all profile zsh tmux kitty neovim install-nvim mise opencode clean pre-commit-setup
 .DEFAULT_GOAL := help
 
 DOTFILES := $(shell pwd)
@@ -14,7 +14,7 @@ help: ## Shows this makefile help
 
 all: mise profile ## Install everything
 
-profile: zsh tmux kitty neovim ## Install ZSH, Tmux, Kitty, and Neovim profiles
+profile: zsh tmux kitty neovim opencode ## Install ZSH, Tmux, Kitty, Neovim, and OpenCode profiles
 
 mise: ## Install mise (runtime version manager, faster than ASDF)
 	@if command -v mise >/dev/null 2>&1; then \
@@ -50,7 +50,6 @@ neovim: ## Install Neovim Lua profile
 	test "$$NVIM_MAJOR" -gt 0 || test "$$NVIM_MINOR" -ge 11 || { echo "Error: Neovim 0.11+ required"; exit 1; }; \
 	rm -rf ${HOME}/.config/nvim; \
 	ln -s ${DOTFILES}/config/nvim ${HOME}/.config/nvim; \
-	ln -sf ${DOTFILES}/vimrc ${HOME}/.vimrc; \
 	echo "Neovim configured"
 
 tmux: ## Install TMUX profile
@@ -62,6 +61,18 @@ kitty: ## Install Kitty terminal profile
 	@ln -sf ${DOTFILES}/config/kitty.conf ${HOME}/.config/kitty/kitty.conf
 	@echo "Kitty configured"
 
+opencode: ## Install OpenCode profile
+	@mkdir -p ${HOME}/.config/opencode
+	@ln -sf ${DOTFILES}/config/opencode/opencode.jsonc ${HOME}/.config/opencode/opencode.jsonc
+	@ln -sf ${DOTFILES}/config/opencode/tui.jsonc ${HOME}/.config/opencode/tui.jsonc
+	@for dir in agents skills rules commands; do \
+	  mkdir -p ${HOME}/.config/opencode/$$dir; \
+	  for f in ${DOTFILES}/config/opencode/$$dir/*; do \
+	    [ -e "$$f" ] && ln -sf "$$f" ${HOME}/.config/opencode/$$dir/; \
+	  done; \
+	done
+	@echo "OpenCode configured"
+
 pre-commit-setup: ## Install pre-commit hooks
 	@command -v pre-commit >/dev/null || { echo "Error: Install pre-commit first (pip install pre-commit)"; exit 1; }
 	@pre-commit install
@@ -72,5 +83,5 @@ clean: ## Remove all symlinks and restore defaults
 	@rm -f ${HOME}/.tmux.conf
 	@rm -f ${HOME}/.config/kitty/kitty.conf
 	@rm -rf ${HOME}/.config/nvim
-	@rm -f ${HOME}/.vimrc
+	@rm -rf ${HOME}/.config/opencode
 	@echo "Symlinks removed"

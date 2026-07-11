@@ -100,3 +100,7 @@ tools/bin/
 config/nvim/plugin/
 config/nvim/.lazy.lua
 config/nvim/lazy-lock.json
+
+# OpenCode cache and runtime files
+.opencode/
+config/opencode/plugin/

@@ -454,7 +454,7 @@ Title font:         system (no monospace in window titles)
 - **Graceful fallbacks** — every tool check uses `command -v`. Missing tools never block.
 - **Symlinks, not copies** — changes to repo files take effect immediately in the running system.
 - **Performance budget first** — a feature that violates the startup budget must be lazy-loaded or omitted.
-- **One source of truth** — `design-system.dotfiles.md` owns design. `CLAUDE.md` owns project guidance. Executable config (Makefile, CI, pre-commit) overrides docs if they conflict.
+- **One source of truth** — `design-system.dotfiles.md` owns design. `AGENTS.md` owns project guidance. Executable config (Makefile, CI, pre-commit) overrides docs if they conflict.
 
 ---
 
@@ -469,7 +469,7 @@ Title font:         system (no monospace in window titles)
 | `docs/tmux.dotfiles.md` | Tmux keybindings, session commands |
 | `docs/kitty.dotfiles.md` | Kitty settings, layout reference |
 | `docs/neovim.dotfiles.md` | Neovim LSP, plugin config |
-| `CLAUDE.md` | Project overview, agent guidance |
+| `AGENTS.md` | Project overview, agent guidance |
 | `README.md` | Public-facing project description |
 
 ---
