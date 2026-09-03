@@ -78,6 +78,16 @@ repos:
         pass_filenames: true
         stages: [pre-commit]
 
+      # ShellCheck semantic linting for ZSH (skip if shellcheck absent)
+      - id: shellcheck-zsh
+        name: ShellCheck ZSH scripts
+        entry: bash -c 'command -v shellcheck >/dev/null 2>&1 && for f in "$@"; do shellcheck -s bash "$f" 2>&1 || exit 1; done || true' --
+        language: system
+        types: [shell]
+        files: '^zsh\.d/.*\.zsh$|^zshrc$'
+        pass_filenames: true
+        stages: [pre-commit]
+
 # Global configuration
 fail_fast: false
 exclude: '^(\.git|\.venv|venv|build|dist)/'
