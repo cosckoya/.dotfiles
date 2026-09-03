@@ -115,3 +115,39 @@ jobs:
             exit 1
           fi
           echo "OK: no hardcoded secrets found"
+
+  container-scan:
+    name: Container image vulnerability scan
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+
+      - name: Install Trivy
+        run: |
+          sudo apt-get update && sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update && sudo apt-get install -y trivy
+
+      - name: Scan pinned Docker images
+        run: |
+          # Images from zsh.d/alias.zsh (update this list when adding new images)
+          images=(
+            "kalilinux/kali-rolling@sha256:PLACEHOLDER_DIGEST_KALI"
+            "parrotsec/core@sha256:PLACEHOLDER_DIGEST_PARROT"
+            "debian@sha256:PLACEHOLDER_DIGEST_DEBIAN"
+            "archlinux@sha256:PLACEHOLDER_DIGEST_ARCH"
+            "wpscanteam/wpscan@sha256:PLACEHOLDER_DIGEST_WPSCAN"
+            "secfigo/nikto@sha256:PLACEHOLDER_DIGEST_NIKTO"
+            "projectdiscovery/nuclei@sha256:PLACEHOLDER_DIGEST_NUCLEI"
+            "metasploitframework/metasploit-framework@sha256:PLACEHOLDER_DIGEST_MSF"
+            "zaproxy/zap-stable@sha256:PLACEHOLDER_DIGEST_ZAP"
+          )
+          for img in "${images[@]}"; do
+            echo "Scanning $img..."
+            trivy image --severity HIGH,CRITICAL --format table "$img" || true
+          done
+        env:
+          TRIVY_DB_REPOSITORY: "public.ecr.aws/aquasecurity/trivy-db:2"
+          TRIVY_JAVA_DB_REPOSITORY: "public.ecr.aws/aquasecurity/trivy-java-db:1"
