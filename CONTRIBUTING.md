@@ -74,7 +74,7 @@ Before submitting a pull request, ensure:
 - [ ] All aliases execute: `alias_name --help` or manual test
 
 ### Code Quality
-- [ ] Follows `~/.claude/rules/stacks/shell.rule.md` conventions:
+- [ ] Follows `~/.agentic/rules/stacks/shell.rule.md` conventions:
   - Tool checks use `command -v`, never `which`
   - PATH additions use `[[ -d path ]]` checks
   - 2-space indentation, no tabs
@@ -183,8 +183,8 @@ pre-commit run --all-files --hook-stage commit
 Refer to:
 - `CLAUDE.md` — Project overview and guidance
 - `docs/README.md` — Full technical documentation
-- `~/.claude/rules/stacks/shell.rule.md` — Mandatory shell conventions
-- `~/.claude/rules/universal/communication.rule.md` — English-only, no emojis policy
+- `~/.agentic/rules/stacks/shell.rule.md` — Mandatory shell conventions
+- `~/.agentic/rules/universal/communication.rule.md` — English-only, no emojis policy
 
 ---
 

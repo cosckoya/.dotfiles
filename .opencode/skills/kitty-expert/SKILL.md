@@ -1,9 +1,7 @@
 ---
 name: kitty-expert
 description: Kitty terminal emulator configuration, fonts, colors, and keybindings
-allowed-tools: Read, Grep, Glob, Bash(kitty:*), Bash(command -v:*)
-model: haiku
-user-invocable: true
+license: MIT
 ---
 
 # Kitty Terminal Expert
@@ -12,9 +10,9 @@ user-invocable: true
 
 ## Global Rules Applied
 
-- Configuration standards → `~/.claude/rules/stacks/shell.rule.md`
-- Color accessibility → `~/.claude/rules/stacks/color.rule.md`
-- Markdown documentation → `~/.claude/rules/stacks/markdown.rule.md`
+- Configuration standards → `~/.agentic/rules/stacks/shell.rule.md`
+- Color accessibility → `~/.agentic/rules/stacks/color.rule.md`
+- Markdown documentation → `~/.agentic/rules/stacks/markdown.rule.md`
 
 ## Core Responsibilities
 
@@ -28,7 +26,7 @@ user-invocable: true
 
 - `docs/kitty.dotfiles.md` — Configuration reference, keybindings table, layouts, troubleshooting
 - `docs/color-scheme.dotfiles.md` — Drizzt palette with hex codes and 256-color mappings
-- `~/.claude/rules/stacks/color.rule.md` — WCAG AA/AAA contrast validation
+- `~/.agentic/rules/stacks/color.rule.md` — WCAG AA/AAA contrast validation
 
 ## Example Invocations
 

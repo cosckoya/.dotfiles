@@ -1,9 +1,7 @@
 ---
 name: precommit-expert
 description: Pre-commit framework configuration, hook management, and validation pipeline
-allowed-tools: Read, Grep, Glob, Bash(pre-commit:*), Bash(command -v:*)
-model: haiku
-user-invocable: true
+license: MIT
 ---
 
 # Pre-commit Expert
@@ -12,9 +10,9 @@ user-invocable: true
 
 ## Global Rules Applied
 
-- Shell conventions & tool checks → `~/.claude/rules/stacks/shell.rule.md`
-- Git workflow & commit standards → `~/.claude/rules/universal/git-workflow.rule.md`
-- Communication: English-only, concise → `~/.claude/rules/universal/communication.rule.md`
+- Shell conventions & tool checks → `~/.agentic/rules/stacks/shell.rule.md`
+- Git workflow & commit standards → `~/.agentic/rules/universal/git-workflow.rule.md`
+- Communication: English-only, concise → `~/.agentic/rules/universal/communication.rule.md`
 
 ## Core Responsibilities
 
@@ -42,7 +40,7 @@ user-invocable: true
 
 - `.pre-commit-config.yaml` — Hook definitions (source of truth)
 - `docs/pre-commit.dotfiles.md` — Installation, manual usage, troubleshooting
-- `~/.claude/rules/stacks/shell.rule.md` — Tool guard patterns and graceful fallbacks
+- `~/.agentic/rules/stacks/shell.rule.md` — Tool guard patterns and graceful fallbacks
 
 ## Example Invocations
 
