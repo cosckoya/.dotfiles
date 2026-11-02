@@ -1,0 +1,30 @@
+name: Auto PR develop to main
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  auto-pr:
+    name: Create or update PR develop -> main
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          fetch-depth: 0
+
+      - name: Create PR if missing and enable auto-merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh pr list --base main --head develop --state open | grep -q .; then
+            echo "PR already open"; exit 0
+          fi
+          gh pr create --base main --head develop --title "chore: release develop to main" --body "Automated release PR." || true
+          PR=$(gh pr list --base main --head develop --state open --json number -q '.[0].number')
+          if [ -n "$PR" ]; then
+            gh pr merge "$PR" --auto --squash || true
+          fi
