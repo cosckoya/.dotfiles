@@ -15,6 +15,13 @@ else
   export EDITOR="$VISUAL"
 fi
 
+# Locale defaults (best practice)
+export LANG="${LANG:-en_US.UTF-8}"
+export LC_ALL="${LC_ALL:-$LANG}"
+
+# GPG agent TTY (needed for pinentry in tmux)
+export GPG_TTY="$(tty 2>/dev/null)"
+
 # PATH extensions - Add only if directories exist
 typeset -U path
 [[ -d "$HOME/bin" ]] && path+=("$HOME/bin")

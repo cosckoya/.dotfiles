@@ -21,4 +21,7 @@ export TMUX_SKIP_IDE="${TMUX_SKIP_IDE:-true}"
 export TMUX_SKIP_DESKTOP="${TMUX_SKIP_DESKTOP:-true}"
 
 # Desktop sessions to skip (comma-separated)
-export TMUX_SKIP_DESKTOP_SESSIONS="${TMUX_SKIP_DESKTOP_SESSIONS:-bspwm,i3,gnome,kde,xfce}"
+export TMUX_SKIP_DESKTOP_SESSIONS="${TMUX_SKIP_DESKTOP_SESSIONS:-bspwm,i3,gnome,kde,xfce,wayland,sway,hyprland}"
+
+# Default file creation mask (security best practice)
+umask 022

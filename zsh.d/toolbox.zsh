@@ -3,11 +3,13 @@
 
 toolbox() {
     local repo_url="https://raw.githubusercontent.com/cosckoya/toolbox/main/Dockerfile"
-    local dockerfile_path="/tmp/toolbox-dockerfile"
+    local dockerfile_path
+    dockerfile_path="$(mktemp)"
     local image_name="toolbox-image"
     local container_name="toolbox-container"
     local workspace_dir="${HOME}/hack"
     local force_rebuild=false
+    trap 'rm -f "$dockerfile_path"' EXIT
     local no_cache=false
 
     # Parse options

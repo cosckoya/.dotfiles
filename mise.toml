@@ -8,6 +8,14 @@
 # node = "22"
 # go = "1.23"
 
+[tools]
+# Tools needed for linting and validation
+lua = "5.4"      # provides luac for Lua syntax checking
+# kitty not available in mise registry - install via system package manager
+
 [tasks]
 # Optional: Add custom tasks
 # Example: mise run install-deps
+
+# Install all tools needed for local CI verification
+install-deps = "mise install"
