@@ -26,5 +26,5 @@ jobs:
           gh pr create --base main --head develop --title "chore: release develop to main" --body "Automated release PR." || true
           PR=$(gh pr list --base main --head develop --state open --json number -q '.[0].number')
           if [ -n "$PR" ]; then
-            gh pr merge "$PR" --auto --squash || true
+            gh pr merge "$PR" --auto --merge || true
           fi
