@@ -1,9 +1,7 @@
 ---
 name: theme-designer
 description: Unified color scheme design across ZSH, Tmux, Kitty, and Neovim
-allowed-tools: Read, Grep, Glob
-model: haiku
-user-invocable: true
+license: MIT
 ---
 
 # Theme Designer
@@ -12,9 +10,9 @@ user-invocable: true
 
 ## Global Rules Applied
 
-- Color accessibility & WCAG compliance → `~/.claude/rules/stacks/color.rule.md`
-- Markdown documentation → `~/.claude/rules/stacks/markdown.rule.md`
-- Communication: English-only, no emojis → `~/.claude/rules/universal/communication.rule.md`
+- Color accessibility & WCAG compliance → `~/.agentic/rules/stacks/color.rule.md`
+- Markdown documentation → `~/.agentic/rules/stacks/markdown.rule.md`
+- Communication: English-only, no emojis → `~/.agentic/rules/universal/communication.rule.md`
 
 ## Core Responsibilities
 
@@ -37,7 +35,7 @@ All colors meet WCAG AAA (7:1+ contrast). Palette is unified across:
 ## Integration Points
 
 - `docs/color-scheme.dotfiles.md` — Complete palette with hex, 256-color codes, and usage
-- `~/.claude/rules/stacks/color.rule.md` — Accessibility standards and validation
+- `~/.agentic/rules/stacks/color.rule.md` — Accessibility standards and validation
 - Component files: `config/kitty.conf`, `config/tmux.conf`, `zshrc`, `config/nvim/lua/core/options.lua`
 
 ## Example Invocations

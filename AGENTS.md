@@ -2,7 +2,7 @@
 
 ## Repo Identity
 
-**NOT an application.** This is a shared-home dotfiles repo for both OpenCode and Claude Code. Symlinks in `.claude/` and `.config/opencode/` are transparent — edits to `.claude/settings.json` change both tools.
+**NOT an application.** This is a shared-home dotfiles repo for OpenCode. Configuration lives in `.opencode/` (project) and `~/.config/opencode/` (global).
 
 ## No CI, Tests, Linters, or Build
 
@@ -17,7 +17,7 @@ pre-commit run --all-files          # all pre-commit hooks
 
 ## ZSH Startup Performance
 
-Hard constraint: **under 110ms**. Every edit to `*.zsh` or `zshrc` triggers an auto-profile via the PostToolUse hook in `.claude/settings.json`. If you suppress the hook, run manually:
+Hard constraint: **under 110ms**. Every edit to `*.zsh` or `zshrc` should be followed by a manual profile (OpenCode has no PostToolUse hook). Run manually:
 
 ```bash
 zsh --startuptime /tmp/zsh.log -i -c exit && sort -k2 -n /tmp/zsh.log | tail -20
@@ -35,14 +35,14 @@ Validates on commit: Makefile syntax, ZSH syntax (`zsh -n`), Lua syntax (`luac -
 
 Both tools generate temp files. Before any `git add`, check `git status` for:
 
-`.claude/.session` `.claude/.cache` `shell-snapshots/` `file-history/` `sessions/` `cache/` `plans/` `tasks/` `backups/` `.opencode/`
+`shell-snapshots/` `file-history/` `sessions/` `cache/` `plans/` `tasks/` `backups/` `.opencode/`
 
 These are covered by `.gitignore`. Do not reintroduce them.
 
 ## Settings
 
-- `.claude/settings.json` — authoritative permissions source of truth
-- `.claude/settings.local.json` — per-machine preferences only (never put permissions here)
+- `~/.config/opencode/opencode.json` — authoritative permissions source of truth (global)
+- Machine-specific preferences live in `~/.config/opencode/` only, never committed
 - No `opencode.json` in repo — OpenCode config is at `~/.config/opencode/`
 
 ## Language
@@ -77,7 +77,7 @@ WCAG AAA (7:1+) on `#100814` background. Drizzt Do'Urden palette. All components
 | `config/nvim/` | Neovim Lua (lazy.nvim + Mason) |
 | `Makefile` | Symlink installer |
 | `.pre-commit-config.yaml` | Git hooks |
-| `.claude/settings.json` | AI tool permissions |
+| `~/.config/opencode/opencode.json` | AI tool permissions |
 | `zsh.d/config.zsh` | TMUX_AUTOSTART_* env vars (user editable) |
 | `docs/design-system.dotfiles.md` | Design tokens, architecture layers, extensibility contract |
 
