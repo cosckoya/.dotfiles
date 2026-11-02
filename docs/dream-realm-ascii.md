@@ -192,7 +192,7 @@ EXAMPLE USAGE:
 │                          ▲                                      │
 │                         ╱ ╲                                     │
 │                        ╱   ╲  RULES (Universal, Authoritative) │
-│                       ╱     ╲ ~/.claude/rules/                 │
+│                       ╱     ╲ ~/.agentic/rules/                 │
 │                      ╱───────╲                                  │
 │                     ╱         ╲                                 │
 │                    ╱           ╲ DOCUMENTATION (This)           │
@@ -200,7 +200,7 @@ EXAMPLE USAGE:
 │                  ╱───────────────╲                              │
 │                 ╱                 ╲                             │
 │                ╱                   ╲ SKILLS (Domain Expertise)  │
-│               ╱                     ╲ .claude/skills/           │
+│               ╱                     ╲ .opencode/skills/           │
 │              ╱───────────────────────╲                          │
 │             ╱                         ╲                         │
 │            ╱                           ╲ CODE (Implementation)   │

@@ -100,3 +100,6 @@ tools/bin/
 config/nvim/plugin/
 config/nvim/.lazy.lua
 config/nvim/lazy-lock.json
+
+# Claude Code (migrated to OpenCode)
+.claude/
