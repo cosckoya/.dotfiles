@@ -6,9 +6,16 @@
 
 # cosckoya/.dotfiles
 
-**A self-contained, offline-capable Linux terminal environment built for speed.**
+**A self-contained Linux terminal realm forged for speed. Offline-capable. No cloud. No bloat.**
 
-ZSH · Tmux · Neovim · Kitty — unified under a single Makefile.
+```
+  ____  ____  ____  ____  ____  ____  ____  ____  ____
+ ||D ||||R ||||E ||||A ||||M ||||  ||||R ||||E ||||A ||||L ||
+ ||__||||__||||__||||__||||__||||__||||__||||__||||__||||__||
+ |/__\||/__\||/__\||/__\||/__\||/__\||/__\||/__\||/__\|
+```
+
+ZSH · Tmux · Neovim · Kitty — unified under a single Makefile. Drizzt Do'Urden palette at WCAG AAA. Gitflow DevSecOps wired in.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-b19cd9.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![Platform](https://img.shields.io/badge/Platform-Linux-7ec8e3.svg?style=flat-square)](https://www.linux.org/)
