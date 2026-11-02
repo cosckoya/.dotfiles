@@ -151,3 +151,30 @@ jobs:
         env:
           TRIVY_DB_REPOSITORY: "public.ecr.aws/aquasecurity/trivy-db:2"
           TRIVY_JAVA_DB_REPOSITORY: "public.ecr.aws/aquasecurity/trivy-java-db:1"
+
+  alignment-check:
+    name: Alignment check (main in develop)
+    if: github.event_name == 'pull_request' && github.base_ref == 'develop'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          fetch-depth: 0
+      - name: Ensure main is ancestor of PR head
+        run: |
+          git fetch origin main
+          if ! git merge-base --is-ancestor origin/main HEAD; then
+            echo "FAIL: origin/main is not an ancestor of this PR"; exit 1
+          fi
+          echo "OK: main is contained in this branch"
+
+  pr-source-check:
+    name: PR source check (only develop -> main)
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          if [ "${{ github.head_ref }}" != "develop" ]; then
+            echo "FAIL: only develop may merge into main (got ${{ github.head_ref }})"; exit 1
+          fi
+          echo "OK: source branch is develop"
