@@ -267,6 +267,7 @@ Full technical reference in [`docs/README.md`](./docs/README.md).
 | [Architecture](./docs/architecture.dotfiles.md) | Installation mechanics, startup flow |
 | [Color Scheme](./docs/color-scheme.dotfiles.md) | Per-component usage, WCAG AAA contrast, lore |
 | [Makefile](./docs/makefile.dotfiles.md) | Targets, symlink mechanics |
+| [Gitflow & DevSecOps](./docs/gitflow.dotfiles.md) | Branch model, CI gates, auto-merge, releases |
 | [Pre-commit](./docs/pre-commit.dotfiles.md) | Hooks, configuration, CI integration |
 | [Troubleshooting](./docs/troubleshooting.dotfiles.md) | Common issues and solutions |
 
@@ -280,7 +281,7 @@ git checkout -b feat/my-change
 git commit -m "feat: description"
 ```
 
-Open a PR against `main`. One approval required.
+Open a PR against `develop`. Releases flow `develop` -> `main` automatically. See [Gitflow & DevSecOps](./docs/gitflow.dotfiles.md).
 
 - [Contributing Guide](./CONTRIBUTING.md) — branch naming, commit format, PR checklist
 - [Security Policy](./.github/SECURITY.md) — vulnerability disclosure

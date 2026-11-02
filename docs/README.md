@@ -40,6 +40,7 @@ Complete technical specifications for deep dives.
 - [Architecture Overview](./architecture.dotfiles.md) — Installation mechanics, startup flow, extensibility
 - [Color Scheme](./color-scheme.dotfiles.md) — Per-component usage, lore, dircolors configuration
 - [Makefile](./makefile.dotfiles.md) — Build targets, symlink mechanics
+- [Gitflow & DevSecOps](./gitflow.dotfiles.md) — Branch model, CI gates, auto-merge, releases
 - [Pre-commit Hooks](./pre-commit.dotfiles.md) — Automated validation, hook configuration, troubleshooting
 
 ## Contributing

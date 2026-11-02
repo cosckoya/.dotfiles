@@ -110,3 +110,19 @@ Edit `config/tmux.conf`, add bind command. Live reload with `tmux source ~/.tmux
 
 **Add a Kitty keybinding:**
 Edit `config/kitty.conf`, add map command. Live reload with `Ctrl+Shift+F5`.
+
+
+## Branching and Release Design
+
+Rationale for the Gitflow setup used in this repository:
+
+- `develop` is the integration branch and is always green. `main` is release-only; every commit on `main` is a tagged release.
+- Feature and fix branches are short-lived and merge into `develop` via squash merge, keeping history linear.
+- Releases flow `develop` to `main` with a merge commit (`--no-ff`) so the release boundary is visible and merge-base ancestry is preserved.
+- After a release, `main` is backmerged into `develop` so that `develop` contains `main` at commit level. This keeps the alignment check (`git merge-base --is-ancestor`) valid.
+- Only `develop` may merge into `main` (enforced by the `pr-source-check` CI job). This prevents accidental or out-of-order releases.
+- Auto-merge is semi-automatic: workflows create the PR and enable auto-merge, but merges happen only after all required checks pass. A maintainer can cancel before merge.
+- Dependabot targets `develop` so dependency updates integrate through the same flow. Only minor and patch updates are auto-merged; major updates require manual review.
+- Tags follow Semantic Versioning (`vX.Y.Z`) and are created on `main` after a release merge.
+
+See [`gitflow.dotfiles.md`](./gitflow.dotfiles.md) for the full reference and [`CONTRIBUTING.md`](../CONTRIBUTING.md) for contributor procedures.
