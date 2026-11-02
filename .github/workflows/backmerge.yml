@@ -1,0 +1,30 @@
+name: Backmerge main to develop
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  backmerge:
+    name: Backmerge main -> develop
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          fetch-depth: 0
+
+      - name: Create PR and enable auto-merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh pr list --base develop --head main --state open | grep -q .; then
+            echo "PR already open"; exit 0
+          fi
+          gh pr create --base develop --head main --title "chore: backmerge main to develop" --body "Automated backmerge after release." || true
+          PR=$(gh pr list --base develop --head main --state open --json number -q '.[0].number')
+          if [ -n "$PR" ]; then
+            gh pr merge "$PR" --auto --merge || true
+          fi
