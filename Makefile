@@ -35,7 +35,8 @@ zsh: ## Install ZSH profile
 	if [ "$$(getent passwd $$USER | cut -d: -f7)" != "/bin/zsh" ]; then \
 		sudo usermod -s /bin/zsh $$USER; \
 	fi
-	@rm -f ${HOME}/.zshrc ${HOME}/.zsh.d
+	@rm -f ${HOME}/.zshrc
+	@[ -L ${HOME}/.zsh.d ] && rm -f ${HOME}/.zsh.d || true
 	@ln -sf ${DOTFILES}/zshrc ${HOME}/.zshrc
 	@ln -sf ${DOTFILES}/zsh.d ${HOME}/.zsh.d
 	@echo "ZSH configured"
@@ -50,7 +51,7 @@ neovim: ## Install Neovim Lua profile
 	command -v nvim >/dev/null || { echo "Error: Install neovim first (make install-nvim)"; exit 1; }; \
 	NVIM_MAJOR=$$(nvim --version | head -1 | sed 's/NVIM v//' | cut -d'.' -f1); \
 	NVIM_MINOR=$$(nvim --version | head -1 | sed 's/NVIM v//' | cut -d'.' -f2); \
-	test "$$NVIM_MAJOR" -gt 0 || test "$$NVIM_MINOR" -ge 11 || { echo "Error: Neovim 0.11+ required"; exit 1; }; \
+	{ [ "$$NVIM_MAJOR" -gt 0 ] || { [ "$$NVIM_MAJOR" -eq 0 ] && [ "$$NVIM_MINOR" -ge 11 ]; }; } || { echo "Error: Neovim 0.11+ required"; exit 1; }; \
 	rm -rf ${HOME}/.config/nvim; \
 	ln -s ${DOTFILES}/config/nvim ${HOME}/.config/nvim; \
 	ln -sf ${DOTFILES}/vimrc ${HOME}/.vimrc; \
@@ -71,7 +72,8 @@ pre-commit-setup: ## Install pre-commit hooks
 	@echo "Pre-commit hooks installed"
 
 clean: ## Remove all symlinks and restore defaults
-	@rm -f ${HOME}/.zshrc ${HOME}/.zsh.d
+	@rm -f ${HOME}/.zshrc
+	@[ -L ${HOME}/.zsh.d ] && rm -f ${HOME}/.zsh.d || true
 	@rm -f ${HOME}/.tmux.conf
 	@rm -f ${HOME}/.config/kitty/kitty.conf
 	@rm -rf ${HOME}/.config/nvim

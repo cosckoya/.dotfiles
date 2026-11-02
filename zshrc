@@ -10,10 +10,13 @@ fi
 if command -v tmux >/dev/null 2>&1 && [[ "$TMUX_AUTOSTART_ENABLED" != "false" ]]; then
   if [[ -z "$TMUX" ]]; then
     _skip_tmux=false
-    if [[ "$TMUX_SKIP_DESKTOP" == "true" ]] && [[ -n "$DESKTOP_SESSION" ]]; then
-      for desktop in ${(s:,:)TMUX_SKIP_DESKTOP_SESSIONS}; do
-        [[ "$DESKTOP_SESSION" == "$desktop" ]] && _skip_tmux=true && break
-      done
+    if [[ "$TMUX_SKIP_DESKTOP" == "true" ]]; then
+      local _desktop="${DESKTOP_SESSION:-${XDG_CURRENT_DESKTOP:-}}"
+      if [[ -n "$_desktop" ]]; then
+        for desktop in ${(s:,:)TMUX_SKIP_DESKTOP_SESSIONS}; do
+          [[ "${_desktop:l}" == "${desktop:l}" ]] && _skip_tmux=true && break
+        done
+      fi
     fi
     if [[ "$TMUX_SKIP_IDE" == "true" ]] && [[ -n "$INSIDE_EMACS" || -n "$VSCODE_PID" ]]; then
       _skip_tmux=true
@@ -22,8 +25,7 @@ if command -v tmux >/dev/null 2>&1 && [[ "$TMUX_AUTOSTART_ENABLED" != "false" ]]
       _skip_tmux=true
     fi
     if [[ $- == *i* ]] && [[ "$_skip_tmux" == "false" ]]; then
-      tmux attach-session -t "${TMUX_AUTOSTART_SESSION:-default}" 2>/dev/null || \
-        tmux new-session -s "${TMUX_AUTOSTART_SESSION:-default}"
+      exec tmux new-session -A -s "${TMUX_AUTOSTART_SESSION:-default}"
     fi
     unset _skip_tmux
   fi
@@ -49,8 +51,8 @@ else
 fi
 
 # History - Optimized settings
-alias history="history 0"
-HIST_STAMPS="yyyy-mm-dd"
+history() { builtin fc -l 1 "$@"; }
+setopt extended_history
 HISTFILE=~/.zsh_history
 HISTSIZE=5000
 SAVEHIST=5000
@@ -213,4 +215,4 @@ export LESS_TERMCAP_us=$'\E[1;32m'
 export LESS_TERMCAP_ue=$'\E[0m'
 
 # opencode
-export PATH=/home/cosckoya/.opencode/bin:$PATH
+export PATH="${HOME}/.opencode/bin:${PATH}"
