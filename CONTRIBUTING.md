@@ -12,6 +12,26 @@ This repository follows 2026 best practices for dotfiles. When contributing, ple
 
 Example: `feat/add-mise-node-setup`, `fix/compinit-syntax-error`, `docs/linux-prerequisites`
 
+## Branching Model
+
+Work branches are created from `develop`, not `main`:
+
+- `feat/`, `fix/`, `docs/`, `chore/`, `perf/` — short-lived, merge into `develop` via squash merge.
+- `hotfix/*` — branched from `main`, merged to `main`, then backmerged to `develop`.
+
+See [`docs/gitflow.dotfiles.md`](./docs/gitflow.dotfiles.md) for the full reference.
+
+## Release Flow
+
+1. Feature/fix PR merged into `develop`.
+2. Auto-PR `develop -> main` is created and auto-merge enabled.
+3. After all CI gates pass, the PR merges into `main` with a merge commit.
+4. `main` is backmerged into `develop` to keep alignment.
+5. Tag the release on `main`: `git tag -a vX.Y.Z -m "Release vX.Y.Z" && git push origin vX.Y.Z`.
+
+Major Dependabot updates require manual review; minor/patch are auto-merged.
+
+
 ## Commit Format
 
 Use **Conventional Commits** format:
@@ -21,7 +41,7 @@ type(scope): short description (under 50 chars)
 
 Longer explanation (if needed). Explain the WHY, not the WHAT — diffs show changes.
 
-Co-Authored-By: Claude <noreply@anthropic.com>
+Co-Authored-By: Roy Batty <roy.batty@cosckoya.bot>
 ```
 
 Types: `feat`, `fix`, `docs`, `test`, `chore`, `perf`, `refactor`, `style`
@@ -35,7 +55,7 @@ Duplicate if/else block with no opening condition deleted.
 
 Verified: zsh -n ~/.zshrc passes.
 
-Co-Authored-By: Claude <noreply@anthropic.com>
+Co-Authored-By: Roy Batty <roy.batty@cosckoya.bot>
 ```
 
 ## Code Review Checklist
