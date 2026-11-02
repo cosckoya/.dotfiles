@@ -1,0 +1,5 @@
+type(scope): short description (under 50 chars)
+
+Longer explanation (if needed). Explain the WHY, not the WHAT.
+
+Co-Authored-By: Roy Batty <roy.batty@cosckoya.bot>
