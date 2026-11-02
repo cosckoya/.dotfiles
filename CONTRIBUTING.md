@@ -96,34 +96,23 @@ Before submitting a pull request, ensure:
 
 ## PR Template
 
-```markdown
-## Description
-Brief explanation of what changed and why.
+Use the repository PR template: [`.github/pull_request_template.md`](./.github/pull_request_template.md). GitHub applies it automatically to new pull requests.
 
-## Type of Change
-- [ ] Feature
-- [ ] Bug Fix
-- [ ] Documentation
-- [ ] Performance Improvement
-- [ ] Other: ___
+## Commit Template
 
-## Performance Impact
-- ZSH startup time before: ___ ms
-- ZSH startup time after: ___ ms
-- Impact: [none / slight improvement / slight regression / significant change]
+Activate the commit message template locally:
 
-## Testing
-- [ ] Pre-commit hooks pass
-- [ ] Shell syntax valid
-- [ ] Tested aliases/functions work
-- [ ] Profiling: [attach results if startup time changed]
-
-## Checklist
-- [ ] Follows shell.rule.md conventions
-- [ ] Documentation updated
-- [ ] No secrets committed
-- [ ] No emojis in code
+```bash
+git config commit.template .github/commit_template.txt
 ```
+
+## Issue Templates
+
+Use the provided templates under [`.github/ISSUE_TEMPLATE/`](./.github/ISSUE_TEMPLATE/): `bug_report.md`, `feature_request.md`, `security.md`. Blank issues are disabled.
+
+## Release Notes
+
+Release notes are auto-generated from merged PRs using [`.github/release.yml`](./.github/release.yml).
 
 ## Code Style Reference
 
