@@ -163,7 +163,7 @@ jobs:
       - name: Ensure main is ancestor of PR head
         run: |
           git fetch origin main
-          if ! git merge-base --is-ancestor origin/main HEAD; then
+          if ! git merge-base --is-ancestor FETCH_HEAD HEAD; then
             echo "FAIL: origin/main is not an ancestor of this PR"; exit 1
           fi
           echo "OK: main is contained in this branch"
